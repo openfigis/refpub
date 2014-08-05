@@ -36,7 +36,8 @@
 	</repositories>
 
 	<modules>
-		
+
+	<module>refpub-web</module>
 	</modules>
 
 
