@@ -38,6 +38,7 @@
 	<modules>
 
 	<module>refpub-web</module>
+	<module>refpub-core-webfragment</module>
 	</modules>
 
 
