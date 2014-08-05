@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.refpub</groupId>
+	<artifactId>refpub</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<version>${project.version}</version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>artifactory.fao.org</id>
+			<name>artifactory.fao.org-releases</name>
+			<url>http://artifactory.fao.org/artifactory/fips</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>gcube-snapshots</id>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<url>http://maven.research-infrastructures.eu/nexus/content/repositories/gcube-snapshots</url>
+		</repository>
+		<repository>
+			<id>gcube-releases</id>
+			<url>http://maven.research-infrastructures.eu/nexus/content/repositories/gcube-releases</url>
+		</repository>
+	</repositories>
+
+	<modules>
+		
+	</modules>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>fao-ci</id>
+			<distributionManagement>
+				<repository>
+					<id>${dm.rel.id}</id>
+					<name>${dm.rel.id-name}</name>
+					<url>${dm.rel.id-url}</url>
+				</repository>
+				<snapshotRepository>
+					<id>${dm.snap.id}</id>
+					<name>${dm.snap.id-name}</name>
+					<url>${dm.snap.id-url}</url>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+
+	<dependencyManagement>
+		<dependencies>
+		</dependencies>
+	</dependencyManagement>
+</project>
