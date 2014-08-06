@@ -3,12 +3,6 @@
 	<name>refpub-web</name>
 	<comment>refpub-web project</comment>
 	<projects>
-		<project>refpub-configuration</project>
-		<project>figis-domain</project>
-		<project>refpub-domain</project>
-		<project>refpub-service-integrationtest</project>
-		<project>refpub-service</project>
-		<project>refpub-core-webfragment</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

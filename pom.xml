@@ -36,9 +36,8 @@
 	</repositories>
 
 	<modules>
-
-	<module>refpub-web</module>
-	<module>refpub-core-webfragment</module>
+		<module>refpub-web</module>
+		<module>refpub-dto</module>
 	</modules>
 
 
