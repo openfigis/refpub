@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
-xmlns:fivme="http://www.fao.org/fi/vme/webservice" 
-targetNamespace="http://www.fao.org/fi/vme/webservice" 
+xmlns:refpub="http://www.fao.org/fi/refpub/webservice" 
+targetNamespace="http://www.fao.org/fi/refpub/webservice" 
 elementFormDefault="qualified">
-	
-	<element name="SpecificMeasureList" type="fivme:SpecificMeasureListType"/>
-	<complexType name="SpecificMeasureListType">
-			<choice maxOccurs="unbounded">
 
-			<element name="SpecificMeasure" type="fivme:SpecificMeasureType" minOccurs="0" maxOccurs="unbounded"/>
-		</choice>
+<!-- Elements -->
+
+    <element name="ConceptList" type="refpub:ConceptListType"></element>
+	
+<!-- Types -->
+
+    <complexType name="ConceptListType">
+    	<sequence>
+    		<element name="concept" type="refpub:ConceptType" minOccurs="0" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="ConceptType">
+    	<attribute name="code" type="string"></attribute>
+    </complexType>
+
+    <complexType name="MultilingualNameType">
+    	<sequence>
+
+    		<element name="text" type="refpub:TextType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="TextType" >
+		<attribute name="Title" type="string"/>
+		<attribute name="lang" type="string"/>
 	</complexType>
 
-	<complexType name="SpecificMeasureType">
-		<attribute name="year" type="int"></attribute>
-		<attribute name="oid" type="int"></attribute>
-		<attribute name="id" type="int"></attribute>
-		<attribute name="lang" type="string"></attribute>
-		<attribute name="validityPeriodStart" type="string"></attribute>
-		<attribute name="validityPeriodEnd" type="string"></attribute>
-		<attribute name="measureText" type="string"></attribute>
-		<attribute name="measureSourceUrl" type="anyURI"></attribute>
-    </complexType>
+
+
 </schema>
