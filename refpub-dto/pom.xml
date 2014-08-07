@@ -47,4 +47,5 @@
 			<version>2.2.7</version>
 		</dependency>
 	</dependencies>
+	<name>RefPub dto JAXB</name>
 </project>

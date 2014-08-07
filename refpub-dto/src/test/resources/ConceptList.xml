@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<refpub:ConceptList xmlns:refpub="http://www.fao.org/fi/refpub/webservice"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.fao.org/fi/refpub/webservice refpub.xsd ">
+	<refpub:concept code="species" />
+</refpub:ConceptList>
