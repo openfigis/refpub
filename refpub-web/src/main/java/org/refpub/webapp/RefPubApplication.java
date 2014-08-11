@@ -10,7 +10,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 public class RefPubApplication extends ResourceConfig {
 
 	public RefPubApplication() {
-		packages("org.refpub.webapp");
+		packages("org.refpub.webservice.core");
 		register(JacksonJsonProvider.class);
 
 	}
