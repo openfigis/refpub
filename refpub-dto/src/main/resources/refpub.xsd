@@ -1,37 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" 
-xmlns:refpub="http://www.fao.org/fi/refpub/webservice" 
-targetNamespace="http://www.fao.org/fi/refpub/webservice" 
-elementFormDefault="qualified">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:refpub="http://www.fao.org/fi/refpub/webservice"
+	targetNamespace="http://www.fao.org/fi/refpub/webservice"
+	elementFormDefault="qualified">
 
-<!-- Elements -->
+	<!-- Elements -->
 
-    <element name="ConceptList" type="refpub:ConceptListType"></element>
-	
-<!-- Types -->
+	<element name="ConceptList" type="refpub:ConceptListType"></element>
 
-    <complexType name="ConceptListType">
-    	<sequence>
-    		<element name="concept" type="refpub:ConceptType" minOccurs="0" maxOccurs="unbounded"></element>
-    	</sequence>
-    </complexType>
+	<!-- Types -->
 
-    <complexType name="ConceptType">
-    	<attribute name="code" type="string"></attribute>
-    </complexType>
+	<complexType name="ConceptListType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+					<element name="concept" type="refpub:ConceptType"
+						minOccurs="0" maxOccurs="unbounded"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
 
-    <complexType name="MultilingualNameType">
-    	<sequence>
+	<complexType name="ConceptType">
+		<complexContent>
+			<extension base="refpub:TreasureType">
+				<attribute name="code" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
 
-    		<element name="text" type="refpub:TextType" maxOccurs="unbounded" minOccurs="0"></element>
-    	</sequence>
-    </complexType>
+	<complexType name="MultilingualNameType">
+		<sequence>
+			<element name="text" type="refpub:TextType" maxOccurs="unbounded"
+				minOccurs="0"></element>
+		</sequence>
+	</complexType>
 
-    <complexType name="TextType" >
-		<attribute name="Title" type="string"/>
-		<attribute name="lang" type="string"/>
+	<complexType name="TextType">
+		<attribute name="Title" type="string" />
+		<attribute name="lang" type="string" />
 	</complexType>
 
 
 
+
+	<complexType name="RestType">
+		<attribute name="resourceUrl" type="anyURI"></attribute>
+	</complexType>
+
+	<complexType name="TreasureType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+					<element name="multilingualName" type="refpub:MultilingualNameType"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+
+	</complexType>
 </schema>
