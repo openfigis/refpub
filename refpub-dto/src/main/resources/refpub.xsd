@@ -6,6 +6,12 @@
 	<!-- Elements -->
 
 	<element name="ConceptList" type="refpub:ConceptListType"></element>
+	<element name="Concept" type="refpub:ConceptType"></element>
+
+	<element name="CodeSystemList" type="refpub:CodeSystemListType"></element>
+	<element name="CodeSystem" type="refpub:CodeSystemType"></element>
+
+
 
 	<!-- Types -->
 
@@ -27,6 +33,28 @@
 			</extension>
 		</complexContent>
 	</complexType>
+
+
+	<complexType name="CodeSystemListType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+					<element name="concept" type="refpub:CodeSystemType"
+						minOccurs="0" maxOccurs="unbounded"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CodeSystemType">
+		<complexContent>
+			<extension base="refpub:TreasureType">
+				<attribute name="code" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
 
 	<complexType name="MultilingualNameType">
 		<sequence>
