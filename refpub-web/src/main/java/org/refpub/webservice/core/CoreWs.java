@@ -13,7 +13,6 @@ public class CoreWs {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	// @Produces({ MediaType.APPLICATION_XML })
 	public ConceptList concepts() {
 
 		ConceptList l = new ConceptList();
