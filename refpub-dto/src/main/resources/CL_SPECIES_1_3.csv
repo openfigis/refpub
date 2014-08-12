@@ -1,0 +1,318 @@
+"ISSCAAP"	"TAXOCODE"	"3A_CODE"	"Scientific_name"	"English_name"	"French_name"	"Spanish_name"	"Author"	"Family"	"Order"	"Stats_data"
+"25"	"1020100101"	"LAU"	"Petromyzon marinus"	"Sea lamprey"	"Lamproie marine"	"Lamprea marina"	"Linnaeus 1758"	"Petromyzontidae"	"PETROMYZONTIFORMES"	1
+"25"	"1020100201"	"LAR"	"Lampetra fluviatilis"	"River lamprey"	"Lamproie de rivière"	"Lamprea de río"	"(Linnaeus 1758)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	1
+"25"	"1020100203"	"IDK"	"Lampetra aepyptera"	"Least brook lamprey"	"Petite lamproie de ruisseau"		"(Abbott 1860)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100204"	"IDL"	"Lampetra ayresii"	"Western American river lamprey"	"Lamproie de rivière de l’Ouest"		"(Günther 1870)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100205"	"IDN"	"Lampetra planeri"	"European brook lamprey"	"Lamproie de ruisseau d'Europe"		"(Bloch 1784)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100206"	"IDO"	"Lampetra richardsoni"	"Western brook lamprey"	"Lamproie occidentale"		"Vladykov & Follett 1965"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100207"	"IKQ"	"Lampetra lanceolata"	"Turkish brook lamprey"	"Lamproie de ruisseau turque"		"Kux & Steiner 1972"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100208"	"IKR"	"Lampetra pacifica"	"Pacific brook lamprey"	"Lamproie de ruisseau du Pacif."		"Vladykov 1973"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100401"	"LAY"	"Ichthyomyzon unicuspis"	"Silver lamprey"	"Lamproie argentée"		"Hubbs & Trautman 1937"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100402"	"IDE"	"Ichthyomyzon bdellium"	"Ohio lamprey"	"Lamproie de l’Ohio"		"(Jordan 1885)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100403"	"IDG"	"Ichthyomyzon castaneus"	"Chestnut lamprey"	"Lamproie brune"		"Girard 1858"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100404"	"IDH"	"Ichthyomyzon fossor"	"Northern brook lamprey"	"Lamproie du Nord"		"Reighard & Cummins 1916"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100405"	"IDI"	"Ichthyomyzon gagei"	"Southern brook lamprey"	"Lamproie méridionale"		"Hubbs & Trautman 1937"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100406"	"IDJ"	"Ichthyomyzon greeleyi"	"Mountain brook lamprey"	"Lamproie d’Allegheny"		"Hubbs & Trautman 1937"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100501"	"LAF"	"Eudontomyzon mariae"	"Ukrainian brook lamprey"	"Lamproie ukrainienne"		"(Berg 1931)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100502"	"ICJ"	"Eudontomyzon danfordi"	"Carpathian lamprey"	"Lamproie carpathique"		"Regan 1911"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100503"	"IKG"	"Eudontomyzon graecus"				"Renaud & Economidis 2010"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100504"	"IKJ"	"Eudontomyzon hellenicus"	"Greek brook lamprey"	"Lamproie de ruisseau grecque"		"Vladykov, Renaud, Kott & Economidis 1982"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100505"	"IKL"	"Eudontomyzon morii"	"Korean lamprey"	"Lamproie coréenne"		"(Berg 1931)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020100901"	"LAW"	"Caspiomyzon wagneri"	"Caspian lamprey"	"Lamproie caspienne"		"(Kessler 1870)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101101"	"LSZ"	"Lethenteron camtschaticum"	"Arctic lamprey"	"Lamproie arctique"		"(Tilesius 1811)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101102"	"IDQ"	"Lethenteron kessleri"	"Siberian lamprey"	"Lamproie de Sibérie"		"(Anikin 1905)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101103"	"IDT"	"Lethenteron ninae"	"Western Transcaucasian lamprey"	"Lamproie de la Transcaucasie"		"Naseka, Tuniyev & Renaud 2009"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101104"	"IDU"	"Lethenteron reissneri"	"Far Eastern brook lamprey"	"Lamproie de l’Extrême–Orient"		"(Dybowski 1869)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101105"	"IDV"	"Lethenteron zanandreai"	"Lombardy brook lamprey"	"Lamproie de Lombardie"		"Vladykov 1955"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101106"	"IKT"	"Lethenteron alaskense"	"Alaskan brook lamprey"	"Lamproie de ruisseau d’Alaska"		"Vladykov & Kott 1978"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101107"	"IKU"	"Lethenteron appendix"	"American brook lamprey"	"Lamproie de l'Est"		"(DeKay 1842)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101202"	"LAO"	"Entosphenus tridentatus"	"Pacific lamprey"	"Lamproie du Pacifique"	"Lamprea del Pacífico"	"(Richardson 1836)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101203"	"IJX"	"Entosphenus folletti"	"Northern California lamprey"	"Lamproie de Californie septen."		"Vladykov & Kott 1976"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101204"	"IJY"	"Entosphenus hubbsi"	"Kern brook lamprey"	"Lamproie de Californie centr."		"Vladykov & Kott 1976"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101205"	"IJZ"	"Entosphenus lethophagus"	"Pit–Klamath brook lamprey"	"Lamproie du bassin Pit–Klamath"		"(Hubbs 1971)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101206"	"IKD"	"Entosphenus macrostomus"	"Vancouver lamprey"	"Lamproie de l’île de Vancouver"		"(Beamish 1982)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101207"	"IKE"	"Entosphenus minimus"	"Miller Lake lamprey"	"Lamproie du lac Miller"		"(Bond & Kan 1973)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101208"	"IKF"	"Entosphenus similis"	"Klamath lamprey"	"Lamproie de la rivière Klamath"		"Vladykov & Kott 1979"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101301"	"IKV"	"Tetrapleurodon geminis"	"Jacona lamprey"	"Lamproie de Jacona"	"Lamprea de Jacona"	"Álvarez del Villar 1966"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020101302"	"IKW"	"Tetrapleurodon spadiceus"	"Chapala lamprey"	"Lamproie mexicaine"	"Lamprea de Chapala"	"(Bean 1887)"	"Petromyzontidae"	"PETROMYZONTIFORMES"	0
+"25"	"10201XXXXX"	"LAS"	"Petromyzontidae"	"Lampreys nei"	"Lamproies nca"	"Lampreas nep"		"Petromyzontidae"	"PETROMYZONTIFORMES"	1
+"25"	"1020200101"	"ICE"	"Mordacia lapicida"	"Chilean lamprey"	"Lamproie du Chili"		"(Gray 1851)"	"Mordaciidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020200102"	"ICF"	"Mordacia praecox"				"Potter 1968"	"Mordaciidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020200103"	"LAK"	"Mordacia mordax"	"Australian lamprey"	"Lamproie australienne"		"(Richardson 1846)"	"Mordaciidae"	"PETROMYZONTIFORMES"	0
+"25"	"1020300701"	"LAE"	"Geotria australis"	"Pouched lamprey"	"Lamproie saccifère"		"Gray 1851"	"Geotriidae"	"PETROMYZONTIFORMES"	0
+"33"	"1030300201"	"MYP"	"Paramyxine atami"	"Brown hagfish"			"Dean 1904"	"Myxinidae"	"MYXINIFORMES"	0
+"33"	"1030300301"	"MYG"	"Myxine glutinosa"	"Hagfish"	"Myxine"	"Pez moco"	"Linnaeus 1758"	"Myxinidae"	"MYXINIFORMES"	0
+"33"	"1030300401"	"MYE"	"Nemamyxine elongata"				"Richardson 1958"	"Myxinidae"	"MYXINIFORMES"	0
+"33"	"1030300601"	"MYB"	"Eptatretus burgeri"	"Inshore hagfish"			"(Girard 1855)"	"Myxinidae"	"MYXINIFORMES"	0
+"33"	"1030300602"	"MYU"	"Eptatretus stoutii"	"Pacific hagfish"			"(Lockington 1878)"	"Myxinidae"	"MYXINIFORMES"	0
+"33"	"1030300603"	"MWC"	"Eptatretus cirrhatus"	"Broadgilled hagfish"			"(Forster 1801)"	"Myxinidae"	"MYXINIFORMES"	1
+"33"	"10303XXXXX"	"MYX"	"Myxinidae"	"Hagfishes nei"	"Mixynes nca"	"Mixinos nep"		"Myxinidae"	"MYXINIFORMES"	1
+"38"	"1040100101"	"HEF"	"Heterodontus francisci"	"Horn shark"	"Requin dormeur cornu"	"Dormilón cornudo"	"(Girard 1855)"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100102"	"HEG"	"Heterodontus galeatus"	"Crested bullhead shark"	"Requin dormeur à crête"	"Dormilón carenado"	"(Günther 1870)"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100103"	"HEJ"	"Heterodontus japonicus"	"Japanese bullhead shark"	"Requin dormeur nekozame"	"Dormilón japonés"	"Macleay 1884"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100104"	"HEM"	"Heterodontus mexicanus"	"Mexican hornshark"	"Requin dormeur buffle"	"Dormilón búfalo"	"Taylor & Castro-Aguirre 1972"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100105"	"HEK"	"Heterodontus portusjacksoni"	"Port Jackson shark"	"Requin dormeur taureau"	"Dormilón toro"	"(Meyer 1793)"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100106"	"HEQ"	"Heterodontus quoyi"	"Galapagos bullhead shark"	"Requin dormeur bouledogue"	"Dormilón de Galápagos"	"(Fréminville 1840)"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100107"	"HEA"	"Heterodontus ramalheira"	"Whitespotted bullhead shark"	"Requin dormeur chabot"	"Dormilón boquigrande"	"(Smith 1949)"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"1040100108"	"HEZ"	"Heterodontus zebra"	"Zebra bullhead shark"	"Requin dormeur zébré"	"Dormilón acebrado"	"(Gray 1831)"	"Heterodontidae"	"HETERODONTIFORMES"	0
+"38"	"104XXXXXXX"	"HDQ"	"Heterodontiformes"	"Bullhead sharks"					"HETERODONTIFORMES"	0
+"38"	"1050100101"	"HXC"	"Chlamydoselachus anguineus"	"Frilled shark"	"Requin lézard"	"Tiburón anguila"	"Garman 1884"	"Chlamydoselachidae"	"HEXANCHIFORMES"	0
+"38"	"1050100102"	"HWR"	"Chlamydoselachus africana"	"African frilled shark"			"Ebert & Compagno 2009"	"Chlamydoselachidae"	"HEXANCHIFORMES"	0
+"38"	"1050200201"	"SBL"	"Hexanchus griseus"	"Bluntnose sixgill shark"	"Requin griset"	"Cañabota gris"	"(Bonnaterre 1788)"	"Hexanchidae"	"HEXANCHIFORMES"	1
+"38"	"1050200202"	"HXN"	"Hexanchus nakamurai"	"Bigeyed sixgill shark"			"Teng 1962"	"Hexanchidae"	"HEXANCHIFORMES"	0
+"38"	"1050200301"	"HXT"	"Heptranchias perlo"	"Sharpnose sevengill shark"	"Requin perlon"	"Cañabota bocadulce"	"(Bonnaterre 1788)"	"Hexanchidae"	"HEXANCHIFORMES"	1
+"38"	"1050200502"	"NTC"	"Notorynchus cepedianus"	"Broadnose sevengill shark"	"Platnez"	"Cañabota gata"	"(Péron 1807)"	"Hexanchidae"	"HEXANCHIFORMES"	1
+"38"	"105XXXXXXX"	"HXW"	"Hexanchiformes"	"Frilled and cow sharks"					"HEXANCHIFORMES"	0
+"38"	"1060100301"	"BSK"	"Cetorhinus maximus"	"Basking shark"	"Pèlerin"	"Peregrino"	"(Gunnerus 1765)"	"Cetorhinidae"	"LAMNIFORMES"	1
+"38"	"1060200501"	"CCT"	"Carcharias taurus"	"Sand tiger shark"	"Requin taureau"	"Toro bacota"	"Rafinesque 1810"	"Odontaspididae"	"LAMNIFORMES"	1
+"38"	"1060200502"	"LOU"	"Carcharias tricuspidatus"	"Indian sand tiger"			"Day 1878"	"Odontaspididae"	"LAMNIFORMES"	0
+"38"	"1060200601"	"LOO"	"Odontaspis ferox"	"Smalltooth sand tiger"	"Requin féroce"	"Solrayo"	"(Risso 1810)"	"Odontaspididae"	"LAMNIFORMES"	0
+"38"	"1060200602"	"ODH"	"Odontaspis noronhai"	"Bigeye sand tiger shark"	"Requin noronhai"	"Solrayo ojigrande"	"(Maul 1955)"	"Odontaspididae"	"LAMNIFORMES"	0
+"38"	"1060301201"	"LMO"	"Mitsukurina owstoni"	"Goblin shark"	"Requin lutin"	"Tiburón duende"	"Jordan 1898"	"Mitsukurinidae"	"LAMNIFORMES"	0
+"38"	"1060403601"	"PSK"	"Pseudocarcharias kamoharai"	"Crocodile shark"	"Requin crocodile"	"Tiburón cocodrilo"	"(Matsubara 1936)"	"Pseudocarchariidae"	"LAMNIFORMES"	1
+"38"	"1060500101"	"LMP"	"Megachasma pelagios"	"Megamouth shark"	"Requin grande guele"	"Tiburón bocudo"	"Taylor, Compagno & Struhsaker 1983"	"Megachasmidae"	"LAMNIFORMES"	0
+"38"	"1060600601"	"ALV"	"Alopias vulpinus"	"Thresher"	"Renard"	"Zorro"	"(Bonnaterre 1788)"	"Alopiidae"	"LAMNIFORMES"	1
+"38"	"1060600602"	"PTH"	"Alopias pelagicus"	"Pelagic thresher"	"Renard pélagique"	"Zorro pelágico"	"Nakamura 1935"	"Alopiidae"	"LAMNIFORMES"	1
+"38"	"1060600603"	"BTH"	"Alopias superciliosus"	"Bigeye thresher"	"Renard à gros yeux"	"Zorro ojón"	"(Lowe 1841)"	"Alopiidae"	"LAMNIFORMES"	1
+"38"	"10606006XX"	"THR"	"Alopias spp"	"Thresher sharks nei"	"Renards de mer nca"	"Zorros nep"		"Alopiidae"	"LAMNIFORMES"	1
+"38"	"1060800201"	"SMA"	"Isurus oxyrinchus"	"Shortfin mako"	"Taupe bleue"	"Marrajo dientuso"	"Rafinesque 1810"	"Lamnidae"	"LAMNIFORMES"	1
+"38"	"1060800203"	"LMA"	"Isurus paucus"	"Longfin mako"	"Petite taupe"	"Marrajo carite"	"Guitart Manday 1966"	"Lamnidae"	"LAMNIFORMES"	1
+"38"	"10608002XX"	"MAK"	"Isurus spp"	"Mako sharks"	"Taupes"	"Marrajos"		"Lamnidae"	"LAMNIFORMES"	1
+"38"	"1060800301"	"POR"	"Lamna nasus"	"Porbeagle"	"Requin-taupe commun"	"Marrajo sardinero"	"(Bonnaterre 1788)"	"Lamnidae"	"LAMNIFORMES"	1
+"38"	"1060800303"	"LMD"	"Lamna ditropis"	"Salmon shark"	"Requin-taupe saumon"	"Marrajo salmón"	"Hubbs & Follett 1947"	"Lamnidae"	"LAMNIFORMES"	0
+"38"	"1060800701"	"WSH"	"Carcharodon carcharias"	"Great white shark"	"Grand requin blanc"	"Jaquetón blanco"	"(Linnaeus 1758)"	"Lamnidae"	"LAMNIFORMES"	1
+"38"	"10608XXXXX"	"MSK"	"Lamnidae"	"Mackerel sharks,porbeagles nei"	"Requins taupe nca"	"Jaquetones,marrajos nep"		"Lamnidae"	"LAMNIFORMES"	1
+"38"	"106XXXXXXX"	"LMZ"	"Lamniformes"	"Mackerel sharks"					"LAMNIFORMES"	0
+"38"	"1070100101"	"OSF"	"Stegostoma fasciatum"	"Zebra shark"	"Requin zèbre"	"Tiburón acebrado"	"(Hermann 1783)"	"Stegostomatidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070200101"	"ORE"	"Eucrossorhinus dasypogon"	"Tasselled wobbegong"	"Requin-tapis barbu"	"Tapicero barbudo"	"(Bleeker 1867)"	"Orectolobidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070200201"	"ORJ"	"Orectolobus japonicus"	"Japanese wobbegong"	"Requin-tapis moustache"	"Tapicero japonés"	"Regan 1906"	"Orectolobidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070200202"	"ORT"	"Orectolobus maculatus"	"Spotted wobbegong"	"Requin-tapis tacheté"	"Tapicero manchado"	"(Bonnaterre 1788)"	"Orectolobidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070200203"	"ORO"	"Orectolobus ornatus"	"Ornate wobbegong"	"Requin-tapis paste"	"Tapicero ornamentado"	"(De Vis 1883)"	"Orectolobidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070200204"	"ORV"	"Orectolobus wardi"	"Northern wobbegong"	"Requin-tapis savetier"	"Tapicero zapatilla"	"Whitley 1939"	"Orectolobidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070200301"	"ORS"	"Sutorectus tentaculatus"	"Cobbler wobbegong"	"Requin-tapis cordonnier"	"Tapicero zapatudo"	"(Peters 1864)"	"Orectolobidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070300901"	"GNC"	"Ginglymostoma cirratum"	"Nurse shark"	"Requin-nourrice"	"Gata nodriza"	"(Bonnaterre 1788)"	"Ginglymostomatidae"	"ORECTOLOBIFORMES"	1
+"38"	"1070300902"	"ORX"	"Ginglymostoma brevicaudatum"	"Short-tail nurse shark"	"Requin nourrice à queue courte"	"Gata nodriza rabicorta"	"Günther 1867"	"Ginglymostomatidae"	"ORECTOLOBIFORMES"	0
+"38"	"10703009XX"	"GNG"	"Ginglymostoma spp"	"Nurse sharks nei"	"Requins-nourrices nca"	"Gatas nodrizas nep"		"Ginglymostomatidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070302401"	"ORZ"	"Nebrius ferrugineus"	"Tawny nurse shark"	"Requin nourrice fauve"	"Gata nodriza atezada"	"(Lesson 1831)"	"Ginglymostomatidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070400201"	"ORF"	"Hemiscyllium freycineti"	"Indonesia speckled carpetshark"	"Requin-chabot grivelé"	"Bamboa jaspeada"	"(Quoy & Gaimard 1824)"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070400202"	"ORK"	"Hemiscyllium hallstromi"	"Papuan epaulette shark"	"Requin-chabot épaulette"	"Bamboa hombrera"	"Whitley 1967"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070400203"	"ORN"	"Hemiscyllium ocellatum"	"Epaulette shark"	"Requin-chabot ocellé"	"Bamboa ocellada"	"(Bonnaterre 1788)"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070400204"	"ORQ"	"Hemiscyllium strahani"	"Hooded carpetshark"	"Requin-chabot moine"	"Bamboa capuchona"	"Whitley 1967"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070400205"	"ORW"	"Hemiscyllium trispeculare"	"Speckled carpetshark"	"Requin-chabot marquéterie"	"Bamboa moteada"	"Richardson 1843"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401501"	"ORA"	"Chiloscyllium arabicum"	"Arabian carpetshark"	"Requin-chabot camot"	"Bamboa arábiga"	"Gubanov 1980"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401502"	"ORP"	"Chiloscyllium caerulopunctatum"	"Bluespotted bambooshark"	"Requin-chabot à taches bleues"	"Bamboa estrellada"	"Pellegrin 1914"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401503"	"ORR"	"Chiloscyllium griseum"	"Grey bambooshark"	"Requin-chabot gris"	"Bamboa gris"	"Müller & Henle 1838"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401504"	"ORI"	"Chiloscyllium indicum"	"Slender bambooshark"	"Requin-chabot élégant"	"Bamboa elegante"	"(Gmelin 1789)"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401505"	"ORH"	"Chiloscyllium plagiosum"	"Whitespotted bambooshark"	"Requin-chabot taches blanches"	"Bamboa punteada"	"(Bennett 1830)"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401506"	"ORB"	"Chiloscyllium punctatum"	"Brownbanded bambooshark"	"Requin-chabot bambou"	"Bamboa estriada"	"Müller & Henle 1838"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401507"	"KYL"	"Chiloscyllium burmensis"	"Burmese bambooshark"	"Requin-chabot birman"	"Bamboa birmana"	"Dingerkus & DeFino 1983"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070401508"	"YYL"	"Chiloscyllium hasselti"	"Hasselt's bambooshark"	"Requin-chabot de Hasselt"	"Bamboa de Hasselt"	"Bleeker 1852"	"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"10704015XX"	"OQX"	"Chiloscyllium spp"	"Bamboosharks nei"				"Hemiscylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070500401"	"RHN"	"Rhincodon typus"	"Whale shark"	"Requin baleine"	"Tiburón ballena"	"Smith 1828"	"Rhincodontidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070600101"	"OBW"	"Brachaelurus waddi"	"Blind shark"	"Requin aveugle des roches"	"Tiburón ciego de roca"	"(Bloch & Schneider 1801)"	"Brachaeluridae"	"ORECTOLOBIFORMES"	0
+"38"	"1070600201"	"OBH"	"Heteroscyllium colcloughi"	"Bluegray carpetshark"	"Requin aveugle gris-bleu"	"Tiburón ciego gris"	"(Ogilby 1908)"	"Brachaeluridae"	"ORECTOLOBIFORMES"	0
+"38"	"1070700101"	"OPC"	"Cirrhoscyllium expolitum"	"Barbelthroat carpetshark"	"Requin carpette à moustache"	"Alfombrera barbuda"	"Smith & Radcliffe 1913"	"Parascylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070700102"	"OPF"	"Cirrhoscyllium formosanum"	"Taiwan saddled carpetshark"	"Requin carpette chin"	"Alfombrera de Taiwan"	"Teng 1959"	"Parascylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070700103"	"OPJ"	"Cirrhoscyllium japonicum"	"Saddle carpetshark"	"Requin carpette chat"	"Alfombrera japonesa"	"Kamohara 1943"	"Parascylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070700201"	"OPY"	"Parascyllium collare"	"Collared carpetshark"	"Requin carpette à collarette"	"Alfombrera collareja"	"Ramsay & Ogilby 1888"	"Parascylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070700202"	"OPE"	"Parascyllium ferrugineum"	"Rusty carpetshark"	"Requin carpette roux"	"Alfombrera mohosa"	"McCulloch 1911"	"Parascylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"1070700204"	"OPV"	"Parascyllium variolatum"	"Necklace carpetshark"	"Requin carpette à collier"	"Alfombrera colarina"	"(Duméril 1853)"	"Parascylliidae"	"ORECTOLOBIFORMES"	0
+"38"	"107XXXXXXX"	"OCX"	"Orectolobiformes"	"Carpet sharks"					"ORECTOLOBIFORMES"	0
+"38"	"1080100101"	"GAA"	"Galeus arae"	"Roughtail catshark"	"Chien à queue rude"	"Pintarroja rabolija"	"(Nichols 1927)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100102"	"GAB"	"Galeus boardmani"	"Australian sawtail catshark"	"Chien égoine"	"Pintarroja australiana"	"(Whitley 1928)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100103"	"GAE"	"Galeus eastmani"	"Gecko catshark"	"Chien gecko"	"Pintarroja salamanquesa"	"(Jordan & Snyder 1904)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100104"	"SHO"	"Galeus melastomus"	"Blackmouth catshark"	"Chien espagnol"	"Pintarroja bocanegra"	"Rafinesque 1810"	"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080100105"	"GAO"	"Galeus longirostris"				"Tachikawa & Taniuchi 1987"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100106"	"GAM"	"Galeus murinus"	"Mouse catshark"	"Chien islandais"	"Pintarroja islándica"	"(Collett 1904)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080100107"	"GAN"	"Galeus nipponensis"	"Broadfin sawtail catshark"	"Chien planeur"	"Pintarroja nipona"	"Nakaya 1975"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100108"	"GAP"	"Galeus piperatus"	"Peppered catshark"	"Chien poivré"	"Pejegato pimienta"	"Springer & Wagner 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100109"	"GAQ"	"Galeus polli"	"African sawtail catshark"	"Chien râpe"	"Pintarroja africana"	"Cadenat 1959"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100110"	"GAI"	"Galeus sauteri"	"Blacktip sawtail catshark"	"Chien lime"	"Pintarroja rabonegro"	"(Jordan & Richardson 1909)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100111"	"GAH"	"Galeus schultzi"	"Dwarf sawtail catshark"	"Chien nain"	"Pintarroja enana"	"Springer 1979"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100112"	"GHA"	"Galeus atlanticus"	"Atlantic sawtail catshark"		"Olayo atlántico"	"(Vaillant 1888)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10801001XX"	"GAU"	"Galeus spp"	"Crest-tail catsharks nei"	"Chiens galeus nca"	"Pintarrojas nep"		"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100301"	"SYC"	"Scyliorhinus canicula"	"Small-spotted catshark"	"Petite roussette"	"Pintarroja"	"(Linnaeus 1758)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080100302"	"SYT"	"Scyliorhinus stellaris"	"Nursehound"	"Grande roussette"	"Alitán"	"(Linnaeus 1758)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080100303"	"SYB"	"Scyliorhinus besnardi"	"Polkadot catshark"	"Roussette polka"	"Alitán de lunares"	"Springer & Sadowsky 1970"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100304"	"SYA"	"Scyliorhinus boa"	"Boa catshark"	"Roussette boa"	"Alitán boa"	"Goode & Bean 1896"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100305"	"SYP"	"Scyliorhinus capensis"	"Yellowspotted catshark"	"Roussette à taches jaunes"	"Alitán de manchas amarillas"	"(Smith 1838)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100306"	"SYE"	"Scyliorhinus cervigoni"	"West African catshark"	"Roussette thalassa"	"Alitán africano"	"Maurin & Bonnet 1970"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100307"	"SYG"	"Scyliorhinus garmani"	"Brownspotted catshark"	"Roussette à taches brunes"	"Alitán manchado"	"(Fowler 1934)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100308"	"SYH"	"Scyliorhinus haeckelii"	"Freckled catshark"	"Roussette taches de son"	"Alitán pecoso"	"(Miranda-Ribeiro 1907)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100309"	"SYU"	"Scyliorhinus hesperius"	"Whitesaddled catshark"	"Roussette selle blanche"	"Alitán ensillado"	"Springer 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100310"	"SYM"	"Scyliorhinus meadi"	"Blotched catshark"	"Roussette cloquée"	"Alitán pintarrajo"	"Springer 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100311"	"SYF"	"Scyliorhinus retifer"	"Chain catshark"	"Roussette maille"	"Alitán mallero"	"(Garman 1881)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100312"	"SYK"	"Scyliorhinus tokubee"				"Shirai, Hagiwara & Nakaya 1992"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100313"	"SYZ"	"Scyliorhinus torazame"	"Cloudy catshark"	"Roussette nuageuse"	"Alitán nubarrado"	"(Tanaka 1908)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100314"	"SYI"	"Scyliorhinus torrei"	"Dwarf catshark"	"Roussette naine"	"Alitán enano"	"Howell Rivero 1936"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10801003XX"	"SCL"	"Scyliorhinus spp"	"Catsharks, nursehounds nei"	"Roussettes nca"	"Alitanes, pintarrojas nep"		"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080100401"	"SHV"	"Schroederichthys bivius"	"Narrowmouthed catshark"	"Holbiche blanche"	"Pejegato bocachica"	"(Smith 1838)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100402"	"SHY"	"Schroederichthys chilensis"	"Redspotted catshark"	"Holbiche à taches rouges"	"Pintarroja chilena"	"(Guichenot 1848)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100403"	"SHU"	"Schroederichthys maculatus"	"Narrowtail catshark"	"Holbiche petite queue"	"Pejegato rabo fino"	"Springer 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100404"	"SHN"	"Schroederichthys tenuis"	"Slender catshark"	"Holbiche mannequin"	"Pejegato menudo"	"Springer 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100501"	"ASY"	"Asymbolus analis"	"Australian spotted catshark"	"Chien tacheté"	"Pejegato de lunares"	"(Ogilby 1885)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100502"	"ASV"	"Asymbolus vincenti"	"Gulf catshark"	"Chien tasmanien"	"Pejegato de Tasmania"	"(Zeitz 1908)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10801005XX"	"AXM"	"Asymbolus spp"					"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100701"	"ATM"	"Atelomycterus macleayi"	"Australian marbled catshark"	"Chien marbré"	"Pejegato jaspeado"	"Whitley 1939"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100702"	"ATY"	"Atelomycterus marmoratus"	"Coral catshark"	"Chien corail"	"Pintarroja coralera"	"(Bennett 1830)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100901"	"HPE"	"Haploblepharus edwardsii"	"Puffadder shyshark"	"Roussette vipérine"	"Alitán viperino"	"(Voigt 1832)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100902"	"HPF"	"Haploblepharus fuscus"	"Brown shyshark"	"Roussette brune"	"Alitán marrón"	"Smith 1950"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080100903"	"HPP"	"Haploblepharus pictus"	"Dark shyshark"	"Roussette sombre"	"Alitán obscuro"	"(Müller & Henle 1838)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101101"	"HOP"	"Holohalaelurus punctatus"	"African spotted catshark"	"Holbiche à gorge tachetée"	"Pejegato moteado"	"(Gilchrist 1914)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101102"	"HOR"	"Holohalaelurus regani"	"Izak catshark"	"Holbiche isard"	"Pejegato reticulado"	"(Gilchrist 1922)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101301"	"PAH"	"Parmaturus campechiensis"	"Campeche catshark"	"Holbiche campèchoise"	"Pejegato campechano"	"Springer 1979"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101302"	"PAE"	"Parmaturus macmillani"	"McMillan's cat shark"			"Hardy 1985"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101303"	"PAV"	"Parmaturus melanobranchius"	"Blackgill catshark"	"Holbiche à joues noires"	"Pejegato de agallas negras"	"(Chan 1966)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101304"	"PAW"	"Parmaturus pilosus"	"Salamander shark"	"Holbiche salamandre"	"Pejagato salamandra"	"Garman 1906"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101305"	"PAY"	"Parmaturus xaniurus"	"Filetail catshark"	"Holbiche râpe"	"Pejegato lima"	"(Gilbert 1892)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101401"	"CSA"	"Apristurus acanutus"				"Meng, Chu & Li 1985"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101402"	"CSU"	"Apristurus atlanticus"	"Atlantic ghost catshark"	"Holbiche atlantique"	"Pejegato atlántico"	"(Koefoed 1927)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101403"	"CSN"	"Apristurus brunneus"	"Brown catshark"	"Holbiche brune"	"Pejegato marrón"	"(Gilbert 1892)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101404"	"CSQ"	"Apristurus canutus"	"Hoary catshark"	"Holbiche grise"	"Pejegato cano"	"Springer & Heemstra 1979"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101405"	"CSG"	"Apristurus gibbosus"				"Meng, Chu & Li 1985"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101406"	"CSW"	"Apristurus herklotsi"	"Longfin catshark"	"Holbiche à longues nageoires"	"Pejegato aletón"	"(Fowler 1934)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101407"	"APD"	"Apristurus indicus"	"Smallbelly catshark"	"Holbiche artouca"	"Pejegato índico"	"(Brauer 1906)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101408"	"APV"	"Apristurus investigatoris"	"Broadnose catshark"	"Holbiche platnez"	"Pejegato ñato"	"(Misra 1962)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101409"	"CSJ"	"Apristurus japonicus"	"Japanese catshark"	"Holbiche japonaise"	"Pejegato japonés"	"Nakaya 1975"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101410"	"CSZ"	"Apristurus kampae"	"Longnose catshark"	"Holbiche tapir"	"Pejegato trompudo"	"Taylor 1972"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101411"	"APQ"	"Apristurus laurussonii"	"Iceland catshark"			"(Saemundsson 1922)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101412"	"CSF"	"Apristurus longicephalus"	"Longhead catshark"	"Holbiche à grande tête"	"Pejegato cabezón"	"Nakaya 1975"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101413"	"CSX"	"Apristurus macrorhynchus"	"Flathead catshark"	"Holbiche torazame"	"Pejegato chato"	"(Tanaka 1909)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101414"	"APM"	"Apristurus macrostomus"				"Meng, Chu & Li 1985"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101415"	"APF"	"Apristurus maderensis"	"Madeira catshark"	"Roussette de Madère"	"Pejegato de Madera"	"Cadenat & Maul 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101416"	"APA"	"Apristurus manis"	"Ghost catshark"	"Holbiche fantôme"	"Pejegato fantasma"	"(Springer 1979)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101417"	"APX"	"Apristurus microps"	"Smalleye catshark"	"Holbiche porc"	"Pejegato puerco"	"(Gilchrist 1922)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101418"	"APY"	"Apristurus micropterygeus"				"Meng, Chu & Li 1986"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101419"	"APW"	"Apristurus nasutus"	"Largenose catshark"	"Holbiche cyrano"	"Pejegato hocicón"	"de Buen 1959"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101420"	"APK"	"Apristurus parvipinnis"	"Smallfin catshark"	"Holbiche petites ailes"	"Pejegato mocho"	"Springer & Heemstra 1979"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101421"	"APZ"	"Apristurus platyrhynchus"	"Spatulasnout catshark"	"Holbiche spatule"	"Pejegato espatulado"	"(Tanaka 1909)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101422"	"APP"	"Apristurus profundorum"	"Deep-water catshark"	"Holbiche papoila"	"Pejegato abisal"	"(Goode & Bean 1896)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101423"	"CSV"	"Apristurus riveri"	"Broadgill catshark"	"Holbiche grandes oreilles"	"Pajegato agallón"	"Bigelow & Schroeder 1944"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101424"	"APC"	"Apristurus saldanha"	"Saldanha catshark"	"Holbiche gatussau"	"Pejegato saldaña"	"(Barnard 1925)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101425"	"APJ"	"Apristurus sibogae"	"Pale catshark"	"Holbiche pâle"	"Pejegato paliducho"	"(Weber 1913)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101426"	"ASI"	"Apristurus sinensis"	"South China catshark"	"Holbiche chuhu"	"Pejegato chino"	"Chu & Hu 1981"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101427"	"ASO"	"Apristurus spongiceps"	"Spongehead catshark"	"Holbiche tête molle"	"Pejegato esponjoso"	"(Gilbert 1905)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101428"	"ASE"	"Apristurus stenseni"	"Panama ghost catshark"	"Holbiche nébuleuse"	"Pejegato panameño"	"(Springer 1979)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080101429"	"ASW"	"Apristurus verweyi"	"Borneo catshark"	"Holbiche malaise"	"Pejegato de Borneo"	"(Fowler 1934)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10801014XX"	"API"	"Apristurus spp"	"Deep-water catsharks"	"Holbiches"	"Pejegatos"		"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080102801"	"AUK"	"Aulohalaelurus kanakorum"	"Kanakorum catshark"			"Séret 1990"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080102802"	"AUL"	"Aulohalaelurus labiosus"	"Australian blackspot catshark"	"Chien à taches noires"	"Pejegato estrellado"	"(Waite 1905)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103001"	"HAA"	"Halaelurus alcocki"	"Arabian catshark"	"Holbiche arabique"	"Pejegato arábigo"	"Garman 1913"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103002"	"HAB"	"Halaelurus boesemani"	"Speckled catshark"	"Holbiche mouchetée"	"Pejegato pintado"	"Springer & D'Aubrey 1972"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103003"	"HAE"	"Halaelurus buergeri"	"Blackspotted catshark"	"Holbiche à taches noires"	"Pejegato de manchas negras"	"(Müller & Henle 1838)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103004"	"HAN"	"Halaelurus canescens"	"Dusky catshark"	"Holbiche sombre"	"Pejegato oscuro"	"(Günther 1878)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080103005"	"HAO"	"Halaelurus dawsoni"	"New Zealand catshark"	"Holbiche kiwi"	"Pejegato neozelandés"	"Springer 1971"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103006"	"HAH"	"Halaelurus hispidus"	"Bristly catshark"	"Holbiche mignonne"	"Pejegato erizado"	"(Alcock 1891)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103007"	"HAV"	"Halaelurus immaculatus"	"Spotless catshark"	"Holbiche glabre"	"Pejegato immaculado"	"Chu & Meng 1982"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103008"	"HAY"	"Halaelurus lineatus"	"Lined catshark"	"Holbiche des plages"	"Pejegato playero"	"Bass, D'Aubrey & Kistnasamy 1975"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103009"	"HAG"	"Halaelurus lutarius"	"Mud catshark"	"Holbiche des vases"	"Pejegato fanguero"	"Springer & D'Aubrey 1972"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103010"	"HAK"	"Halaelurus natalensis"	"Tiger catshark"	"Holbiche tigrée"	"Pejegato atigrado"	"(Regan 1904)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103011"	"HAQ"	"Halaelurus quagga"	"Quagga catshark"	"Holbiche quagga"	"Pejegato quagga"	"(Alcock 1899)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103101"	"PEU"	"Pentanchus profundicolus"	"Onefin catshark"	"Holbiche voile"	"Pejegato velero"	"Smith & Radcliffe 1912"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103401"	"CPF"	"Cephaloscyllium fasciatum"	"Reticulated swellshark"	"Holbiche bouffie"	"Pejegato mallero"	"Chan 1966"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103402"	"CPS"	"Cephaloscyllium isabellum"	"Draughtsboard shark"	"Holbiche damier"	"Pejegato ajedrezado"	"(Bonnaterre 1788)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080103403"	"CPT"	"Cephaloscyllium laticeps"	"Australian swellshark"	"Holbiche gressouillette"	"Pejegato australiano"	"(Duméril 1853)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103404"	"CPN"	"Cephaloscyllium nascione"	"Whitefinned swellshark"	"Holbiche isabelle"	"Pejegato bordeado"	"Whitley 1932"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103405"	"CPA"	"Cephaloscyllium silasi"	"Indian swellshark"	"Holbiche indienne"	"Pejegato de Silas"	"(Talwar 1974)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103406"	"CPH"	"Cephaloscyllium sufflans"	"Balloon shark"	"Holbiche soufflue"	"Pejegato balón"	"(Regan 1921)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103407"	"CPB"	"Cephaloscyllium umbratile"	"Blotchy swell shark"			"Jordan & Fowler 1903"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103408"	"CPV"	"Cephaloscyllium ventriosum"	"Swellshark"	"Holbiche ventrue"	"Pejegato hinchado"	"(Garman 1880)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103501"	"CPC"	"Cephalurus cephalus"	"Lollipop catshark"	"Holbiche têtard"	"Pejegato renacuajo"	"(Gilbert 1892)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103601"	"POU"	"Poroderma africanum"	"Striped catshark"	"Roussette rubanée"	"Alitán listado"	"(Gmelin 1789)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103602"	"POE"	"Poroderma marleyi"	"Barbeled catshark"	"Roussette barbichette"	"Alitán de barbilla"	"Fowler 1934"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080103603"	"POH"	"Poroderma pantherinum"	"Leopard catshark"	"Roussette panthère"	"Alitán leopardo"	"(Müller & Henle 1838)"	"Scyliorhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10801XXXXX"	"SYX"	"Scyliorhinidae"	"Catsharks, etc. nei"	"Chiens,holbiches,rousset. nca"	"Alitanes,pejegatos,pintar. nep"		"Scyliorhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080200401"	"BSH"	"Prionace glauca"	"Blue shark"	"Peau bleue"	"Tiburón azul"	"(Linnaeus 1758)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080200501"	"CIO"	"Isogomphodon oxyrhynchus"	"Daggernose shark"	"Requin bécune"	"Cazón picudo sudamericano"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080200701"	"LMT"	"Lamiopsis temmincki"	"Broadfin shark"	"Requin grandes ailes"	"Tiburón aletón"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080200801"	"CNX"	"Nasolamia velox"	"Whitenose shark"	"Requin nez blanc"	"Cazón trompa blanca"	"(Gilbert 1898)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201001"	"CCP"	"Carcharhinus plumbeus"	"Sandbar shark"	"Requin gris"	"Tiburón trozo"	"(Nardo 1827)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201002"	"CCY"	"Carcharhinus amblyrhynchoides"	"Graceful shark"	"Requin gracile"	"Tiburón grácil"	"(Whitley 1934)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201003"	"CCL"	"Carcharhinus limbatus"	"Blacktip shark"	"Requin bordé"	"Tiburón macuira"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201005"	"BLR"	"Carcharhinus melanopterus"	"Blacktip reef shark"	"Requin pointes noires"	"Tiburón de puntas negras"	"(Quoy & Gaimard 1824)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201006"	"AML"	"Carcharhinus amblyrhynchos"	"Grey reef shark"	"Requin dagsit"	"Tiburón de arrecifes"	"(Bleeker 1856)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201007"	"CCF"	"Carcharhinus amboinensis"	"Pigeye shark"	"Requin balestrine"	"Tiburón baleta"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201008"	"CCX"	"Carcharhinus borneensis"	"Borneo shark"	"Requin tigre houareau"	"Tiburón de Borneo"	"(Bleeker 1859)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201009"	"CCN"	"Carcharhinus acronotus"	"Blacknose shark"	"Requin nez noir"	"Tiburón amarillo"	"(Poey 1860)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201010"	"CCC"	"Carcharhinus cautus"	"Nervous shark"	"Requin nerveux"	"Tiburón nervioso"	"(Whitley 1945)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201011"	"OCS"	"Carcharhinus longimanus"	"Oceanic whitetip shark"	"Requin océanique"	"Tiburón oceánico"	"(Poey 1861)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201012"	"CCR"	"Carcharhinus porosus"	"Smalltail shark"	"Requin tiqueue"	"Tiburón poroso"	"(Ranzani 1840)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201014"	"CCD"	"Carcharhinus dussumieri"	"Whitecheek shark"	"Requin à joues blanches"	"Tiburón cariblanco"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201015"	"CCZ"	"Carcharhinus fitzroyensis"	"Creek whaler"	"Requin baleinier"	"Tiburón ballenero"	"(Whitley 1943)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201016"	"DUS"	"Carcharhinus obscurus"	"Dusky shark"	"Requin de sable"	"Tiburón arenero"	"(Lesueur 1818)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201017"	"FAL"	"Carcharhinus falciformis"	"Silky shark"	"Requin soyeux"	"Tiburón jaquetón"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201018"	"CCE"	"Carcharhinus leucas"	"Bull shark"	"Requin bouledogue"	"Tiburón sarda"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201019"	"ALS"	"Carcharhinus albimarginatus"	"Silvertip shark"	"Requin pointe blanche"	"Tiburón de puntas blancas"	"(Rüppell 1837)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201020"	"BRO"	"Carcharhinus brachyurus"	"Copper shark"	"Requin cuivre"	"Tiburón cobrizo"	"(Günther 1870)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201021"	"CCB"	"Carcharhinus brevipinna"	"Spinner shark"	"Requin tisserand"	"Tiburón aleta negra"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201022"	"CCI"	"Carcharhinus sealei"	"Blackspot shark"	"Requin à tache noir"	"Tiburón alinegro"	"(Pietschmann 1913)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201023"	"CCS"	"Carcharhinus signatus"	"Night shark"	"Requin de nuit"	"Tiburón de noche"	"(Poey 1868)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201024"	"CCM"	"Carcharhinus macloti"	"Hardnose shark"	"Requin à nez rude"	"Tiburón trompudo"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201025"	"CCO"	"Carcharhinus isodon"	"Finetooth shark"	"Requin à petits dents"	"Tiburón dentiliso"	"(Valenciennes 1841)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201026"	"CCA"	"Carcharhinus altimus"	"Bignose shark"	"Requin babosse"	"Tiburón baboso"	"(Springer 1950)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201027"	"CCG"	"Carcharhinus galapagensis"	"Galapagos shark"	"Requin des Galapagos"	"Tiburón de Galápagos"	"(Snodgrass & Heller 1905)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201028"	"CCK"	"Carcharhinus hemiodon"	"Pondicherry shark"	"Requin baliai"	"Tiburón de Pondicherry"	"(Valenciennes 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201029"	"CCJ"	"Carcharhinus leiodon"				"Garrick 1985"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201030"	"CCV"	"Carcharhinus perezi"	"Caribbean reef shark"	"Requin de récif"	"Tiburón coralino"	"(Poey 1876)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201031"	"CCQ"	"Carcharhinus sorrah"	"Spot-tail shark"	"Requin à queue tachetée"	"Tiburón rabo manchado"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080201032"	"CCU"	"Carcharhinus tilstoni"	"Australian blacktip shark"			"(Whitley 1950)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201033"	"CCW"	"Carcharhinus wheeleri"	"Blacktail reef shark"	"Requin à queue noire"	"Tiburón coralero rabinegro"	"Garrick 1982"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10802010XX"	"CWZ"	"Carcharhinus spp"	"Carcharhinus sharks nei"	"Requins Carcharhinus nca"	"Cazones Carcharhinus nep"		"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080201703"	"TIG"	"Galeocerdo cuvier"	"Tiger shark"	"Requin tigre commun"	"Tintorera tigre"	"(Péron & Lesueur 1822)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080202101"	"SLA"	"Scoliodon laticaudus"	"Spadenose shark"	"Requin épée"	"Cazón espadachín"	"Müller & Henle 1838"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080202201"	"TRB"	"Triaenodon obesus"	"Whitetip reef shark"	"Requin corail"	"Tiburón coralero ñato"	"(Rüppell 1837)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080202701"	"NGB"	"Negaprion brevirostris"	"Lemon shark"	"Requin citron"	"Tiburón galano"	"(Poey 1868)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080202702"	"NGA"	"Negaprion acutidens"	"Sicklefin lemon shark"	"Requin limon faucille"	"Tiburón segador"	"(Rüppell 1837)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080203201"	"CLD"	"Loxodon macrorhinus"	"Sliteye shark"	"Requin sagrin"	"Tiburón ojuelo"	"Müller & Henle 1839"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080203301"	"CGA"	"Glyphis gangeticus"	"Ganges shark"	"Requin du Ganges"	"Tiburón del Ganges"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080203302"	"CGG"	"Glyphis glyphis"	"Speartooth shark"	"Requin lancette"	"Tiburón lanza"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080204001"	"RHT"	"Rhizoprionodon terraenovae"	"Atlantic sharpnose shark"	"Requin aiguille gussi"	"Cazón picudo atlántico"	"(Richardson 1836)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080204002"	"RHA"	"Rhizoprionodon acutus"	"Milk shark"	"Requin à museau pointu"	"Cazón lechoso"	"(Rüppell 1837)"	"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080204003"	"RHL"	"Rhizoprionodon lalandii"	"Brazilian sharpnose shark"	"Requin aiguille brésilien"	"Cazón picudo chino"	"(Müller & Henle 1839)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080204004"	"RHU"	"Rhizoprionodon longurio"	"Pacific sharpnose shark"	"Requin bironche"	"Cazón picudo del Pacífico"	"(Jordan & Gilbert 1882)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080204005"	"RHX"	"Rhizoprionodon oligolinx"	"Grey sharpnose shark"	"Requin aiguille gris"	"Cazón picudo gris"	"Springer 1964"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080204006"	"RHR"	"Rhizoprionodon porosus"	"Caribbean sharpnose shark"	"Requin aiguille antillais"	"Cazón picudo antillano"	"(Poey 1861)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"1080204007"	"RHY"	"Rhizoprionodon taylori"	"Australian sharpnose shark"	"Requin aiguille réchine"	"Cazón picudo australiano"	"(Ogilby 1915)"	"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10802040XX"	"RHZ"	"Rhizoprionodon spp"	"Sharpnose sharks nei"	"Requins aiguilles gussi nca"	"Cazones picudos nep"		"Carcharhinidae"	"CARCHARHINIFORMES"	0
+"38"	"10802XXXXX"	"RSK"	"Carcharhinidae"	"Requiem sharks nei"	"Requins nca"	"Cazones picudos,tintoreras nep"		"Carcharhinidae"	"CARCHARHINIFORMES"	1
+"38"	"1080300401"	"EUB"	"Eusphyra blochii"	"Winghead shark"			"(Cuvier 1816)"	"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"1080300501"	"SPZ"	"Sphyrna zygaena"	"Smooth hammerhead"	"Requin-marteau commun"	"Cornuda cruz(=Pez martillo)"	"(Linnaeus 1758)"	"Sphyrnidae"	"CARCHARHINIFORMES"	1
+"38"	"1080300503"	"SSN"	"Sphyrna corona"	"Scalloped bonnethead"	"Requin-marteau cornu"	"Cornuda coronada"	"Springer 1940"	"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"1080300504"	"SPV"	"Sphyrna couardi"	"Whitefin hammerhead"	"Requin-marteau aile blanche"	"Cornuda aliblanca"	"Cadenat 1951"	"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"1080300506"	"SPL"	"Sphyrna lewini"	"Scalloped hammerhead"	"Requin-marteau halicorne"	"Cornuda común"	"(Griffith & Smith 1834)"	"Sphyrnidae"	"CARCHARHINIFORMES"	1
+"38"	"1080300507"	"SPE"	"Sphyrna media"	"Scoophead"	"Requin-marteau écope"	"Cornuda cuchara"	"Springer 1940"	"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"1080300508"	"SPQ"	"Sphyrna tudes"	"Smalleye hammerhead"	"Requin-marteau à petits yeux"	"Cornuda ojichica"	"(Valenciennes 1822)"	"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"1080300509"	"SPJ"	"Sphyrna tiburo"	"Bonnethead"	"Requin-marteau tiburo"	"Cornuda de corona"	"(Linnaeus 1758)"	"Sphyrnidae"	"CARCHARHINIFORMES"	1
+"38"	"1080300510"	"SPK"	"Sphyrna mokarran"	"Great hammerhead"	"Grand requin marteau"	"Cornuda gigante"	"(Rüppell 1837)"	"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"10803005XX"	"SPN"	"Sphyrna spp"	"Hammerhead sharks nei"	"Requins marteau nca"	"Cornudas(=Peces martillo) nep"		"Sphyrnidae"	"CARCHARHINIFORMES"	0
+"38"	"10803XXXXX"	"SPY"	"Sphyrnidae"	"Hammerhead sharks, etc. nei"	"Requins marteau, etc. nca"	"Cornudas, etc. nep"		"Sphyrnidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400701"	"CTU"	"Mustelus antarcticus"	"Gummy shark"	"Émissole gommée"	"Musola austral"	"Günther 1870"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400702"	"CTN"	"Mustelus californicus"	"Grey smooth-hound"	"Émissole grise"	"Musola gris de California"	"Gill 1864"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400703"	"CTI"	"Mustelus canis"	"Dusky smooth-hound"	"Émissole douce"	"Boca dulce"	"(Mitchill 1815)"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400704"	"CTD"	"Mustelus dorsalis"	"Sharptooth smooth-hound"	"Émissole blanche"	"Musola blanca"	"Gill 1864"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400705"	"CTF"	"Mustelus fasciatus"	"Striped smooth-hound"	"Émissole rayée"	"Mustola listada"	"(Garman 1913)"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400706"	"CTE"	"Mustelus griseus"	"Spotless smooth-hound"	"Émissole côtière"	"Musola gris"	"Pietschmann 1908"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400707"	"CTK"	"Mustelus henlei"	"Brown smooth-hound"	"Émissole brune"	"Musola parda"	"(Gill 1863)"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400708"	"CTJ"	"Mustelus higmani"	"Smalleye smooth-hound"	"Émissole ti-yeux"	"Musola amarilla"	"Springer & Lowe 1963"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400709"	"MTL"	"Mustelus lenticulatus"	"Spotted estuary smooth-hound"	"Émissole grivelée"	"Musola manchada"	"Phillipps 1932"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400710"	"MUU"	"Mustelus lunulatus"	"Sicklefin smooth-hound"	"Émissole mamon"	"Musola segadora"	"Jordan & Gilbert 1882"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400711"	"MTZ"	"Mustelus manazo"	"Starspotted smooth-hound"	"Émissole étoilée"	"Musola celestial"	"Bleeker 1854"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400712"	"SDP"	"Mustelus schmitti"	"Narrownose smooth-hound"	"Émissole gatuso"	"Gatuso"	"Springer 1939"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400713"	"SMD"	"Mustelus mustelus"	"Smooth-hound"	"Émissole lisse"	"Musola"	"(Linnaeus 1758)"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400714"	"MTR"	"Mustelus norrisi"	"Narrowfin smooth-hound"	"Émissole veuve"	"Musola viuda"	"Springer 1939"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400715"	"SDS"	"Mustelus asterias"	"Starry smooth-hound"	"Émissole tachetée"	"Musola dentuda"	"Cloquet 1821"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080400716"	"MTE"	"Mustelus mento"	"Speckled smooth-hound"	"Émissole fine"	"Musola fina"	"Cope 1877"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400717"	"MTM"	"Mustelus mosis"	"Arabian smooth-hound"	"Émissole d'Arabie"	"Musola arábiga"	"Klunzinger 1871"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400718"	"MUP"	"Mustelus palumbes"	"Whitespotted smooth-hound"	"Émissole palombe"	"Musola paloma"	"Smith 1957"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400720"	"MPT"	"Mustelus punctulatus"	"Blackspotted smooth-hound"	"Émissole pointilée"	"Musola pimienta"	"Risso 1826"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080400721"	"MUW"	"Mustelus whitneyi"	"Humpback smooth-hound"	"Émissole piruche"	"Musola prieta"	"Chirichigno F. 1973"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"10804007XX"	"SDV"	"Mustelus spp"	"Smooth-hounds nei"	"Émissoles nca"	"Tollos nep"		"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080401103"	"GAG"	"Galeorhinus galeus"	"Tope shark"	"Requin-hâ"	"Cazón"	"(Linnaeus 1758)"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080402301"	"TTA"	"Triakis acutipinna"	"Sharpfin houndshark"	"Virli équatorien"	"Tollo del Ecuador"	"Kato 1968"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080402302"	"LES"	"Triakis semifasciata"	"Leopard shark"	"Virli léopard"	"Tollo leopardo"	"Girard 1855"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080402303"	"TTM"	"Triakis maculata"	"Spotted houndshark"	"Virli tacheté"	"Tollo manchado"	"Kner & Steindachner 1867"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080402304"	"TTE"	"Triakis megalopterus"	"Sharptooth houndshark"	"Virli dentu"	"Tollo dentudo"	"(Smith 1839)"	"Triakidae"	"CARCHARHINIFORMES"	1
+"38"	"1080402305"	"TTY"	"Triakis scyllium"	"Banded houndshark"	"Virli coro"	"Tollo rayado"	"Müller & Henle 1839"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080402401"	"TIK"	"Iago garricki"	"Longnose houndshark"	"Requin-hâ long nez"	"Cazón picudo"	"Fourmanoir & Rivaton 1979"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080402402"	"TIO"	"Iago omanensis"	"Bigeye houndshark"	"Requin-hâ à gros yeux"	"Cazón ojigrande"	"(Norman 1939)"	"Triakidae"	"CARCHARHINIFORMES"	0
+"38"	"1080402501"	"TGF"	"Gogolia filewoodi"	"Sailback houndshark"	"Requin-hâ voile"	"Cazón velero"	"Compagno 1973"	"Triakidae"	"CARCHARHINIFORMES"	0
