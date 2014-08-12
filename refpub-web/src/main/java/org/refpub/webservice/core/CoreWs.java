@@ -6,10 +6,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.fao.fi.refpub.webservice.Code;
 import org.fao.fi.refpub.webservice.CodeSystem;
 import org.fao.fi.refpub.webservice.CodeSystemList;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
+import org.fao.fi.refpub.webservice.test.mock.CodeMock;
 import org.fao.fi.refpub.webservice.test.mock.CodeSystemListMock;
 import org.fao.fi.refpub.webservice.test.mock.CodeSystemMock;
 import org.fao.fi.refpub.webservice.test.mock.ConceptListMock;
@@ -45,6 +47,14 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public CodeSystem codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return CodeSystemMock.create();
+	}
+
+	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Code code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+			@PathParam("code") String code) {
+		return CodeMock.create();
 	}
 
 }
