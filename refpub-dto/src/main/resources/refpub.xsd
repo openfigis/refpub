@@ -48,7 +48,7 @@
 		<complexContent>
 			<extension base="refpub:TreasureType">
 				<sequence>
-					<element name="codeList" type="refpub:CodeType" maxOccurs="unbounded" minOccurs="0"></element>
+					<element name="code" type="refpub:CodeType" maxOccurs="unbounded" minOccurs="0"></element>
 				</sequence>
 			</extension>
 		</complexContent>

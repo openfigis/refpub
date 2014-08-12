@@ -16,16 +16,7 @@ public class CodeSystemMock {
 
 	public static String csvFileName = "src/main/resources/CL_SPECIES_1_3.csv";
 	public final static String CODE = "asfis";
-
-	public static final CodeSystem cl = new CodeSystem();
-
-	public static CodeSystem create() {
-		cl.setCode(CODE);
-		cl.setMultilingualName(MultilingualTypeMock.create());
-		cl.setResourceUrl(ResourceUrlMock.create("codesystem") + CODE);
-		return cl;
-	}
-
+	private static final CodeSystem cl = new CodeSystem();
 	static {
 		try {
 			Reader r = new InputStreamReader(CodeSystemMock.class.getClassLoader().getResourceAsStream(
@@ -33,12 +24,12 @@ public class CodeSystemMock {
 			CSVReader reader = new CSVReader(r, '\t');
 			reader.readNext();
 			String[] nextLine;
-			CodeSystem cl = new CodeSystem();
 			while ((nextLine = reader.readNext()) != null) {
 				Code code = new Code();
 				String codeValue = nextLine[0];
 				if (!StringUtils.isBlank(codeValue)) {
 					code.setCode(codeValue);
+					code.setResourceUrl(ResourceUrlMock.create("concept/asfis/code") + codeValue);
 
 					MultilingualType l = new MultilingualType();
 					code.setName(l);
@@ -48,7 +39,7 @@ public class CodeSystemMock {
 					add2Codes(code.getName().getTexts(), "es", nextLine[6]);
 					add2Codes(code.getName().getTexts(), "la", nextLine[7]);
 					add2Codes(code.getName().getTexts(), "fr", nextLine[8]);
-					cl.getCodeLists().add(code);
+					cl.getCodes().add(code);
 				}
 			}
 			reader.close();
@@ -56,6 +47,13 @@ public class CodeSystemMock {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static CodeSystem create() {
+		cl.setCode(CODE);
+		cl.setMultilingualName(MultilingualTypeMock.create());
+		cl.setResourceUrl(ResourceUrlMock.create("codesystem") + CODE);
+		return cl;
 	}
 
 	private static void add2Codes(List<TextType> names, String lang, String v) {
