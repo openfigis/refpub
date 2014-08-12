@@ -40,7 +40,7 @@ public class CoreWs {
 		return CodeSystemListMock.create();
 	}
 
-	@Path("codesystem/{codesystem}")
+	@Path("concept/{concept}/codesystem/{codesystem}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public CodeSystem codesystem(@PathParam("codesystem") String codesystem) {

@@ -1,13 +1,13 @@
 package org.fao.fi.refpub.webservice.test.mock;
 
-import org.fao.fi.refpub.webservice.MultilingualNameType;
+import org.fao.fi.refpub.webservice.MultilingualType;
 import org.fao.fi.refpub.webservice.TextType;
 
-public class MultilingualNameTypeMock {
+public class MultilingualTypeMock {
 
-	public static MultilingualNameType create() {
+	public static MultilingualType create() {
 
-		MultilingualNameType n = new MultilingualNameType();
+		MultilingualType n = new MultilingualType();
 		TextType en = new TextType();
 		en.setLang("en");
 		en.setText("In the English Language");

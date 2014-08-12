@@ -5,16 +5,15 @@
 
 	<!-- Elements -->
 
-	<element name="ConceptList" type="refpub:ConceptListType"></element>
+    <element name="ConceptList" type="refpub:ConceptListType"></element>
 	<element name="Concept" type="refpub:ConceptType"></element>
 
 	<element name="CodeSystemList" type="refpub:CodeSystemListType"></element>
 	<element name="CodeSystem" type="refpub:CodeSystemType"></element>
-
+	<element name="Code" type="refpub:CodeType"></element>
 
 
 	<!-- Types -->
-
 	<complexType name="ConceptListType">
 		<complexContent>
 			<extension base="refpub:RestType">
@@ -29,7 +28,6 @@
 	<complexType name="ConceptType">
 		<complexContent>
 			<extension base="refpub:TreasureType">
-				<attribute name="code" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -49,19 +47,29 @@
 	<complexType name="CodeSystemType">
 		<complexContent>
 			<extension base="refpub:TreasureType">
-				<attribute name="code" type="string"></attribute>
+				<sequence>
+					<element name="codeList" type="refpub:CodeType" maxOccurs="unbounded" minOccurs="0"></element>
+				</sequence>
 			</extension>
 		</complexContent>
 	</complexType>
 
 
 
-	<complexType name="MultilingualNameType">
+	<complexType name="MultilingualType">
 		<sequence>
 			<element name="text" type="refpub:TextType" maxOccurs="unbounded"
 				minOccurs="0"></element>
 		</sequence>
 	</complexType>
+
+
+	<complexType name="NameValueType">
+		<attribute name="text" type="string" />
+		<attribute name="lang" type="string" />
+	</complexType>
+
+
 
 	<complexType name="TextType">
 		<attribute name="text" type="string" />
@@ -79,10 +87,27 @@
 		<complexContent>
 			<extension base="refpub:RestType">
 				<sequence>
-					<element name="multilingualName" type="refpub:MultilingualNameType"></element>
+					<element name="multilingualName"
+						type="refpub:MultilingualType">
+					</element>
 				</sequence>
+				<attribute name="code" type="string"></attribute>
 			</extension>
 		</complexContent>
 
 	</complexType>
+
+	<complexType name="CodeType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+					<element name="name" type="refpub:MultilingualType"></element>
+					<element name="longName" type="refpub:MultilingualType"></element>
+					<element name="nameValueList" type="refpub:NameValueType" maxOccurs="unbounded" minOccurs="0"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
 </schema>

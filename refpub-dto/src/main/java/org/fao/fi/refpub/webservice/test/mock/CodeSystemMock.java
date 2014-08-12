@@ -9,7 +9,7 @@ public class CodeSystemMock {
 	public static CodeSystem create() {
 		CodeSystem c = new CodeSystem();
 		c.setCode(CODE);
-		c.setMultilingualName(MultilingualNameTypeMock.create());
+		c.setMultilingualName(MultilingualTypeMock.create());
 		c.setResourceUrl(ResourceUrlMock.create("codesystem") + CODE);
 		return c;
 	}
