@@ -11,5 +11,4 @@ public class CodeSystemListMock {
 		l.getConcepts().add(CodeSystemMock.create());
 		return l;
 	}
-
 }

@@ -64,7 +64,7 @@
 	</complexType>
 
 	<complexType name="TextType">
-		<attribute name="Title" type="string" />
+		<attribute name="text" type="string" />
 		<attribute name="lang" type="string" />
 	</complexType>
 

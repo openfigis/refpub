@@ -10,11 +10,11 @@ public class MultilingualNameTypeMock {
 		MultilingualNameType n = new MultilingualNameType();
 		TextType en = new TextType();
 		en.setLang("en");
-		en.setTitle("In the English Language");
+		en.setText("In the English Language");
 
 		TextType fr = new TextType();
 		fr.setLang("fr");
-		fr.setTitle("En langue francaise");
+		fr.setText("En langue francaise");
 
 		n.getTexts().add(en);
 		n.getTexts().add(fr);
