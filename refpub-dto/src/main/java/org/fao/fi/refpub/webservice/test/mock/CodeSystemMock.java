@@ -26,7 +26,7 @@ public class CodeSystemMock {
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
 				Code code = new Code();
-				String codeValue = nextLine[0];
+				String codeValue = nextLine[2];
 				if (!StringUtils.isBlank(codeValue)) {
 					code.setCode(codeValue);
 					code.setResourceUrl(ResourceUrlMock.create("concept/asfis/code") + codeValue);
