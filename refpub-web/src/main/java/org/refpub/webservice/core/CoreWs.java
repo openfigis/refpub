@@ -29,7 +29,7 @@ public class CoreWs {
 	@Path("concept/{concept}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept concept(@PathParam("conceptCode") String conceptCode) {
+	public Concept concept(@PathParam("concept") String conceptCode) {
 		return ConceptTypeMock.create();
 	}
 
@@ -43,7 +43,7 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public CodeSystem codesystem(@PathParam("codesystem") String codesystem) {
+	public CodeSystem codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return CodeSystemMock.create();
 	}
 
