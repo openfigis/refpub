@@ -16,6 +16,7 @@ public class CodeSystemMock {
 
 	public static String csvFileName = "src/main/resources/CL_SPECIES_1_3.csv";
 	public final static String CODE = "asfis";
+
 	private static final CodeSystem cl = new CodeSystem();
 	static {
 		try {
@@ -29,8 +30,7 @@ public class CodeSystemMock {
 				String codeValue = nextLine[2];
 				if (!StringUtils.isBlank(codeValue)) {
 					code.setCode(codeValue);
-					code.setResourceUrl(ResourceUrlMock.create("concept/asfis/code") + codeValue);
-
+					code.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem/asfis/code") + codeValue);
 					MultilingualType l = new MultilingualType();
 					code.setName(l);
 
@@ -52,7 +52,7 @@ public class CodeSystemMock {
 	public static CodeSystem create() {
 		cl.setCode(CODE);
 		cl.setMultilingualName(MultilingualTypeMock.create());
-		cl.setResourceUrl(ResourceUrlMock.create("codesystem") + CODE);
+		cl.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem") + CODE);
 		return cl;
 	}
 
