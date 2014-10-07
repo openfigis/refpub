@@ -72,7 +72,7 @@
 
 
 	<complexType name="TextType">
-		<attribute name="text" type="string" />
+		<attribute name="value" type="string" />
 		<attribute name="lang" type="string" />
 	</complexType>
 
