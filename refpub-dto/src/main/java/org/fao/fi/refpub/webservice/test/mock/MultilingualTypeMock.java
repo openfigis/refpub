@@ -10,11 +10,11 @@ public class MultilingualTypeMock {
 		MultilingualType n = new MultilingualType();
 		TextType en = new TextType();
 		en.setLang("en");
-		en.setText("In the English Language");
+		en.setValue("In the English Language");
 
 		TextType fr = new TextType();
 		fr.setLang("fr");
-		fr.setText("En langue francaise");
+		fr.setValue("En langue francaise");
 
 		n.getTexts().add(en);
 		n.getTexts().add(fr);

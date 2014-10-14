@@ -22,7 +22,7 @@ public class CoreWs {
 
 	@Path("concepts")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON })
 	// @Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList concepts() {
 		return ConceptListMock.create();

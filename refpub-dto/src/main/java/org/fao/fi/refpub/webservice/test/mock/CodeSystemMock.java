@@ -60,7 +60,7 @@ public class CodeSystemMock {
 		if (!StringUtils.isBlank(v)) {
 			TextType t = new TextType();
 			t.setLang(lang);
-			t.setText(v);
+			t.setValue(v);
 			names.add(t);
 		}
 	}
