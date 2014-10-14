@@ -12,6 +12,8 @@
 	<!-- (1) generateIsSetMethod="false" because it generate set methods for setting certain properties to null. (2)generateElementClass="true" 
 		because it generate classes instead of using the less readable JAXBElement.class. It generates therefore more classes. This 
 		may or not may effect the performance in a negative way, this has not been measured. -->
+		
+		<!-- Test Trunk -->
 
 
 
