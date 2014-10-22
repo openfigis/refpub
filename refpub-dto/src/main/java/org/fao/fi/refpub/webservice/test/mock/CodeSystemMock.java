@@ -5,10 +5,10 @@ import java.io.Reader;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.fao.fi.refpub.webservice.Code;
-import org.fao.fi.refpub.webservice.CodeSystem;
-import org.fao.fi.refpub.webservice.MultilingualType;
-import org.fao.fi.refpub.webservice.TextType;
+import org.fao.fi.refpub.webservice.CodeDTO;
+import org.fao.fi.refpub.webservice.CodeSystemDTO;
+import org.fao.fi.refpub.webservice.MultilingualTypeDTO;
+import org.fao.fi.refpub.webservice.TextTypeDTO;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -17,7 +17,7 @@ public class CodeSystemMock {
 	public static String csvFileName = "src/main/resources/CL_SPECIES_1_3.csv";
 	public final static String CODE = "asfis";
 
-	private static final CodeSystem cl = new CodeSystem();
+	private static final CodeSystemDTO cl = new CodeSystemDTO();
 	static {
 		try {
 			Reader r = new InputStreamReader(CodeSystemMock.class.getClassLoader().getResourceAsStream(
@@ -26,12 +26,12 @@ public class CodeSystemMock {
 			reader.readNext();
 			String[] nextLine;
 			while ((nextLine = reader.readNext()) != null) {
-				Code code = new Code();
+				CodeDTO code = new CodeDTO();
 				String codeValue = nextLine[2];
 				if (!StringUtils.isBlank(codeValue)) {
 					code.setCode(codeValue);
 					code.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem/asfis/code") + codeValue);
-					MultilingualType l = new MultilingualType();
+					MultilingualTypeDTO l = new MultilingualTypeDTO();
 					code.setName(l);
 
 					add2Codes(code.getName().getTexts(), "en", nextLine[4]);
@@ -49,16 +49,16 @@ public class CodeSystemMock {
 		}
 	}
 
-	public static CodeSystem create() {
+	public static CodeSystemDTO create() {
 		cl.setCode(CODE);
 		cl.setMultilingualName(MultilingualTypeMock.create());
 		cl.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem") + CODE);
 		return cl;
 	}
 
-	private static void add2Codes(List<TextType> names, String lang, String v) {
+	private static void add2Codes(List<TextTypeDTO> names, String lang, String v) {
 		if (!StringUtils.isBlank(v)) {
-			TextType t = new TextType();
+			TextTypeDTO t = new TextTypeDTO();
 			t.setLang(lang);
 			t.setValue(v);
 			names.add(t);

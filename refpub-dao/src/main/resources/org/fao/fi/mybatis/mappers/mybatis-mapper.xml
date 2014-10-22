@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.fao.fi.refpub.persistence.PersistenceServiceInterface">
+	<resultMap type="org.fao.fi.refpub.dao.objects.MainCategories" id="CategoriesResults">
+		<id property="id" column="ID"/>
+		<result property="parent" column="PARENT"/>
+		<result property="name_e" column="NAME_E"/>
+		<result property="name_f" column="NAME_F"/>
+		<result property="name_s" column="NAME_S"/>
+		<result property="name_a" column="NAME_A"/>
+		<result property="name_r" column="NAME_R"/>
+		<result property="name_c" column="NAME_C"/>
+		<result property="codelist_id" column="CODELIST_ID"/>
+		<result property="codelist_name" column="CODELIST_NAME"/>
+		<result property="ref_table" column="REF_TABLE"/>
+		<result property="meta_column" column="META_COLUMN"/>
+	</resultMap>
+	
+	<resultMap type="org.fao.fi.refpub.dao.objects.RefPubObject" id="ObjectResults">
+		<id property="id" column="FIC_ITEM"/>
+		<result property="fic_sys_item" column="FIC_SYS_ITEM"/>
+		<result property="name_e" column="NAME_E"/>
+		<result property="long_name_e" column="LONG_NAME_E"/>
+		<result property="full_name_e" column="FULL_NAME_E"/>
+		<result property="name_f" column="NAME_F"/>
+		<result property="long_name_f" column="LONG_NAME_F"/>
+		<result property="full_name_f" column="FULL_NAME_F"/>
+		<result property="name_s" column="NAME_S"/>
+		<result property="long_name_s" column="LONG_NAME_S"/>
+		<result property="full_name_s" column="FULL_NAME_S"/>
+		<result property="unit" column="UNIT"/>
+		<result property="scientific_name" column="SCIENTIFIC_NAME"/>
+		<result property="alpha3code" column="ALPHA3CODE"/>
+		<result property="meta" column="META"/>
+		<result property="entry_status" column="ENTRY_STATUS"/>
+		<result property="faomap_layer_id" column="FAOMAP_LAYER_ID"/>
+		<result property="author" column="AUTHOR"/>
+		<result property="name_a" column="NAME_A"/>
+		<result property="name_c" column="NAME_C"/>
+		<result property="name_r" column="NAME_R"/>
+		<result property="long_name_a" column="LONG_NAME_A"/>
+		<result property="long_name_c" column="LONG_NAME_C"/>
+		<result property="long_name_r" column="LONG_NAME_R"/>
+		<result property="full_name_a" column="FULL_NAME_A"/>
+		<result property="full_name_c" column="FULL_NAME_C"/>
+		<result property="full_name_r" column="FULL_NAME_R"/>
+	</resultMap>
+	
+	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">
+		<result property="ref_table" column="REF_TABLE"/>
+	</resultMap>
+	
+	<select id="getCategories" resultMap="ObjectResults">
+		select
+			C.ID,
+			C.PARENT, 
+			C.NAME_E as NAME_E,
+			C.NAME_F as NAME_F,
+			C.NAME_S as NAME_S,
+			C.NAME_A as NAME_A,
+			C.NAME_R as NAME_R,
+			C.NAME_C as NAME_C,
+			CODELIST_ID,
+			CODELIST_NAME,
+			regexp_substr(I.INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE,
+			regexp_substr(I.INIT_XML,'MetaColumn=([^;]+)') as META_COLUMN
+		FROM
+		  FIGIS.MD_REFOBJECT C
+		    left join (
+		    			select 
+							A.ID as CODELIST_ID,
+							A.NAME_E as CODELIST_NAME, 
+						 	A.OBJID as OWNER, 
+							regexp_substr(AI.INIT_XML,'(^|\\s)Column=([^;]+)') 
+						from FIGIS.MD_REFATTR A
+						left outer join FIGIS.MD_CLASSINIT AI on A.READER_CLSINIT=AI.ID
+						where (lower(A.NAME_E) like '%code%' or lower(AI.INIT_XML) like '%column=%code%')
+		    ) on OWNER=C.ID
+		    left join FIGIS.MD_CLASSINIT I on I.ID=C.READER_CLSINIT
+		 where C.ID>0 AND C.ID = 31005
+	</select>
+	
+	<select id="getObjects" parameterType="map" resultMap="ObjectResults">
+	<![CDATA[ SELECT * FROM (SELECT * FROM ${table} WHERE META=#{meta}) WHERE ROWNUM <= 100 ]]>
+	</select>
+	
+	<select id="getRefTable" parameterType="int" resultMap="ClassInitResults">
+		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM FIGIS.MD_CLASSINIT WHERE ID=#{id}
+	</select>
+	
+</mapper>

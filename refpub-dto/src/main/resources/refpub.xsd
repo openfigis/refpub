@@ -5,18 +5,18 @@
 
 	<!-- Elements -->
 
-    <element name="ConceptList" type="refpub:ConceptListType"></element>
-	<element name="Concept" type="refpub:ConceptType"></element>
+    <element name="ConceptListDTO" type="refpub:ConceptListType"></element>
+	<element name="ConceptDTO" type="refpub:ConceptType"></element>
 
-	<element name="CodeSystemList" type="refpub:CodeSystemListType"></element>
-	<element name="CodeSystem" type="refpub:CodeSystemType"></element>
-	<element name="Code" type="refpub:CodeType"></element>
+	<element name="CodeSystemListDTO" type="refpub:CodeSystemListType"></element>
+	<element name="CodeSystemDTO" type="refpub:CodeSystemType"></element>
+	<element name="CodeDTO" type="refpub:CodeTypeDTO"></element>
 
 
 	<!-- Types -->
 	<complexType name="ConceptListType">
 		<complexContent>
-			<extension base="refpub:RestType">
+			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="concept" type="refpub:ConceptType"
 						minOccurs="0" maxOccurs="unbounded"></element>
@@ -27,7 +27,7 @@
 
 	<complexType name="ConceptType">
 		<complexContent>
-			<extension base="refpub:TreasureType">
+			<extension base="refpub:TreasureTypeDTO">
 			</extension>
 		</complexContent>
 	</complexType>
@@ -35,7 +35,7 @@
 
 	<complexType name="CodeSystemListType">
 		<complexContent>
-			<extension base="refpub:RestType">
+			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="concept" type="refpub:CodeSystemType"
 						minOccurs="0" maxOccurs="unbounded"></element>
@@ -46,9 +46,9 @@
 
 	<complexType name="CodeSystemType">
 		<complexContent>
-			<extension base="refpub:TreasureType">
+			<extension base="refpub:TreasureTypeDTO">
 				<sequence>
-					<element name="code" type="refpub:CodeType" maxOccurs="unbounded" minOccurs="0"></element>
+					<element name="code" type="refpub:CodeTypeDTO" maxOccurs="unbounded" minOccurs="0"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -56,59 +56,64 @@
 
 
 
-	<complexType name="MultilingualType">
+	<complexType name="MultilingualTypeDTO">
 		<sequence>
-			<element name="text" type="refpub:TextType" maxOccurs="unbounded"
+			<element name="text" type="refpub:TextTypeDTO" maxOccurs="unbounded"
 				minOccurs="0"></element>
 		</sequence>
 	</complexType>
 
-
-	<complexType name="NameValueType">
+	<complexType name="NameValueTypeDTO">
 		<attribute name="text" type="string" />
 		<attribute name="lang" type="string" />
 	</complexType>
 
 
 
-	<complexType name="TextType">
+	<complexType name="TextTypeDTO">
+		<attribute name="value" type="string" />
+		<attribute name="lang" type="string" />
+	</complexType>
+
+	<complexType name="TestTypeDTO">
 		<attribute name="value" type="string" />
 		<attribute name="lang" type="string" />
 	</complexType>
 
 
-
-
-	<complexType name="RestType">
+	<complexType name="RestTypeDTO">
 		<attribute name="resourceUrl" type="anyURI"></attribute>
 	</complexType>
 
-	<complexType name="TreasureType">
+	<complexType name="TreasureTypeDTO">
 		<complexContent>
-			<extension base="refpub:RestType">
+			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="multilingualName"
-						type="refpub:MultilingualType">
+						type="refpub:MultilingualTypeDTO">
+					</element>
+					<element name="multilingualFullName"
+						type="refpub:MultilingualTypeDTO">
+					</element>
+					<element name="multilingualLongName"
+						type="refpub:MultilingualTypeDTO">
 					</element>
 				</sequence>
 				<attribute name="code" type="string"></attribute>
+				<attribute name="sys_item" type="string"></attribute>
+				<attribute name="id" type="string"></attribute>
+				<attribute name="scientific_name" type="string"></attribute>
+				<attribute name="alpha3code" type="string"></attribute>
 			</extension>
 		</complexContent>
-
 	</complexType>
-
-	<complexType name="CodeType">
+	
+	<complexType name="CodeTypeDTO">
 		<complexContent>
-			<extension base="refpub:RestType">
+			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="name"
-						type="refpub:MultilingualType">
-					</element>
-					<element name="longName"
-						type="refpub:MultilingualType">
-					</element>
-					<element name="nameValueList"
-						type="refpub:NameValueType" maxOccurs="unbounded" minOccurs="0">
+						type="refpub:MultilingualTypeDTO">
 					</element>
 				</sequence>
 				<attribute name="code" type="string"></attribute>
