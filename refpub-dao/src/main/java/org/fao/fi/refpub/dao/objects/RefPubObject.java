@@ -1,10 +1,22 @@
 package org.fao.fi.refpub.dao.objects;
 
+import java.util.List;
+import java.util.Map;
+
 public class RefPubObject {
 	private int id;
-	private int codelist_id;
-	private String codelist_name;
+	/*private int codelist_id;
+	private String codelist_name;*/
+	private String Concept;
+	
+	public String getConcept() {
+		return Concept;
+	}
+	public void setConcept(String concept) {
+		Concept = concept;
+	}
 	private String fic_sys_item;
+	private String fic_item;
 	private String name_e;
 	private String long_name_e;
 	private String full_name_e;
@@ -38,6 +50,25 @@ public class RefPubObject {
 	private String entry_status;
 	private String faomap_layer_id;
 	private String author;
+	
+	private String area;
+	private String un_code;
+	private String undp_code;
+	private String iso_2_code;
+	private String iso_3_code;
+	private String min_long;
+	private String max_long;
+	private String min_lat;
+	private String max_lat;
+	private String area_size;
+	private String official_name_e;
+	private String official_name_f;
+	private String official_name_s;
+	private String official_name_a;
+	private String official_name_r;
+	private String official_name_c;
+	
+	private List<CodeList> codeList;
 
 	public int getId() {
 		return id;
@@ -45,7 +76,7 @@ public class RefPubObject {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getCodelist_id() {
+	/*public int getCodelist_id() {
 		return codelist_id;
 	}
 	public void setCodelist_id(int codelist_id) {
@@ -56,12 +87,18 @@ public class RefPubObject {
 	}
 	public void setCodelist_name(String codelist_name) {
 		this.codelist_name = codelist_name;
-	}
+	}*/
 	public String getFic_sys_item() {
 		return fic_sys_item;
 	}
 	public void setFic_sys_item(String fic_sys_item) {
 		this.fic_sys_item = fic_sys_item;
+	}
+	public String getFic_item() {
+		return fic_item;
+	}
+	public void setFic_item(String fic_item) {
+		this.fic_item = fic_item;
 	}
 	public String getName_e() {
 		return name_e;
@@ -212,5 +249,108 @@ public class RefPubObject {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getUn_code() {
+		return un_code;
+	}
+	public void setUn_code(String un_code) {
+		this.un_code = un_code;
+	}
+	public String getUndp_code() {
+		return undp_code;
+	}
+	public void setUndp_code(String undp_code) {
+		this.undp_code = undp_code;
+	}
+	public String getIso_2_code() {
+		return iso_2_code;
+	}
+	public void setIso_2_code(String iso_2_code) {
+		this.iso_2_code = iso_2_code;
+	}
+	public String getIso_3_code() {
+		return iso_3_code;
+	}
+	public void setIso_3_code(String iso_3_code) {
+		this.iso_3_code = iso_3_code;
+	}
+	public String getMin_long() {
+		return min_long;
+	}
+	public void setMin_long(String min_long) {
+		this.min_long = min_long;
+	}
+	public String getMax_long() {
+		return max_long;
+	}
+	public void setMax_long(String max_long) {
+		this.max_long = max_long;
+	}
+	public String getMin_lat() {
+		return min_lat;
+	}
+	public void setMin_lat(String min_lat) {
+		this.min_lat = min_lat;
+	}
+	public String getMax_lat() {
+		return max_lat;
+	}
+	public void setMax_lat(String max_lat) {
+		this.max_lat = max_lat;
+	}
+	public String getArea_size() {
+		return area_size;
+	}
+	public void setArea_size(String area_size) {
+		this.area_size = area_size;
+	}
+	public String getOfficial_name_e() {
+		return official_name_e;
+	}
+	public void setOfficial_name_e(String official_name_e) {
+		this.official_name_e = official_name_e;
+	}
+	public String getOfficial_name_f() {
+		return official_name_f;
+	}
+	public void setOfficial_name_f(String official_name_f) {
+		this.official_name_f = official_name_f;
+	}
+	public String getOfficial_name_s() {
+		return official_name_s;
+	}
+	public void setOfficial_name_s(String official_name_s) {
+		this.official_name_s = official_name_s;
+	}
+	public String getOfficial_name_a() {
+		return official_name_a;
+	}
+	public void setOfficial_name_a(String official_name_a) {
+		this.official_name_a = official_name_a;
+	}
+	public String getOfficial_name_r() {
+		return official_name_r;
+	}
+	public void setOfficial_name_r(String official_name_r) {
+		this.official_name_r = official_name_r;
+	}
+	public String getOfficial_name_c() {
+		return official_name_c;
+	}
+	public void setOfficial_name_c(String official_name_c) {
+		this.official_name_c = official_name_c;
+	}
+	public List<CodeList> getCodeList() {
+		return codeList;
+	}
+	public void setCodeList(List<CodeList> codeList) {
+		this.codeList = codeList;
 	}
 }

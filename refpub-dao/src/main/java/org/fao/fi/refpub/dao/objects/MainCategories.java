@@ -13,7 +13,9 @@ public class MainCategories {
 	private int codelist_id;
 	private String codelist_name;
 	private String ref_table;
+	private String ref_table_grp;
 	private String meta_column;
+	private String concept_name;
 	public int getId() {
 		return id;
 	}
@@ -85,6 +87,18 @@ public class MainCategories {
 	}
 	public void setMeta_column(String meta_column) {
 		this.meta_column = meta_column;
+	}
+	public String getRef_table_grp() {
+		return ref_table_grp;
+	}
+	public void setRef_table_grp(String ref_table_grp) {
+		this.ref_table_grp = ref_table_grp;
+	}
+	public String getConcept_name() {
+		return concept_name;
+	}
+	public void setConcept_name(String concept_name) {
+		this.concept_name = concept_name;
 	}
 
 }

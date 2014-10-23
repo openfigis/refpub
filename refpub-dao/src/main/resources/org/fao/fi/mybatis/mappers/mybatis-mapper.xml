@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fao.fi.refpub.persistence.PersistenceServiceInterface">
-	<resultMap type="org.fao.fi.refpub.dao.objects.MainCategories" id="CategoriesResults">
+	<!-- <resultMap type="org.fao.fi.refpub.dao.objects.MainCategories" id="CategoriesResults">
 		<id property="id" column="ID"/>
 		<result property="parent" column="PARENT"/>
 		<result property="name_e" column="NAME_E"/>
@@ -14,11 +14,27 @@
 		<result property="codelist_name" column="CODELIST_NAME"/>
 		<result property="ref_table" column="REF_TABLE"/>
 		<result property="meta_column" column="META_COLUMN"/>
+	</resultMap> -->
+	
+	<resultMap type="org.fao.fi.refpub.dao.objects.chunks.MDConcept" id="ConceptResult">
+		<result property="table_name" column="TABLE_NAME"/>
+		<result property="table_group" column="TABLE_GROUP"/>
+		<result property="rest_concept" column="REST_CONCEPT"/>
+		<result property="fic_meta" column="FIC_META"/>
+	</resultMap>
+	
+	<resultMap type="org.fao.fi.refpub.dao.objects.chunks.MDCodelist" id="CodelistResult">
+		<result property="table_name" column="TABLE_NAME"/>
+		<result property="code_column" column="CODE_COLUMN"/>
+		<result property="code_name" column="CODE_NAME"/>
+		<result property="rest_concept" column="REST_CONCEPT"/>
+		<result property="isDefault" column="IS_RESOURCEURL"/>
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.RefPubObject" id="ObjectResults">
 		<id property="id" column="FIC_ITEM"/>
 		<result property="fic_sys_item" column="FIC_SYS_ITEM"/>
+		<result property="fic_item" column="FIC_ITEM"/>
 		<result property="name_e" column="NAME_E"/>
 		<result property="long_name_e" column="LONG_NAME_E"/>
 		<result property="full_name_e" column="FULL_NAME_E"/>
@@ -44,13 +60,54 @@
 		<result property="full_name_a" column="FULL_NAME_A"/>
 		<result property="full_name_c" column="FULL_NAME_C"/>
 		<result property="full_name_r" column="FULL_NAME_R"/>
+		<result property="official_name_e" column="OFFICIAL_NAME_E"/>
+		<result property="official_name_f" column="OFFICIAL_NAME_F"/>
+		<result property="official_name_r" column="OFFICIAL_NAME_R"/>
+		<result property="official_name_s" column="OFFICIAL_NAME_S"/>
+		<result property="official_name_a" column="OFFICIAL_NAME_A"/>
+		<result property="official_name_c" column="OFFICIAL_NAME_C"/>
+		<result property="area" column="AREA"/>
+		<result property="un_code" column="UN_CODE"/>
+		<result property="undp_code" column="UNDP_CODE"/>
+		<result property="iso_2_code" column="ISO_2_CODE"/>
+		<result property="iso_3_code" column="ISO_3_CODE"/>
+		<result property="min_long" column="MIN_LONG"/>
+		<result property="max_long" column="MAX_LONG"/>
+		<result property="min_lat" column="MIN_LAT"/>
+		<result property="max_lat" column="MAX_LAT"/>
+		<result property="area_size" column="AREA_SIZE"/>
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">
 		<result property="ref_table" column="REF_TABLE"/>
 	</resultMap>
+		
+	<select id="getConcepts" resultMap="ConceptResult">
+		SELECT * FROM FIGIS.MD_CONCEPT
+	</select>
+	<select id="getConcept" resultMap="ConceptResult">
+		SELECT * FROM FIGIS.MD_CONCEPT WHERE REST_CONCEPT=#{concept}
+	</select>
+	<select id="getCodeList" parameterType="map" resultMap="CodelistResult">
+		SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} AND CODE_NAME=#{codelistname}
+	</select>
 	
-	<select id="getCategories" resultMap="ObjectResults">
+	<select id="getObject" parameterType="map" resultMap="ObjectResults">
+		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
+		SELECT * FROM ${table} WHERE ${column}=#{codelist}
+	</select>
+	<select id="getObjects" parameterType="map" resultMap="ObjectResults">
+		<![CDATA[ SELECT * FROM (SELECT * FROM ${table} WHERE META=#{meta}) WHERE ROWNUM <= 100 ]]>
+	</select>
+	
+	<select id="getCodelistForConcept" resultMap="CodelistResult">
+		SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept}
+	</select>
+	
+	<select id="getRefTable" parameterType="int" resultMap="ClassInitResults">
+		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM FIGIS.MD_CLASSINIT WHERE ID=#{id}
+	</select>
+	<!-- <select id="getCategories" resultMap="ObjectResults">
 		select
 			C.ID,
 			C.PARENT, 
@@ -78,14 +135,5 @@
 		    ) on OWNER=C.ID
 		    left join FIGIS.MD_CLASSINIT I on I.ID=C.READER_CLSINIT
 		 where C.ID>0 AND C.ID = 31005
-	</select>
-	
-	<select id="getObjects" parameterType="map" resultMap="ObjectResults">
-	<![CDATA[ SELECT * FROM (SELECT * FROM ${table} WHERE META=#{meta}) WHERE ROWNUM <= 100 ]]>
-	</select>
-	
-	<select id="getRefTable" parameterType="int" resultMap="ClassInitResults">
-		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM FIGIS.MD_CLASSINIT WHERE ID=#{id}
-	</select>
-	
+	</select> -->
 </mapper>

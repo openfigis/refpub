@@ -1,27 +1,53 @@
 package org.fao.fi.refpub.webservice.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.fao.fi.refpub.dao.objects.CodeList;
+import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.webservice.ConceptDTO;
+import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
 public class ConceptType {
 
 	
-	public static ConceptDTO create(RefPubObject cat) {
+	public static ConceptDTO create(RefPubConcept concept) {
+		
 		ConceptDTO c = new ConceptDTO();
-		if (cat.getCodelist_name() != null) {
-			c.setCode(cat.getCodelist_name());
+
+		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
+		urlChunks.add(new ResourceKeyValue("concept", concept.getName()));
+		
+		c.setResourceUrl(ResourceUrl.create(urlChunks));
+		c.setName(concept.getName());
+		c.setCodeList(CodeListType.create(concept.getCodelists()));
+				
+		return c;
+	}
+	
+	public static ConceptDTO create(RefPubObject object) {
+		
+		ConceptDTO c = new ConceptDTO();
+		for (CodeList cl : object.getCodeList()) {
+			if (cl.getIsDefault() == 1) {
+				List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
+				urlChunks.add(new ResourceKeyValue("concept", object.getConcept()));
+				urlChunks.add(new ResourceKeyValue("codesystem", cl.getName()));
+				urlChunks.add(new ResourceKeyValue("code", cl.getValue()));
+				c.setResourceUrl(ResourceUrl.create(urlChunks));
+			}
 		}
 		
-		c.setAlpha3Code(cat.getAlpha3code());
-		c.setId(Integer.toString(cat.getId()));
-		c.setScientificName(cat.getScientific_name());
-		c.setSysItem(cat.getFic_sys_item());
-		
-		c.setMultilingualName(MultilingualType.create(cat, "SHORT"));
-		c.setMultilingualFullName(MultilingualType.create(cat, "FULL"));
-		c.setMultilingualLongName(MultilingualType.create(cat, "LONG"));
-		
-		c.setResourceUrl(ResourceUrl.create("concept") + Integer.toString(cat.getId()));
+		c.setId(Integer.toString(object.getId()));
+		c.setScientificName(object.getScientific_name());
+		c.setSysItem(object.getFic_sys_item());
+		c.setCodeList(CodeListType.createList(object));
+		c.setMultilingualName(MultilingualType.create(object, "SHORT"));
+		c.setMultilingualFullName(MultilingualType.create(object, "FULL"));
+		c.setMultilingualLongName(MultilingualType.create(object, "LONG"));
+		c.setMultilingualLongName(MultilingualType.create(object, "OFFICIAL"));
+				
 		return c;
 	}
 }

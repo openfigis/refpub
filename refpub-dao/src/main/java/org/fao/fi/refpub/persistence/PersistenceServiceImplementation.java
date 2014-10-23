@@ -2,9 +2,12 @@ package org.fao.fi.refpub.persistence;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
+import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
+import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
 import org.fao.fi.refpub.dao.pool.MyBatisSqlSessionFactory;
 public class PersistenceServiceImplementation implements PersistenceServiceInterface{
 	
@@ -39,6 +42,68 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+
+
+	@Override
+	public List<MDConcept> getConcepts() {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getConcepts();
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Override
+	public MDConcept getConcept(String concept) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getConcept(concept);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public List<MDCodelist> getCodelistForConcept(String concept) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getCodelistForConcept(concept);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public RefPubObject getObject(String table, String column, String codelist) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObject(table, column, codelist);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public MDCodelist getCodeList(String concept, String codelistname) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getCodeList(concept, codelistname);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	
 
 
 }

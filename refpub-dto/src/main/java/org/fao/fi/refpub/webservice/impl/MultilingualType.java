@@ -13,6 +13,7 @@ public class MultilingualType {
 		if (type.equalsIgnoreCase("short")) { return MultilingualType.getNames(cat); }
 		else if (type.equalsIgnoreCase("long")) { return MultilingualType.getLongNames(cat); }
 		else if (type.equalsIgnoreCase("full")) { return MultilingualType.getFullNames(cat); }
+		else if (type.equalsIgnoreCase("official")) { return MultilingualType.getOfficialNames(cat); }
 		else { return MultilingualType.getNames(cat); }
 	}
 	
@@ -154,6 +155,53 @@ public class MultilingualType {
 			TextTypeDTO zh = new TextTypeDTO();
 			zh.setLang("ZH");
 			zh.setValue(cat.getLong_name_c());
+			n.getTexts().add(zh);
+		}
+		return n;
+	}
+	
+	private static MultilingualTypeDTO getOfficialNames(RefPubObject cat) {
+		MultilingualTypeDTO n = new MultilingualTypeDTO();
+		
+		if (cat.getOfficial_name_a()!=null && !cat.getOfficial_name_a().equalsIgnoreCase("")) {
+			TextTypeDTO ar = new TextTypeDTO();
+			ar.setLang("AR");
+			ar.setValue(cat.getOfficial_name_a());
+			n.getTexts().add(ar);
+		}
+		
+		if (cat.getOfficial_name_e()!=null && !cat.getOfficial_name_e().equalsIgnoreCase("")) {
+			TextTypeDTO en = new TextTypeDTO();
+			en.setLang("EN");
+			en.setValue(cat.getOfficial_name_e());
+			n.getTexts().add(en);
+		}
+		
+		if (cat.getOfficial_name_s()!=null && !cat.getOfficial_name_s().equalsIgnoreCase("")) {
+			TextTypeDTO es = new TextTypeDTO();
+			es.setLang("ES");
+			es.setValue(cat.getOfficial_name_s());
+			n.getTexts().add(es);
+		}
+		
+		if (cat.getOfficial_name_f()!=null && !cat.getOfficial_name_f().equalsIgnoreCase("")) {
+			TextTypeDTO fr = new TextTypeDTO();
+			fr.setLang("FR");
+			fr.setValue(cat.getOfficial_name_f());
+			n.getTexts().add(fr);
+		}
+		
+		if (cat.getOfficial_name_r()!=null && !cat.getOfficial_name_r().equalsIgnoreCase("")) {
+			TextTypeDTO ru = new TextTypeDTO();
+			ru.setLang("RU");
+			ru.setValue(cat.getOfficial_name_r());
+			n.getTexts().add(ru);
+		}
+		
+		if (cat.getOfficial_name_c()!=null && !cat.getOfficial_name_c().equalsIgnoreCase("")) {
+			TextTypeDTO zh = new TextTypeDTO();
+			zh.setLang("ZH");
+			zh.setValue(cat.getOfficial_name_c());
 			n.getTexts().add(zh);
 		}
 		return n;

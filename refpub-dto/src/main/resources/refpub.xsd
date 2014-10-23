@@ -19,7 +19,7 @@
 			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="concept" type="refpub:ConceptType"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="1" maxOccurs="unbounded"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -38,7 +38,7 @@
 			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="concept" type="refpub:CodeSystemType"
-						minOccurs="0" maxOccurs="unbounded"></element>
+						minOccurs="1" maxOccurs="unbounded"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -48,7 +48,7 @@
 		<complexContent>
 			<extension base="refpub:TreasureTypeDTO">
 				<sequence>
-					<element name="code" type="refpub:CodeTypeDTO" maxOccurs="unbounded" minOccurs="0"></element>
+					<element name="code" type="refpub:CodeTypeDTO" maxOccurs="unbounded" minOccurs="1"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -59,7 +59,17 @@
 	<complexType name="MultilingualTypeDTO">
 		<sequence>
 			<element name="text" type="refpub:TextTypeDTO" maxOccurs="unbounded"
-				minOccurs="0"></element>
+				minOccurs="1" nillable="true"></element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="CodeListListTypeDTO">
+		<sequence>
+			<element name="name" type="refpub:CodeListDTO" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="url" type="refpub:TextTypeDTO" maxOccurs="unbounded"
+				minOccurs="1"></element>
 		</sequence>
 	</complexType>
 
@@ -79,8 +89,13 @@
 		<attribute name="value" type="string" />
 		<attribute name="lang" type="string" />
 	</complexType>
-
-
+	
+	<complexType name="CodeListDTO">
+		<attribute name="name" type="string" />
+		<attribute name="value" type="string" />
+		<attribute name="url" type="string" />
+	</complexType>
+	
 	<complexType name="RestTypeDTO">
 		<attribute name="resourceUrl" type="anyURI"></attribute>
 	</complexType>
@@ -98,12 +113,24 @@
 					<element name="multilingualLongName"
 						type="refpub:MultilingualTypeDTO">
 					</element>
+					<element name="multilingualOfficialName"
+						type="refpub:MultilingualTypeDTO">
+					</element>
+					<element name="CodeList"
+						type="refpub:CodeListListTypeDTO">
+					</element>
+					<element name="name" type="string" minOccurs="1"></element>
+					<element name="codelist" type="string" minOccurs="1"></element>
+					<element name="sys_item" type="string" minOccurs="1"></element>
+					<element name="id" type="string" minOccurs="1"></element>
+					<element name="scientific_name" type="string" minOccurs="1"></element>
+					<element name="alpha3code" type="string" minOccurs="1"></element>
 				</sequence>
-				<attribute name="code" type="string"></attribute>
+				<!-- <attribute name="code" type="string"></attribute>
 				<attribute name="sys_item" type="string"></attribute>
 				<attribute name="id" type="string"></attribute>
 				<attribute name="scientific_name" type="string"></attribute>
-				<attribute name="alpha3code" type="string"></attribute>
+				<attribute name="alpha3code" type="string"></attribute> -->
 			</extension>
 		</complexContent>
 	</complexType>

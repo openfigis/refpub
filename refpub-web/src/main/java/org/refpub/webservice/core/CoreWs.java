@@ -9,18 +9,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.fao.fi.refpub.beans.RefPubImplementation;
-import org.fao.fi.refpub.webservice.CodeDTO;
 import org.fao.fi.refpub.webservice.CodeSystemDTO;
 import org.fao.fi.refpub.webservice.CodeSystemListDTO;
 import org.fao.fi.refpub.webservice.ConceptDTO;
 import org.fao.fi.refpub.webservice.ConceptListDTO;
+import org.fao.fi.refpub.webservice.impl.Code;
 import org.fao.fi.refpub.webservice.impl.ConceptList;
-import org.fao.fi.refpub.webservice.impl.ConceptType;
-import org.fao.fi.refpub.webservice.test.mock.CodeMock;
 import org.fao.fi.refpub.webservice.test.mock.CodeSystemListMock;
 import org.fao.fi.refpub.webservice.test.mock.CodeSystemMock;
-import org.fao.fi.refpub.webservice.test.mock.ConceptListMock;
-import org.fao.fi.refpub.webservice.test.mock.ConceptTypeMock;
 
 @Path("")
 @ManagedBean
@@ -32,12 +28,9 @@ public class CoreWs {
 	@Path("concepts")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	// @Produces({ MediaType.APPLICATION_JSON })
 	public ConceptListDTO concepts() {
 		//return ConceptListMock.create();
-		
-		//bean = new BeanImpl();
-		return ConceptList.create(bean.getCategories());
+		return ConceptList.create(bean.getConcepts());
 	}
 	
 	@Path("concept/{concept}")
@@ -46,7 +39,7 @@ public class CoreWs {
 	public ConceptListDTO conceptList(@PathParam("concept") String conceptCode) {
 		//return ConceptTypeMock.create();
 		
-		return ConceptList.create(bean.getObjects(conceptCode));
+		return ConceptList.createObj(bean.getObjects(conceptCode));
 	}
 
 	/*@Path("concept/{concept}")
@@ -75,9 +68,10 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public CodeDTO code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	public ConceptDTO code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
-		return CodeMock.create();
+		//return CodeMock.create();
+		return Code.create(bean.getObject(concept, codesystem, code));
 	}
 
 }
