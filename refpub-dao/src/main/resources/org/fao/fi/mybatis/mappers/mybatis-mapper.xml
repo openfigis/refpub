@@ -1,26 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.fao.fi.refpub.persistence.PersistenceServiceInterface">
-	<!-- <resultMap type="org.fao.fi.refpub.dao.objects.MainCategories" id="CategoriesResults">
-		<id property="id" column="ID"/>
-		<result property="parent" column="PARENT"/>
-		<result property="name_e" column="NAME_E"/>
-		<result property="name_f" column="NAME_F"/>
-		<result property="name_s" column="NAME_S"/>
-		<result property="name_a" column="NAME_A"/>
-		<result property="name_r" column="NAME_R"/>
-		<result property="name_c" column="NAME_C"/>
-		<result property="codelist_id" column="CODELIST_ID"/>
-		<result property="codelist_name" column="CODELIST_NAME"/>
-		<result property="ref_table" column="REF_TABLE"/>
-		<result property="meta_column" column="META_COLUMN"/>
-	</resultMap> -->
-	
 	<resultMap type="org.fao.fi.refpub.dao.objects.chunks.MDConcept" id="ConceptResult">
 		<result property="table_name" column="TABLE_NAME"/>
-		<result property="table_group" column="TABLE_GROUP"/>
+		<result property="table_group" column="GROUP_TABLE"/>
 		<result property="rest_concept" column="REST_CONCEPT"/>
 		<result property="fic_meta" column="FIC_META"/>
+		<result property="table_group_column" column="GROUP_GROUP"/>
+		<result property="table_group_member" column="GROUP_MEMBER"/>
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.chunks.MDCodelist" id="CodelistResult">
@@ -33,6 +20,7 @@
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.RefPubObject" id="ObjectResults">
 		<id property="id" column="FIC_ITEM"/>
+		<result property="primary_key_id" column="PKID"/>
 		<result property="fic_sys_item" column="FIC_SYS_ITEM"/>
 		<result property="fic_item" column="FIC_ITEM"/>
 		<result property="name_e" column="NAME_E"/>
@@ -76,10 +64,19 @@
 		<result property="min_lat" column="MIN_LAT"/>
 		<result property="max_lat" column="MAX_LAT"/>
 		<result property="area_size" column="AREA_SIZE"/>
+		<result property="group_name" column="GROUP_NAME"/>
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">
 		<result property="ref_table" column="REF_TABLE"/>
+	</resultMap>
+	
+	<resultMap type="org.fao.fi.refpub.dao.objects.db.TableInfo" id="TableInfoResults">
+		<result property="table_name" column="TABLE_NAME"/>
+		<result property="primary_key" column="COLUMN_NAME"/>
+		<result property="position" column="POSITION"/>
+		<result property="status" column="STATUS"/>
+		<result property="owner" column="OWNER"/>
 	</resultMap>
 		
 	<select id="getConcepts" resultMap="ConceptResult">
@@ -94,10 +91,10 @@
 	
 	<select id="getObject" parameterType="map" resultMap="ObjectResults">
 		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
-		SELECT * FROM ${table} WHERE ${column}=#{codelist}
+		SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column}=#{codelist}
 	</select>
 	<select id="getObjects" parameterType="map" resultMap="ObjectResults">
-		<![CDATA[ SELECT * FROM (SELECT * FROM ${table} WHERE META=#{meta}) WHERE ROWNUM <= 100 ]]>
+		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE META=#{meta}) WHERE ROWNUM <= 100 ]]>
 	</select>
 	
 	<select id="getCodelistForConcept" resultMap="CodelistResult">
@@ -107,33 +104,31 @@
 	<select id="getRefTable" parameterType="int" resultMap="ClassInitResults">
 		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM FIGIS.MD_CLASSINIT WHERE ID=#{id}
 	</select>
-	<!-- <select id="getCategories" resultMap="ObjectResults">
-		select
-			C.ID,
-			C.PARENT, 
-			C.NAME_E as NAME_E,
-			C.NAME_F as NAME_F,
-			C.NAME_S as NAME_S,
-			C.NAME_A as NAME_A,
-			C.NAME_R as NAME_R,
-			C.NAME_C as NAME_C,
-			CODELIST_ID,
-			CODELIST_NAME,
-			regexp_substr(I.INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE,
-			regexp_substr(I.INIT_XML,'MetaColumn=([^;]+)') as META_COLUMN
-		FROM
-		  FIGIS.MD_REFOBJECT C
-		    left join (
-		    			select 
-							A.ID as CODELIST_ID,
-							A.NAME_E as CODELIST_NAME, 
-						 	A.OBJID as OWNER, 
-							regexp_substr(AI.INIT_XML,'(^|\\s)Column=([^;]+)') 
-						from FIGIS.MD_REFATTR A
-						left outer join FIGIS.MD_CLASSINIT AI on A.READER_CLSINIT=AI.ID
-						where (lower(A.NAME_E) like '%code%' or lower(AI.INIT_XML) like '%column=%code%')
-		    ) on OWNER=C.ID
-		    left join FIGIS.MD_CLASSINIT I on I.ID=C.READER_CLSINIT
-		 where C.ID>0 AND C.ID = 31005
-	</select> -->
+	
+	<select id="getParentHierarchy" parameterType="map" resultMap="ObjectResults">
+		SELECT 
+			A.*, B.NAME_E AS GROUP_NAME
+		FROM 
+			${table} A, FIGIS.MD_REFOBJECT B
+		WHERE 
+			${primary_key} IN 
+				(SELECT ${group_column_key} FROM ${group_table} WHERE ${group_column} = #{id}) 
+			AND A.META = B.ID
+	</select>
+	
+	
+	<!-- General Util Queries -->
+	<select id="getTableInfo" parameterType="map" resultMap="TableInfoResults">
+		SELECT 
+			cols.TABLE_NAME, cols.COLUMN_NAME, cols.POSITION, cons.STATUS, cons.OWNER
+		FROM 
+			all_constraints cons, all_cons_columns cols
+		WHERE 
+			cols.table_name = #{table} AND 
+			cons.constraint_type = 'P' AND 
+			cons.constraint_name = cols.constraint_name AND 
+			cons.owner = cols.owner
+		ORDER BY 
+			cols.table_name, cols.position
+	</select>
 </mapper>

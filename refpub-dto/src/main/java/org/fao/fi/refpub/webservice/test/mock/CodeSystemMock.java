@@ -50,7 +50,7 @@ public class CodeSystemMock {
 	}
 
 	public static CodeSystemDTO create() {
-		cl.setCodelist(CODE);
+		//cl.setCodelist(CODE);
 		cl.setMultilingualName(MultilingualTypeMock.create());
 		cl.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem") + CODE);
 		return cl;

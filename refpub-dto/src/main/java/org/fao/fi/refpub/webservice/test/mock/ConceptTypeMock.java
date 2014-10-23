@@ -8,7 +8,7 @@ public class ConceptTypeMock {
 
 	public static ConceptDTO create() {
 		ConceptDTO c = new ConceptDTO();
-		c.setCodelist(CODE);
+		//c.setCodelist(CODE);
 		c.setMultilingualName(MultilingualTypeMock.create());
 		c.setResourceUrl(ResourceUrlMock.create("concept") + CODE);
 		return c;

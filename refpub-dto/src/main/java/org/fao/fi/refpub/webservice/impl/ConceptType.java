@@ -20,7 +20,7 @@ public class ConceptType {
 		urlChunks.add(new ResourceKeyValue("concept", concept.getName()));
 		
 		c.setResourceUrl(ResourceUrl.create(urlChunks));
-		c.setName(concept.getName());
+		//c.setName(concept.getName());
 		c.setCodeList(CodeListType.create(concept.getCodelists()));
 				
 		return c;
@@ -39,14 +39,20 @@ public class ConceptType {
 			}
 		}
 		
-		c.setId(Integer.toString(object.getId()));
+		//c.setId(Integer.toString(object.getId()));
 		c.setScientificName(object.getScientific_name());
-		c.setSysItem(object.getFic_sys_item());
+		//c.setSysItem(object.getFic_sys_item());
 		c.setCodeList(CodeListType.createList(object));
 		c.setMultilingualName(MultilingualType.create(object, "SHORT"));
 		c.setMultilingualFullName(MultilingualType.create(object, "FULL"));
 		c.setMultilingualLongName(MultilingualType.create(object, "LONG"));
 		c.setMultilingualLongName(MultilingualType.create(object, "OFFICIAL"));
+		
+		try {
+			c.setHierarchy(HierarchyListType.create(object.getParents()));
+		} catch (Exception ex) {
+			c.setHierarchy(null);
+		}
 				
 		return c;
 	}

@@ -2,12 +2,12 @@ package org.fao.fi.refpub.persistence;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
+import org.fao.fi.refpub.dao.objects.db.TableInfo;
 import org.fao.fi.refpub.dao.pool.MyBatisSqlSessionFactory;
 public class PersistenceServiceImplementation implements PersistenceServiceInterface{
 	
@@ -22,11 +22,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 	
-	public List<RefPubObject> getObjects(String id, String table) {
+	public List<RefPubObject> getObjects(String id, String table, String pk_column) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getObjects(id, table);
+			return mapper.getObjects(id, table, pk_column);
 		} finally {
 			sqlSession.close();
 		}
@@ -80,11 +80,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 
 
 	@Override
-	public RefPubObject getObject(String table, String column, String codelist) {
+	public RefPubObject getObject(String table, String column, String codelist, String pk_column) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getObject(table, column, codelist);
+			return mapper.getObject(table, column, codelist, pk_column);
 		} finally {
 			sqlSession.close();
 		}
@@ -103,7 +103,27 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 
-	
+	@Override
+	public List<RefPubObject> getParentHierarchy(String table, String group_table,
+			String group_column, String id, String group_column_key, String primary_key) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getParentHierarchy(table, group_table, group_column, id, group_column_key, primary_key);
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 
+	@Override
+	public TableInfo getTableInfo(String table) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getTableInfo(table);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

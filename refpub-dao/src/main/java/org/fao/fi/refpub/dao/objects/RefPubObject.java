@@ -1,10 +1,11 @@
 package org.fao.fi.refpub.dao.objects;
 
 import java.util.List;
-import java.util.Map;
 
 public class RefPubObject {
 	private int id;
+	
+	private String primary_key_id;
 	/*private int codelist_id;
 	private String codelist_name;*/
 	private String Concept;
@@ -67,9 +68,17 @@ public class RefPubObject {
 	private String official_name_a;
 	private String official_name_r;
 	private String official_name_c;
+	private String group_name;
+	private List<RefPubObject> parents;
 	
 	private List<CodeList> codeList;
 
+	public String getPrimary_key_id() {
+		return primary_key_id;
+	}
+	public void setPrimary_key_id(String primary_key_id) {
+		this.primary_key_id = primary_key_id;
+	}
 	public int getId() {
 		return id;
 	}
@@ -352,5 +361,17 @@ public class RefPubObject {
 	}
 	public void setCodeList(List<CodeList> codeList) {
 		this.codeList = codeList;
+	}
+	public String getGroup_name() {
+		return group_name;
+	}
+	public void setGroup_name(String group_name) {
+		this.group_name = group_name;
+	}
+	public List<RefPubObject> getParents() {
+		return parents;
+	}
+	public void setParents(List<RefPubObject> parents) {
+		this.parents = parents;
 	}
 }

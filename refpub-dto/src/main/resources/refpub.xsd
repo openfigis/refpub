@@ -84,12 +84,25 @@
 		<attribute name="value" type="string" />
 		<attribute name="lang" type="string" />
 	</complexType>
-
-	<complexType name="TestTypeDTO">
+	
+	<complexType name="TextTypeValuePairDTO">
+		<attribute name="name" type="string" />
 		<attribute name="value" type="string" />
-		<attribute name="lang" type="string" />
 	</complexType>
 	
+	<complexType name="TextTypeSimpleDTO">
+		<attribute name="value" type="string" />
+	</complexType>
+	
+	<complexType name="TextTypeValueListDTO">
+		<sequence>
+			<element name="name" type="string" minOccurs="1" maxOccurs="unbounded">
+			</element>
+			<element name="value" type="refpub:TextTypeValuePairDTO" minOccurs="1" maxOccurs="unbounded">
+			</element>
+		</sequence>
+	</complexType>
+
 	<complexType name="CodeListDTO">
 		<attribute name="name" type="string" />
 		<attribute name="value" type="string" />
@@ -98,6 +111,14 @@
 	
 	<complexType name="RestTypeDTO">
 		<attribute name="resourceUrl" type="anyURI"></attribute>
+	</complexType>
+	
+	<complexType name="ParentListDTO">
+		<sequence>
+			<element name="value" type="refpub:TextTypeValueListDTO" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
 	</complexType>
 
 	<complexType name="TreasureTypeDTO">
@@ -119,12 +140,15 @@
 					<element name="CodeList"
 						type="refpub:CodeListListTypeDTO">
 					</element>
-					<element name="name" type="string" minOccurs="1"></element>
+					<!-- <element name="name" type="string" minOccurs="1"></element>
 					<element name="codelist" type="string" minOccurs="1"></element>
 					<element name="sys_item" type="string" minOccurs="1"></element>
-					<element name="id" type="string" minOccurs="1"></element>
+					<element name="id" type="string" minOccurs="1"></element> -->
 					<element name="scientific_name" type="string" minOccurs="1"></element>
-					<element name="alpha3code" type="string" minOccurs="1"></element>
+					<!-- <element name="alpha3code" type="string" minOccurs="1"></element> -->
+					<element name="Hierarchy"
+						type="refpub:ParentListDTO">
+					</element>
 				</sequence>
 				<!-- <attribute name="code" type="string"></attribute>
 				<attribute name="sys_item" type="string"></attribute>

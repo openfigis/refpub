@@ -13,6 +13,7 @@ import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
+import org.fao.fi.refpub.dao.objects.db.TableInfo;
 import org.fao.fi.refpub.dao.utils.Utils;
 import org.fao.fi.refpub.persistence.PersistenceServiceImplementation;
 import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
@@ -75,7 +76,10 @@ public class RefPubImplementation implements RefPubInterface {
 		RefPubConcept cp = this.getConcept(concept); 
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation();
 		
-		List<RefPubObject> objs = ps.getObjects(cp.getMeta(), "FIGIS." + cp.getTable_name());
+		MDConcept mdconcept = ps.getConcept(concept);
+		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
+		
+		List<RefPubObject> objs = ps.getObjects(cp.getMeta(), "FIGIS." + cp.getTable_name(), tbl.getPrimary_key());
 		List<MDCodelist> codelists = ps.getCodelistForConcept(concept);
 		
 		int counter = 0;
@@ -97,13 +101,23 @@ public class RefPubImplementation implements RefPubInterface {
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation();
 		MDConcept mdconcept = ps.getConcept(concept);
 		MDCodelist mdcodelist =  ps.getCodeList(concept, codelist);
+		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
 		
-		RefPubObject obj = ps.getObject("FIGIS." + mdconcept.getTable_name(), mdcodelist.getCode_column(), code);
+		RefPubObject obj = ps.getObject("FIGIS." + mdconcept.getTable_name(), mdcodelist.getCode_column(), code, tbl.getPrimary_key());
 		
 		List<CodeList> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), obj);
 		obj.setConcept(concept);
 		obj.setCodeList(codemap);
 		
+		
+		obj.setParents(ps.getParentHierarchy("FIGIS." + mdconcept.getTable_name(),
+											 "FIGIS." +  mdconcept.getTable_group(), 
+											 mdconcept.getTable_group_member(), 
+											 obj.getPrimary_key_id(),
+											 mdconcept.getTable_group_column(),
+											 tbl.getPrimary_key()));
+		/*mdconcept.getTable_group_column();
+		tbl.getPrimary_key();*/
 		return obj;
 	}
 }
