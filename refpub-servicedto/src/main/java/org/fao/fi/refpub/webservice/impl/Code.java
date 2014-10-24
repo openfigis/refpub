@@ -8,4 +8,8 @@ public class Code {
 	public static ConceptDTO create (RefPubObject object) {
 		return ConceptType.create(object);
 	}
+	
+	public static ConceptDTO error (String message) {
+		return ConceptType.error(message);
+	}
 }

@@ -22,6 +22,22 @@ public class CodeListType {
 		return n;
 	}
 	
+	public static CodeListListTypeDTO create(Map<String, String> codelists, String concept) {
+		CodeListListTypeDTO n = new CodeListListTypeDTO();
+		for (Map.Entry<String, String> entry : codelists.entrySet())
+		{
+			CodeListDTO cl = new CodeListDTO();
+			cl.setName(entry.getValue());
+			
+			List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
+			urlChunks.add(new ResourceKeyValue("concept", concept));
+			urlChunks.add(new ResourceKeyValue("codesystem", entry.getValue()));
+			cl.setUrl(ResourceUrl.create(urlChunks));
+		    n.getNames().add(cl);
+		}
+		return n;
+	}
+	
 	public static CodeListListTypeDTO createList(RefPubObject obj, boolean forCodeList) {
 		CodeListListTypeDTO n = new CodeListListTypeDTO();
 		for (CodeList cl : obj.getCodeList()) {

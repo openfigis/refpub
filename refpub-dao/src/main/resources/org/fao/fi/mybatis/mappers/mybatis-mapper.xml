@@ -103,7 +103,7 @@
 	
 	<select id="getObjectsByCodeList" parameterType="map" resultMap="ObjectResults">
 		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
-		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column} IS NOT NULL) WHERE ROWNUM <= 100 ]]>
+		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column} IS NOT NULL AND ${column} != ' ') WHERE ROWNUM <= 100 ]]>
 	</select>
 	
 	<select id="getCodelistForConcept" resultMap="CodelistResult">

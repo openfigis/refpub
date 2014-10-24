@@ -6,7 +6,7 @@
 		<artifactId>refpub</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>refpub-dto</artifactId>
+	<artifactId>refpub-servicedto</artifactId>
 	<build>
 		<plugins>
 			<plugin>

@@ -21,7 +21,7 @@ public class ConceptType {
 		
 		c.setResourceUrl(ResourceUrl.create(urlChunks));
 		//c.setName(concept.getName());
-		c.setCodeList(CodeListType.create(concept.getCodelists()));
+		c.setCodeList(CodeListType.create(concept.getCodelists(), concept.getName()));
 				
 		return c;
 	}
@@ -29,6 +29,7 @@ public class ConceptType {
 	public static ConceptDTO create(RefPubObject object) {
 		
 		ConceptDTO c = new ConceptDTO();
+
 		if (object.getCodeList() != null) {
 			for (CodeList cl : object.getCodeList()) {
 				if (cl.getIsDefault() == 1) {
@@ -65,6 +66,11 @@ public class ConceptType {
 		ConceptDTO c = new ConceptDTO();
 		c.setCodeList(CodeListType.createList(object, forCodeList));
 		
+		return c;
+	}
+	
+	public static ConceptDTO error(String message) {
+		ConceptDTO c = new ConceptDTO();
 		return c;
 	}
 }

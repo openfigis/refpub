@@ -12,7 +12,8 @@ public class ConceptList {
 	public static ConceptListDTO create(List<RefPubConcept> list) {
 		
 		ConceptListDTO l = new ConceptListDTO();
-		l.setResourceUrl(ResourceUrlMock.create("concepts"));
+		l.setResourceUrl(ResourceUrlMock.create("concept"));
+		l.setCountRecords(list.size());
 		for (RefPubConcept m : list) {
 			l.getConcepts().add(ConceptType.create(m));
 		}
@@ -22,7 +23,8 @@ public class ConceptList {
 	public static ConceptListDTO createObj(List<RefPubObject> list) {
 		
 		ConceptListDTO l = new ConceptListDTO();
-		l.setResourceUrl(ResourceUrlMock.create("concepts"));
+		l.setCountRecords(list.size());
+		l.setResourceUrl(ResourceUrlMock.create("concept"));
 		for (RefPubObject m : list) {
 			l.getConcepts().add(ConceptType.create(m));
 		}

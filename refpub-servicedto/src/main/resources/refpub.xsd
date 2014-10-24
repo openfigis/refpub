@@ -16,13 +16,24 @@
 	<!-- Types -->
 	<complexType name="ConceptListType">
 		<complexContent>
-			<extension base="refpub:RestTypeDTO">
+			<extension base="refpub:RestTypeSingleDTO">
 				<sequence>
 					<element name="concept" type="refpub:ConceptType"
 						minOccurs="1" maxOccurs="unbounded"></element>
 				</sequence>
 			</extension>
 		</complexContent>
+		
+	</complexType>
+	
+	<complexType name="RestTypeDTO">
+		<attribute name="resourceUrl" type="anyURI"></attribute>
+	</complexType>
+	
+	<complexType name="RestTypeSingleDTO">
+		<attribute name="count_records" type="int"></attribute>
+		<attribute name="resourceUrl" type="anyURI"></attribute>
+		<attribute name="error_msg" type="string"></attribute>
 	</complexType>
 
 	<complexType name="ConceptType">
@@ -109,10 +120,6 @@
 		<attribute name="url" type="string" />
 	</complexType>
 	
-	<complexType name="RestTypeDTO">
-		<attribute name="resourceUrl" type="anyURI"></attribute>
-	</complexType>
-	
 	<complexType name="ParentListDTO">
 		<sequence>
 			<element name="value" type="refpub:TextTypeValueListDTO" maxOccurs="unbounded"
@@ -125,36 +132,26 @@
 		<complexContent>
 			<extension base="refpub:RestTypeDTO">
 				<sequence>
+					<!-- <element name="records_count" type="int" minOccurs="1"></element> -->
 					<element name="multilingualName"
-						type="refpub:MultilingualTypeDTO">
+						type="refpub:MultilingualTypeDTO" nillable="true">
 					</element>
 					<element name="multilingualFullName"
-						type="refpub:MultilingualTypeDTO">
+						type="refpub:MultilingualTypeDTO" nillable="true">
 					</element>
 					<element name="multilingualLongName"
-						type="refpub:MultilingualTypeDTO">
+						type="refpub:MultilingualTypeDTO" nillable="true">
 					</element>
 					<element name="multilingualOfficialName"
-						type="refpub:MultilingualTypeDTO">
+						type="refpub:MultilingualTypeDTO" nillable="true">
 					</element>
 					<element name="CodeList"
-						type="refpub:CodeListListTypeDTO">
+						type="refpub:CodeListListTypeDTO" nillable="true">
 					</element>
-					<!-- <element name="name" type="string" minOccurs="1"></element>
-					<element name="codelist" type="string" minOccurs="1"></element>
-					<element name="sys_item" type="string" minOccurs="1"></element>
-					<element name="id" type="string" minOccurs="1"></element> -->
-					<element name="scientific_name" type="string" minOccurs="1"></element>
-					<!-- <element name="alpha3code" type="string" minOccurs="1"></element> -->
-					<element name="Hierarchy"
-						type="refpub:ParentListDTO">
+					<element name="scientific_name" type="string" minOccurs="1" nillable="false"></element>
+					<element name="Hierarchy" type="refpub:ParentListDTO" nillable="false">
 					</element>
 				</sequence>
-				<!-- <attribute name="code" type="string"></attribute>
-				<attribute name="sys_item" type="string"></attribute>
-				<attribute name="id" type="string"></attribute>
-				<attribute name="scientific_name" type="string"></attribute>
-				<attribute name="alpha3code" type="string"></attribute> -->
 			</extension>
 		</complexContent>
 	</complexType>
@@ -164,13 +161,12 @@
 			<extension base="refpub:RestTypeDTO">
 				<sequence>
 					<element name="name"
-						type="refpub:MultilingualTypeDTO">
+						type="refpub:MultilingualTypeDTO" nillable="true">
 					</element>
 				</sequence>
 				<attribute name="code" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
-
 
 </schema>

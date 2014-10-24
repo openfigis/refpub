@@ -8,29 +8,25 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.fao.fi.refpub.beans.RefPubImplementation;
-import org.fao.fi.refpub.webservice.CodeSystemDTO;
-import org.fao.fi.refpub.webservice.CodeSystemListDTO;
 import org.fao.fi.refpub.webservice.ConceptDTO;
 import org.fao.fi.refpub.webservice.ConceptListDTO;
+import org.fao.fi.refpub.webservice.beans.RefPubInterface;
 import org.fao.fi.refpub.webservice.impl.Code;
-import org.fao.fi.refpub.webservice.impl.CodeListList;
-import org.fao.fi.refpub.webservice.impl.ConceptList;
-import org.fao.fi.refpub.webservice.test.mock.CodeSystemMock;
 
 @Path("")
 @ManagedBean
+
 public class CoreWs {
 
-	@Inject RefPubImplementation bean;
+	@Inject RefPubInterface bean;
 	
-	
-	@Path("concepts")
+	@Path("concept")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptListDTO concepts() {
 		//return ConceptListMock.create();
-		return ConceptList.create(bean.getConcepts());
+		//return ConceptList.create(bean.getConcepts());
+		return bean.getAllConcept();
 	}
 	
 	@Path("concept/{concept}")
@@ -38,15 +34,21 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptListDTO conceptList(@PathParam("concept") String conceptCode) {
 		//return ConceptTypeMock.create();
-		return ConceptList.createObj(bean.getObjects(conceptCode));
+		//return ConceptList.createObj(bean.getObjects(conceptCode));
+		return bean.getAllObjectByConcept(conceptCode);
 	}
 
-	@Path("codesystems")
+	@Path("codesystem")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptDTO codesystems() {
 		//return CodeSystemListMock.create();
-		return CodeListList.create(bean.getCodeLists());
+		try {
+			//return CodeListList.create(bean.getCodeLists());
+			return bean.getAllCodeSystem();
+		} catch (Exception ex) {
+			return Code.error(ex.getMessage());
+		}
 	}
 
 	@Path("concept/{concept}/codesystem/{codesystem}")
@@ -54,7 +56,8 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptListDTO codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		//return CodeSystemMock.create();
-		return ConceptList.createObj(bean.getListByCodeList(concept, codesystem));
+		//return ConceptList.createObj(bean.getListByCodeList(concept, codesystem));
+		return bean.getObjectByCodeSystem(concept, codesystem);
 	}
 
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}")
@@ -62,7 +65,12 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptDTO code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
-		return Code.create(bean.getObject(concept, codesystem, code));
+		try {
+			//return Code.create(bean.getObject(concept, codesystem, code));
+			return bean.getObject(concept, codesystem, code);
+		} catch (Exception ex) {
+			return Code.error(ex.getMessage());
+		}
 	}
 
 }
