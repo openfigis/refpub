@@ -126,4 +126,28 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+
+
+	@Override
+	public List<MDCodelist> getCodeList_list() {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getCodeList_list();
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public List<RefPubObject> getObjectsByCodeList(String table, String column, String pk_column) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObjectsByCodeList(table, column, pk_column);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }

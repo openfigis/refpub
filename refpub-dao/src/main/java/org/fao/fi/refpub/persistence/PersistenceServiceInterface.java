@@ -20,6 +20,8 @@ public abstract interface PersistenceServiceInterface {
 	MDCodelist getCodeList(@Param("concept") String concept, @Param("codelistname") String codelistname);
 	ClassInitXML getRefTable(int id);
 	RefPubObject getObject(@Param("table") String table, @Param("column") String column, @Param("codelist") String codelistvalue, @Param("main_id") String pk_column);
+	List<RefPubObject> getObjectsByCodeList(@Param("table") String table, @Param("column") String column, @Param("main_id") String pk_column);
+	List<MDCodelist> getCodeList_list();
 	
 	List<RefPubObject> getParentHierarchy(@Param("table") String table,
 									@Param("group_table") String group_table,

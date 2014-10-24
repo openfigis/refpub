@@ -14,8 +14,8 @@ import org.fao.fi.refpub.webservice.CodeSystemListDTO;
 import org.fao.fi.refpub.webservice.ConceptDTO;
 import org.fao.fi.refpub.webservice.ConceptListDTO;
 import org.fao.fi.refpub.webservice.impl.Code;
+import org.fao.fi.refpub.webservice.impl.CodeListList;
 import org.fao.fi.refpub.webservice.impl.ConceptList;
-import org.fao.fi.refpub.webservice.test.mock.CodeSystemListMock;
 import org.fao.fi.refpub.webservice.test.mock.CodeSystemMock;
 
 @Path("")
@@ -38,31 +38,23 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptListDTO conceptList(@PathParam("concept") String conceptCode) {
 		//return ConceptTypeMock.create();
-		
 		return ConceptList.createObj(bean.getObjects(conceptCode));
 	}
-
-	/*@Path("concept/{concept}")
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptDTO concept(@PathParam("concept") String conceptCode) {
-		return ConceptTypeMock.create();
-		
-		//return ConceptType.create(bean.getObjects(conceptCode, "FIC_ITEM"));
-	}*/
 
 	@Path("codesystems")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public CodeSystemListDTO codesystems() {
-		return CodeSystemListMock.create();
+	public ConceptDTO codesystems() {
+		//return CodeSystemListMock.create();
+		return CodeListList.create(bean.getCodeLists());
 	}
 
 	@Path("concept/{concept}/codesystem/{codesystem}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public CodeSystemDTO codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
-		return CodeSystemMock.create();
+	public ConceptListDTO codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		//return CodeSystemMock.create();
+		return ConceptList.createObj(bean.getListByCodeList(concept, codesystem));
 	}
 
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}")
@@ -70,7 +62,6 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptDTO code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
-		//return CodeMock.create();
 		return Code.create(bean.getObject(concept, codesystem, code));
 	}
 

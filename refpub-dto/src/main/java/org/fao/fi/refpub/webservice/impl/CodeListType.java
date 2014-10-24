@@ -22,7 +22,7 @@ public class CodeListType {
 		return n;
 	}
 	
-	public static CodeListListTypeDTO createList(RefPubObject obj) {
+	public static CodeListListTypeDTO createList(RefPubObject obj, boolean forCodeList) {
 		CodeListListTypeDTO n = new CodeListListTypeDTO();
 		for (CodeList cl : obj.getCodeList()) {
 			CodeListDTO cldto = new CodeListDTO();
@@ -30,9 +30,14 @@ public class CodeListType {
 			cldto.setValue(cl.getValue());
 
 			List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
-			urlChunks.add(new ResourceKeyValue("concept", obj.getConcept()));
-			urlChunks.add(new ResourceKeyValue("codesystem", cldto.getName()));
-			urlChunks.add(new ResourceKeyValue("code", cldto.getValue()));
+			if (forCodeList) { //We are listening JUST the codelist. so the referrer URL must be different from an object detail listening
+				urlChunks.add(new ResourceKeyValue("concept", cl.getValue()));
+				urlChunks.add(new ResourceKeyValue("codesystem", cl.getName()));
+			} else { //object details listening. URL generator to list the object link by its codelists
+				urlChunks.add(new ResourceKeyValue("concept", obj.getConcept()));
+				urlChunks.add(new ResourceKeyValue("codesystem", cldto.getName()));
+				urlChunks.add(new ResourceKeyValue("code", cldto.getValue()));
+			}
 			
 			cldto.setUrl(ResourceUrl.create(urlChunks));
 			n.getNames().add(cldto);

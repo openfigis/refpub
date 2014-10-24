@@ -10,4 +10,6 @@ public interface RefPubInterface {
 	RefPubConcept getConcept(String concept);
 	List<RefPubObject> getObjects(String concept);
 	RefPubObject getObject(String concept, String codelist, String code);
+	RefPubObject getCodeLists();
+	List<RefPubObject> getListByCodeList(String concept, String codelist);
 }

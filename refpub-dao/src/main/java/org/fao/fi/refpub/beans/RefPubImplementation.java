@@ -116,8 +116,51 @@ public class RefPubImplementation implements RefPubInterface {
 											 obj.getPrimary_key_id(),
 											 mdconcept.getTable_group_column(),
 											 tbl.getPrimary_key()));
-		/*mdconcept.getTable_group_column();
-		tbl.getPrimary_key();*/
+
 		return obj;
+	}
+
+	@Override
+	public RefPubObject getCodeLists() {
+		PersistenceServiceInterface ps = new PersistenceServiceImplementation();
+		RefPubObject returnObj = new RefPubObject();
+		
+		List<MDCodelist> codelists = ps.getCodeList_list();
+		
+		List<CodeList> l = new ArrayList<CodeList>();
+		
+		for (MDCodelist cl : codelists) {
+			CodeList codeListObj = new CodeList();
+			codeListObj.setName(cl.getCode_name());
+			codeListObj.setValue(cl.getRest_concept());
+			l.add(codeListObj);
+		}
+		returnObj.setCodeList(l);
+		
+		return returnObj;
+	}
+
+	@Override
+	public List<RefPubObject> getListByCodeList(String concept, String codelist) {
+		PersistenceServiceInterface ps = new PersistenceServiceImplementation();
+	
+		MDCodelist cl = ps.getCodeList(concept, codelist);
+		TableInfo ti = ps.getTableInfo(cl.getTable_name());
+		List<RefPubObject> returnList = ps.getObjectsByCodeList("FIGIS." + cl.getTable_name(), 
+																cl.getCode_column(), 
+																ti.getPrimary_key());
+		
+		List<MDCodelist> codelists = ps.getCodelistForConcept(concept);
+		
+		int counter = 0;
+		for (RefPubObject obj : returnList) {
+			List<CodeList> codemap = Utils.retrieveCodeListForObject(codelists, obj);
+			obj.setConcept(concept);
+			obj.setCodeList(codemap);
+			returnList.set(counter, obj);
+			counter++;
+		}
+		
+		return returnList;
 	}
 }
