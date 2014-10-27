@@ -11,6 +11,7 @@ import org.fao.fi.refpub.webservice.CodeListListTypeDTO;
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
 public class CodeListType {
+	
 	public static CodeListListTypeDTO create(Map<String, String> codelists) {
 		CodeListListTypeDTO n = new CodeListListTypeDTO();
 		for (Map.Entry<String, String> entry : codelists.entrySet())

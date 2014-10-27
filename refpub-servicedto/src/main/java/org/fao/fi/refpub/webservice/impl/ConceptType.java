@@ -11,7 +11,6 @@ import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
 public class ConceptType {
 
-	
 	public static ConceptDTO create(RefPubConcept concept) {
 		
 		ConceptDTO c = new ConceptDTO();
@@ -25,7 +24,6 @@ public class ConceptType {
 				
 		return c;
 	}
-	
 	public static ConceptDTO create(RefPubObject object) {
 		
 		ConceptDTO c = new ConceptDTO();

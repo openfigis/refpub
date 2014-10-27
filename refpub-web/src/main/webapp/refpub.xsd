@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:refpub="http://www.fao.org/fi/refpub/webservice"
+<schema 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:refpub="http://www.fao.org/fi/refpub/webservice"
 	targetNamespace="http://www.fao.org/fi/refpub/webservice"
-	elementFormDefault="qualified">
+	elementFormDefault="qualified"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	jaxb:extensionBindingPrefixes="xjc"
+	jaxb:version="2.0">
+	
+	
+	<annotation>
+       <appinfo>
+          <jaxb:globalBindings>
+           	<xjc:superClass name="org.fao.fi.refpub.webservice.objects.customization.jaxb.JaxbSuperClass"/>
+           	<xjc:treatRestrictionLikeNewType />
+			<xjc:simple />
+          </jaxb:globalBindings>
+       </appinfo>
+    </annotation>
 
 	<!-- Elements -->
 
