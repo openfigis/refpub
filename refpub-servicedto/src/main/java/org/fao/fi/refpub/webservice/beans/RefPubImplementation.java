@@ -10,7 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
-import org.fao.fi.refpub.dao.objects.CodeList;
+import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.dao.objects.chunks.GenericType;
@@ -20,13 +20,13 @@ import org.fao.fi.refpub.dao.objects.db.TableInfo;
 import org.fao.fi.refpub.dao.utils.Utils;
 import org.fao.fi.refpub.persistence.PersistenceServiceImplementation;
 import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
-import org.fao.fi.refpub.webservice.AttributesDTO;
-import org.fao.fi.refpub.webservice.ConceptDTO;
-import org.fao.fi.refpub.webservice.ConceptListDTO;
-import org.fao.fi.refpub.webservice.impl.Code;
-import org.fao.fi.refpub.webservice.impl.CodeListList;
-import org.fao.fi.refpub.webservice.impl.ConceptList;
-import org.fao.fi.refpub.webservice.impl.AttributeListType;
+import org.fao.fi.refpub.webservice.Attributes;
+import org.fao.fi.refpub.webservice.Concept;
+import org.fao.fi.refpub.webservice.ConceptList;
+import org.fao.fi.refpub.webservice.impl.AttributeListTypeDTO;
+import org.fao.fi.refpub.webservice.impl.CodeDTO;
+import org.fao.fi.refpub.webservice.impl.CodeListListDTO;
+import org.fao.fi.refpub.webservice.impl.ConceptListDTO;
 import org.fao.fi.refpub.webservice.objects.Constants;
 
 /*
@@ -39,49 +39,49 @@ public class RefPubImplementation implements RefPubInterface {
 	@Produces
 	
 	@Override
-	public ConceptListDTO getAllConcept() {
-		return ConceptList.create(this.getAllConcepts());
+	public ConceptList getAllConcept() {
+		return ConceptListDTO.create(this.getAllConcepts());
 	}
 
 
 	@Override
-	public ConceptDTO getConcept(String concept) {
+	public Concept getConcept(String concept) {
 		return null;
 	}
 
 
 	@Override
-	public ConceptListDTO getAllObjectByConcept(String concept) {
-		return ConceptList.createObj(this.getAllObjectsForConcept(concept));
+	public ConceptList getAllObjectByConcept(String concept) {
+		return ConceptListDTO.createObj(this.getAllObjectsForConcept(concept));
 	}
 
 
 	@Override
-	public ConceptDTO getObject(String concept, String codesystem, String code) {
-		return Code.create(this.getSingleObject(concept, codesystem, code));
+	public Concept getObject(String concept, String codesystem, String code) {
+		return CodeDTO.create(this.getSingleObject(concept, codesystem, code));
 	}
 
 
 	@Override
-	public ConceptDTO getAllCodeSystem() {
-		return CodeListList.create(this.getAllCodeList());
+	public Concept getAllCodeSystem() {
+		return CodeListListDTO.create(this.getAllCodeList());
 	}
 
 
 	@Override
-	public ConceptListDTO getObjectByCodeSystem(String concept, String codesystem) {
-		return ConceptList.createObj(this.getObjectsByCodeList(concept, codesystem));
-	}
-	
-	@Override
-	public ConceptDTO getAllCodeSystemByConcept(String concept) {
-		return CodeListList.create(this.getCodeSystemByConcept(concept));
+	public ConceptList getObjectByCodeSystem(String concept, String codesystem) {
+		return ConceptListDTO.createObj(this.getObjectsByCodeList(concept, codesystem));
 	}
 	
 	@Override
-	public AttributesDTO getAllAttributesForConceptAndCodesystem(
+	public Concept getAllCodeSystemByConcept(String concept) {
+		return CodeListListDTO.create(this.getCodeSystemByConcept(concept));
+	}
+	
+	@Override
+	public Attributes getAllAttributesForConceptAndCodesystem(
 			String concept, String codesystem) {
-		return AttributeListType.create(this.attributeListByConceptCodelist(concept, codesystem));
+		return AttributeListTypeDTO.create(this.attributeListByConceptCodelist(concept, codesystem));
 	}
 	
 	private List<RefPubConcept> getAllConcepts() {
@@ -147,7 +147,7 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		int counter = 0;
 		for (RefPubObject obj : objs) {
-			List<CodeList> codemap = Utils.retrieveCodeListForObject(codelists, obj);
+			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
 			objs.set(counter, obj);
@@ -169,7 +169,7 @@ public class RefPubImplementation implements RefPubInterface {
 			return new RefPubObject();
 		}
 		
-		List<CodeList> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), obj);
+		List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), obj);
 		obj.setConcept(concept);
 		obj.setCodeList(codemap);
 		
@@ -190,10 +190,10 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		List<MDCodelist> codelists = ps.getCodeList_list();
 		
-		List<CodeList> l = new ArrayList<CodeList>();
+		List<CodeListDAO> l = new ArrayList<CodeListDAO>();
 		
 		for (MDCodelist cl : codelists) {
-			CodeList codeListObj = new CodeList();
+			CodeListDAO codeListObj = new CodeListDAO();
 			codeListObj.setName(cl.getCode_name());
 			codeListObj.setValue(cl.getRest_concept());
 			l.add(codeListObj);
@@ -218,7 +218,7 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		int counter = 0;
 		for (RefPubObject obj : returnList) {
-			List<CodeList> codemap = Utils.retrieveCodeListForObject(codelists, obj);
+			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
 			returnList.set(counter, obj);
@@ -235,10 +235,10 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		List<MDCodelist> codelists = ps.getCodeList_listByConcept(concept);
 		
-		List<CodeList> l = new ArrayList<CodeList>();
+		List<CodeListDAO> l = new ArrayList<CodeListDAO>();
 		
 		for (MDCodelist cl : codelists) {
-			CodeList codeListObj = new CodeList();
+			CodeListDAO codeListObj = new CodeListDAO();
 			codeListObj.setName(cl.getCode_name());
 			codeListObj.setValue(cl.getRest_concept());
 			l.add(codeListObj);

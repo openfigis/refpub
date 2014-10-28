@@ -8,11 +8,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.fao.fi.refpub.webservice.AttributesDTO;
-import org.fao.fi.refpub.webservice.ConceptDTO;
-import org.fao.fi.refpub.webservice.ConceptListDTO;
+import org.fao.fi.refpub.webservice.Attributes;
+import org.fao.fi.refpub.webservice.Concept;
+import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.beans.RefPubInterface;
-import org.fao.fi.refpub.webservice.impl.Code;
+import org.fao.fi.refpub.webservice.impl.CodeDTO;
 
 @Path("")
 @ManagedBean
@@ -27,14 +27,14 @@ public class CoreWs {
 	@Path("concept")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptListDTO concepts() {
+	public ConceptList concepts() {
 		return bean.getAllConcept();
 	}
 	
 	@Path("concept/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptListDTO conceptsXML() {
+	public ConceptList conceptsXML() {
 		return bean.getAllConcept();
 	}
 	
@@ -46,14 +46,14 @@ public class CoreWs {
 	@Path("concept/{concept}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptListDTO conceptList(@PathParam("concept") String conceptCode) {
+	public ConceptList conceptList(@PathParam("concept") String conceptCode) {
 		return bean.getAllObjectByConcept(conceptCode);
 	}
 	
 	@Path("concept/{concept}/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptListDTO conceptListXML(@PathParam("concept") String conceptCode) {
+	public ConceptList conceptListXML(@PathParam("concept") String conceptCode) {
 		return bean.getAllObjectByConcept(conceptCode);
 	}
 
@@ -66,22 +66,22 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptDTO codesystems(@PathParam("concept") String concept) {
+	public Concept codesystems(@PathParam("concept") String concept) {
 		try {
 			return bean.getAllCodeSystemByConcept(concept);
 		} catch (Exception ex) {
-			return Code.error(ex.getMessage());
+			return CodeDTO.error(ex.getMessage());
 		}
 	}
 	
 	@Path("concept/{concept}/codesystem/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptDTO codesystemsXML(@PathParam("concept") String concept) {
+	public Concept codesystemsXML(@PathParam("concept") String concept) {
 		try {
 			return bean.getAllCodeSystemByConcept(concept);
 		} catch (Exception ex) {
-			return Code.error(ex.getMessage());
+			return CodeDTO.error(ex.getMessage());
 		}
 	}
 	
@@ -93,14 +93,14 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptListDTO codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	public ConceptList codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return bean.getObjectByCodeSystem(concept, codesystem);
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptListDTO codesystemXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	public ConceptList codesystemXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return bean.getObjectByCodeSystem(concept, codesystem);
 	}
 	
@@ -111,24 +111,24 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptDTO code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	public Concept code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
 			return bean.getObject(concept, codesystem, code);
 		} catch (Exception ex) {
-			return Code.error(ex.getMessage());
+			return CodeDTO.error(ex.getMessage());
 		}
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptDTO codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	public Concept codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
 			return bean.getObject(concept, codesystem, code);
 		} catch (Exception ex) {
-			return Code.error(ex.getMessage());
+			return CodeDTO.error(ex.getMessage());
 		}
 	}
 
@@ -139,14 +139,14 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public AttributesDTO code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	public Attributes code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
-	public AttributesDTO codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	public Attributes codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
 	}
 

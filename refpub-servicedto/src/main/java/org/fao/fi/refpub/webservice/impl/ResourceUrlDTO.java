@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
-public class ResourceUrl {
+public class ResourceUrlDTO {
 
 	/*public static String create(String type) {
 		return "http://localhost:8080/refpub-web/rest/" + type + "/";

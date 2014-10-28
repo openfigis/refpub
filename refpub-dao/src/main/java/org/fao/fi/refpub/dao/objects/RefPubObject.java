@@ -71,7 +71,7 @@ public class RefPubObject {
 	private String group_name;
 	private List<RefPubObject> parents;
 	
-	private List<CodeList> codeList;
+	private List<CodeListDAO> codeList;
 
 	public String getPrimary_key_id() {
 		return primary_key_id;
@@ -356,10 +356,10 @@ public class RefPubObject {
 	public void setOfficial_name_c(String official_name_c) {
 		this.official_name_c = official_name_c;
 	}
-	public List<CodeList> getCodeList() {
+	public List<CodeListDAO> getCodeList() {
 		return codeList;
 	}
-	public void setCodeList(List<CodeList> codeList) {
+	public void setCodeList(List<CodeListDAO> codeList) {
 		this.codeList = codeList;
 	}
 	public String getGroup_name() {

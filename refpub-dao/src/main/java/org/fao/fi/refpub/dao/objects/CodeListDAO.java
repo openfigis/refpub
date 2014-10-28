@@ -1,6 +1,6 @@
 package org.fao.fi.refpub.dao.objects;
 
-public class CodeList {
+public class CodeListDAO {
 	private String name;
 	private String value;
 	private int isDefault;

@@ -4,45 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.fao.fi.refpub.dao.objects.CodeList;
+import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
-import org.fao.fi.refpub.webservice.CodeListDTO;
-import org.fao.fi.refpub.webservice.CodeListListTypeDTO;
+import org.fao.fi.refpub.webservice.CodeList;
+import org.fao.fi.refpub.webservice.CodeListListType;
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
-public class CodeListType {
+public class CodeListTypeDTO {
 	
-	public static CodeListListTypeDTO create(Map<String, String> codelists) {
-		CodeListListTypeDTO n = new CodeListListTypeDTO();
+	public static CodeListListType create(Map<String, String> codelists) {
+		CodeListListType n = new CodeListListType();
 		for (Map.Entry<String, String> entry : codelists.entrySet())
 		{
-			CodeListDTO cl = new CodeListDTO();
+			CodeList cl = new CodeList();
 			cl.setName(entry.getValue());
 		    n.getNames().add(cl);
 		}
 		return n;
 	}
 	
-	public static CodeListListTypeDTO create(Map<String, String> codelists, String concept) {
-		CodeListListTypeDTO n = new CodeListListTypeDTO();
+	public static CodeListListType create(Map<String, String> codelists, String concept) {
+		CodeListListType n = new CodeListListType();
 		for (Map.Entry<String, String> entry : codelists.entrySet())
 		{
-			CodeListDTO cl = new CodeListDTO();
+			CodeList cl = new CodeList();
 			cl.setName(entry.getValue());
 			
 			List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 			urlChunks.add(new ResourceKeyValue("concept", concept));
 			urlChunks.add(new ResourceKeyValue("codesystem", entry.getValue()));
-			cl.setUrl(ResourceUrl.create(urlChunks));
+			cl.setUrl(ResourceUrlDTO.create(urlChunks));
 		    n.getNames().add(cl);
 		}
 		return n;
 	}
 	
-	public static CodeListListTypeDTO createList(RefPubObject obj, boolean forCodeList) {
-		CodeListListTypeDTO n = new CodeListListTypeDTO();
-		for (CodeList cl : obj.getCodeList()) {
-			CodeListDTO cldto = new CodeListDTO();
+	public static CodeListListType createList(RefPubObject obj, boolean forCodeList) {
+		CodeListListType n = new CodeListListType();
+		for (CodeListDAO cl : obj.getCodeList()) {
+			CodeList cldto = new CodeList();
 			cldto.setName(cl.getName());
 			cldto.setValue(cl.getValue());
 
@@ -56,7 +56,7 @@ public class CodeListType {
 				urlChunks.add(new ResourceKeyValue("code", cldto.getValue()));
 			}
 			
-			cldto.setUrl(ResourceUrl.create(urlChunks));
+			cldto.setUrl(ResourceUrlDTO.create(urlChunks));
 			n.getNames().add(cldto);
 		}
 		return n;

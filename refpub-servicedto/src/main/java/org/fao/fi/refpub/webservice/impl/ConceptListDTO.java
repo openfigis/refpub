@@ -4,29 +4,29 @@ import java.util.List;
 
 import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
-import org.fao.fi.refpub.webservice.ConceptListDTO;
+import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.test.mock.ResourceUrlMock;
 
-public class ConceptList {
+public class ConceptListDTO {
 	
-	public static ConceptListDTO create(List<RefPubConcept> list) {
+	public static ConceptList create(List<RefPubConcept> list) {
 		
-		ConceptListDTO l = new ConceptListDTO();
+		ConceptList l = new ConceptList();
 		l.setResourceUrl(ResourceUrlMock.create("concept"));
 		l.setCountRecords(list.size());
 		for (RefPubConcept m : list) {
-			l.getConcepts().add(ConceptType.create(m));
+			l.getConcepts().add(ConceptTypeDTO.create(m));
 		}
 		return l;
 	}
 	
-	public static ConceptListDTO createObj(List<RefPubObject> list) {
+	public static ConceptList createObj(List<RefPubObject> list) {
 		
-		ConceptListDTO l = new ConceptListDTO();
+		ConceptList l = new ConceptList();
 		l.setCountRecords(list.size());
 		l.setResourceUrl(ResourceUrlMock.create("concept"));
 		for (RefPubObject m : list) {
-			l.getConcepts().add(ConceptType.create(m));
+			l.getConcepts().add(ConceptTypeDTO.create(m));
 		}
 		return l;
 	}

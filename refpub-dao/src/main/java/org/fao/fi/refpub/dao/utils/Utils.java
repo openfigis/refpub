@@ -3,15 +3,15 @@ package org.fao.fi.refpub.dao.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fao.fi.refpub.dao.objects.CodeList;
+import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 
 public class Utils {
-	public static List<CodeList> retrieveCodeListForObject(List<MDCodelist> codelists, RefPubObject obj) {
-		List<CodeList> codemap = new ArrayList<CodeList>();
+	public static List<CodeListDAO> retrieveCodeListForObject(List<MDCodelist> codelists, RefPubObject obj) {
+		List<CodeListDAO> codemap = new ArrayList<CodeListDAO>();
 		for (MDCodelist cl : codelists) {
-			CodeList clobj = new CodeList();
+			CodeListDAO clobj = new CodeListDAO();
 			String column = cl.getCode_column();
 			if (column.equalsIgnoreCase("ALPHA3CODE")) {
 				clobj.setName(cl.getCode_name());

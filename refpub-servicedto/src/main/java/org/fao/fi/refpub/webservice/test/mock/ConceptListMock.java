@@ -1,12 +1,12 @@
 package org.fao.fi.refpub.webservice.test.mock;
 
-import org.fao.fi.refpub.webservice.ConceptListDTO;
+import org.fao.fi.refpub.webservice.ConceptList;
 
 
 public class ConceptListMock {
 
-	public static ConceptListDTO create() {
-		ConceptListDTO l = new ConceptListDTO();
+	public static ConceptList create() {
+		ConceptList l = new ConceptList();
 		l.setResourceUrl(ResourceUrlMock.create("concepts"));
 		l.getConcepts().add(ConceptTypeMock.create());
 		l.getConcepts().add(ConceptTypeMock.create());
