@@ -2,31 +2,89 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RefPub</title>
+<title>RefPub Test Page</title>
+<LINK href="style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<p align="center">
-
-		List of concepts like species, gears, etc <a href="rest/concept">rest/concepts</a>
-		<br> <br> A certain concept <a href="rest/concept/Species">rest/concept/{concept}</a>
-		<br> <br> List of codesystems like asfis, faomajorarea, etc
-
-		<a href="rest/codesystem">rest/codesystems</a> <br> <br> 
+	<div class="main">
+		<br />
+		<div class="banner">
+			<div class="bannerLeft">
+				<img src="images/refpub_banner.png" title="RefPub example page">
+			</div>
+			<div class="bannerRight">
+				<a href="http://www.fao.org">
+					<img src="images/fao-logo.png" title="FAO Home page" width="60px">
+				</a>
+			</div>
+		</div>
+		<div class="contents">
+			<table class="tbl">
+				<tr>
+					<td align="left">
+						<h3>Examples</h3>
+					</td>
+				</tr>
+			</table>
+			<div class="datagrid">
+				<table>
+					<tbody>
+						<tr>
+							<td>List of concepts like species, gears, etc</td>
+							<td><a href="rest/concept" target="_blank">JSON</a></td>
+							<td><a href="rest/concept/xml" target="_blank">XML</a></td>
+						</tr>
+						<tr class="alt">
+							<td>A certain concept</td>
+							<td><a href="rest/concept/Species" target="_blank">JSON</a></td>
+							<td><a href="rest/concept/Species/xml" target="_blank">XML</a></td>
+						</tr>
+						<tr>
+							<td>List of codesystems like asfis, faomajorarea, etc</td>
+							<td><a href="rest/codesystem" target="_blank">JSON</a></td>
+							<td><a href="rest/codesystem/xml" target="_blank">XML</a></td>
+						</tr>
+						<tr class="alt">
+							<td>Codesystems, given the concept and codesystem code</td>
+							<td><a href="rest/concept/Species/codesystem/ASFIS" target="_blank">JSON</a></td>
+							<td><a href="rest/concept/Species/codesystem/ASFIS/xml" target="_blank">XML</a></td>
+						</tr>
+						<tr>
+							<td>Code, given the concept, codesystem and code</td>
+							<td><a href="rest/concept/Species/codesystem/ASFIS/code/LAU" target="_blank">JSON</a></td>
+							<td><a href="rest/concept/Species/codesystem/ASFIS/code/LAU/xml" target="_blank">XML</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<table class="tbl">
+				<tr>
+					<td align="left">
+						<h3>Resources</h3>
+					</td>
+				</tr>
+			</table>
+			<div class="datagrid">
+				<table>
+					<tbody>
+						<tr>
+							<td><a href="rest/application.wadl" target="_blank">WADL</a></td>
+						</tr>
+						<tr class="alt">
+							<td><a href="refpub.xsd" target="_blank">JAXB XSD File</a></td>
+						</tr>
+						<tr>
+							<td><a href="http://figisapps.fao.org/FIGISwiki/index.php/RefPub_REST_API" target="_blank">RefPub Wiki Page</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		
-		Codesystems, given the concept and codesystem code <a href="rest/concept/Species/codesystem/ASFIS">rest/concept/{concept}/codesystem/{codesystem}</a><br> <br>
-
-		Code, given the concept, codesystem and code <a href="rest/concept/Species/codesystem/ASFIS/code/LAU">rest/concept/{concept}/codesystem/{codesystem}/code/{code}</a><br> <br>
-
-
-
-
-		<br> <br> <a href="rest/application.wadl"> <img
-			alt="RefPub WADL" src="refpub_logo.png" width="10%" align="middle">
-		</a>
-	</p>
-	<p align="right">
-		<a href="refpub.xsd">JAXB XSD File</a>
-	</p>
-
+		<div class="footer">
+			<a href="http://validator.w3.org/" title="W3C Validator"><img src="images/w3c.png" width="100px;"></a>
+			<a href="http://en.wikipedia.org/wiki/Representational_state_transfer" title="Rest API Wiki"><img src="images/rest_api.png" width="50px;"></a>
+		</div>
+	</div>
 </body>
 </html>

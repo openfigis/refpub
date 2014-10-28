@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
+import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
 import org.fao.fi.refpub.dao.objects.db.TableInfo;
@@ -146,6 +147,30 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
 			return mapper.getObjectsByCodeList(table, column, pk_column);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public List<MDCodelist> getCodeList_listByConcept(String concept) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getCodeList_listByConcept(concept);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public List<GenericType> getTableColumns(String table) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getTableColumns(table);
 		} finally {
 			sqlSession.close();
 		}

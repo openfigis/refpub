@@ -28,6 +28,7 @@
 	<element name="CodeSystemListDTO" type="refpub:CodeSystemListType"></element>
 	<element name="CodeSystemDTO" type="refpub:CodeSystemType"></element>
 	<element name="CodeDTO" type="refpub:CodeTypeDTO"></element>
+	<element name="AttributesDTO" type="refpub:AttributesListDTO"></element>
 
 
 	<!-- Types -->
@@ -129,6 +130,17 @@
 			<element name="value" type="refpub:TextTypeValuePairDTO" minOccurs="1" maxOccurs="unbounded">
 			</element>
 		</sequence>
+	</complexType>
+	
+	<complexType name="AttributesListDTO">
+		<complexContent>
+			<extension base="refpub:RestTypeSingleDTO">
+				<sequence>
+					<element name="attributes" type="refpub:TextTypeValuePairDTO" minOccurs="1" maxOccurs="unbounded">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
 	</complexType>
 
 	<complexType name="CodeListDTO">

@@ -78,6 +78,11 @@
 		<result property="status" column="STATUS"/>
 		<result property="owner" column="OWNER"/>
 	</resultMap>
+	
+	<resultMap type="org.fao.fi.refpub.dao.objects.chunks.GenericType" id="TableColumnResults">
+		<result property="key" column="ATTRIBUTE"/>
+		<result property="value" column="COLUMN_NAME"/>
+	</resultMap>
 		
 	<select id="getConcepts" resultMap="ConceptResult">
 		SELECT * FROM FIGIS.MD_CONCEPT
@@ -93,6 +98,10 @@
 		SELECT * FROM FIGIS.MD_CODELIST
 	</select>
 	
+	<select id="getCodeList_listByConcept" parameterType="string" resultMap="CodelistResult">
+		SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept}
+	</select>
+	
 	<select id="getObject" parameterType="map" resultMap="ObjectResults">
 		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column}=#{codelist}
@@ -103,7 +112,7 @@
 	
 	<select id="getObjectsByCodeList" parameterType="map" resultMap="ObjectResults">
 		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
-		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column} IS NOT NULL AND ${column} != ' ') WHERE ROWNUM <= 100 ]]>
+		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column} IS NOT NULL) WHERE ROWNUM <= 100 ]]>
 	</select>
 	
 	<select id="getCodelistForConcept" resultMap="CodelistResult">
@@ -139,5 +148,8 @@
 			cons.owner = cols.owner
 		ORDER BY 
 			cols.table_name, cols.position
+	</select>
+	<select id="getTableColumns" parameterType="map" resultMap="TableColumnResults">
+		SELECT 'attribute' AS ATTRIBUTE, column_name AS COLUMN_NAME from all_tab_columns where table_name=#{table}
 	</select>
 </mapper>

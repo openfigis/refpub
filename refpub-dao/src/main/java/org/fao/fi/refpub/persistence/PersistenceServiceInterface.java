@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
+import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
 import org.fao.fi.refpub.dao.objects.db.TableInfo;
@@ -22,6 +23,8 @@ public abstract interface PersistenceServiceInterface {
 	RefPubObject getObject(@Param("table") String table, @Param("column") String column, @Param("codelist") String codelistvalue, @Param("main_id") String pk_column);
 	List<RefPubObject> getObjectsByCodeList(@Param("table") String table, @Param("column") String column, @Param("main_id") String pk_column);
 	List<MDCodelist> getCodeList_list();
+	List<MDCodelist> getCodeList_listByConcept(String concept);
+	List<GenericType> getTableColumns(@Param("table") String table);
 	
 	List<RefPubObject> getParentHierarchy(@Param("table") String table,
 									@Param("group_table") String group_table,

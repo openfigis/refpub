@@ -1,6 +1,7 @@
 package org.fao.fi.refpub.webservice.beans;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,17 +13,21 @@ import javax.inject.Named;
 import org.fao.fi.refpub.dao.objects.CodeList;
 import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
+import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
 import org.fao.fi.refpub.dao.objects.db.TableInfo;
 import org.fao.fi.refpub.dao.utils.Utils;
 import org.fao.fi.refpub.persistence.PersistenceServiceImplementation;
 import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
+import org.fao.fi.refpub.webservice.AttributesDTO;
 import org.fao.fi.refpub.webservice.ConceptDTO;
 import org.fao.fi.refpub.webservice.ConceptListDTO;
 import org.fao.fi.refpub.webservice.impl.Code;
 import org.fao.fi.refpub.webservice.impl.CodeListList;
 import org.fao.fi.refpub.webservice.impl.ConceptList;
+import org.fao.fi.refpub.webservice.impl.AttributeListType;
+import org.fao.fi.refpub.webservice.objects.Constants;
 
 /*
  * Implementation of the CDI bean that implements the RefPub Restful API functionalities
@@ -66,6 +71,17 @@ public class RefPubImplementation implements RefPubInterface {
 	@Override
 	public ConceptListDTO getObjectByCodeSystem(String concept, String codesystem) {
 		return ConceptList.createObj(this.getObjectsByCodeList(concept, codesystem));
+	}
+	
+	@Override
+	public ConceptDTO getAllCodeSystemByConcept(String concept) {
+		return CodeListList.create(this.getCodeSystemByConcept(concept));
+	}
+	
+	@Override
+	public AttributesDTO getAllAttributesForConceptAndCodesystem(
+			String concept, String codesystem) {
+		return AttributeListType.create(this.attributeListByConceptCodelist(concept, codesystem));
 	}
 	
 	private List<RefPubConcept> getAllConcepts() {
@@ -212,6 +228,46 @@ public class RefPubImplementation implements RefPubInterface {
 		return returnList;
 	}
 
+
+	private RefPubObject getCodeSystemByConcept(String concept) {
+		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
+		RefPubObject returnObj = new RefPubObject();
+		
+		List<MDCodelist> codelists = ps.getCodeList_listByConcept(concept);
+		
+		List<CodeList> l = new ArrayList<CodeList>();
+		
+		for (MDCodelist cl : codelists) {
+			CodeList codeListObj = new CodeList();
+			codeListObj.setName(cl.getCode_name());
+			codeListObj.setValue(cl.getRest_concept());
+			l.add(codeListObj);
+		}
+		returnObj.setCodeList(l);
+		
+		return returnObj;
+	}
+
+
+	
+	private List<GenericType> attributeListByConceptCodelist(String concept, String codelist) {
+		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
+		MDCodelist cl = ps.getCodeList(concept, codelist);
+		List<GenericType> list = ps.getTableColumns(cl.getTable_name());
+		
+		List<GenericType> retList = new ArrayList<GenericType>(); 
+		for (GenericType t : list) {
+			if (Arrays.asList(Constants.valid_attributes).contains(t.getValue().toLowerCase())) {
+				t.setValue(t.getValue().toLowerCase());
+				retList.add(t);
+			}
+		}
+		
+		return retList;
+	}
+
+
+	
 
 	
 
