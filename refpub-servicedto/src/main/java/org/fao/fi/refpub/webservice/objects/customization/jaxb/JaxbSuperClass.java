@@ -1,5 +1,7 @@
 package org.fao.fi.refpub.webservice.objects.customization.jaxb;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -11,4 +13,5 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 
 @JsonInclude(Include.NON_EMPTY)
+@XmlTransient
 public class JaxbSuperClass {}

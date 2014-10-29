@@ -6,7 +6,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 import org.fao.fi.refpub.webservice.Attributes;
 import org.fao.fi.refpub.webservice.Concept;
@@ -20,7 +22,9 @@ import org.fao.fi.refpub.webservice.impl.CodeDTO;
 public class CoreWs {
 
 	@Inject RefPubInterface bean;
-	
+	@Context
+	private UriInfo uriInfo;
+
 	/*
 	 * Get Concepts JSON
 	 */
@@ -28,6 +32,14 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList concepts() {
+		return this.conceptsJSON();
+	}
+	
+	@Path("concept/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ConceptList conceptsJSON() {
+		bean.setUrl(uriInfo);
 		return bean.getAllConcept();
 	}
 	
@@ -35,18 +47,53 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList conceptsXML() {
+		bean.setUrl(uriInfo);
 		return bean.getAllConcept();
+	}
+
+	/*
+	 * --------------------------------------------------------
+	 * get codesystems
+	 */
+	@Path("codesystem")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Concept code() {
+		return this.codeJson();
+	}
+	
+	@Path("codesystem/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Concept codeJson() {
+		bean.setUrl(uriInfo);
+		return bean.getAllCodeSystem();
+	}
+	
+	@Path("codesystem/xml")
+	@GET
+	@Produces({ MediaType.APPLICATION_XML })
+	public Concept codeXML() {
+		bean.setUrl(uriInfo);
+		return bean.getAllCodeSystem();
 	}
 	
 	/*
 	 * --------------------------------------------------------
 	 * Get all objects by concept
 	 */
-	
 	@Path("concept/{concept}")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList conceptList(@PathParam("concept") String conceptCode) {
+		return this.conceptListJson(conceptCode);
+	}
+	
+	@Path("concept/{concept}/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ConceptList conceptListJson(@PathParam("concept") String conceptCode) {
+		bean.setUrl(uriInfo);
 		return bean.getAllObjectByConcept(conceptCode);
 	}
 	
@@ -54,6 +101,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList conceptListXML(@PathParam("concept") String conceptCode) {
+		bean.setUrl(uriInfo);
 		return bean.getAllObjectByConcept(conceptCode);
 	}
 
@@ -62,12 +110,19 @@ public class CoreWs {
 	 * --------------------------------------------------------
 	 * Get all codesystems by concept
 	 */
-	
 	@Path("concept/{concept}/codesystem")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept codesystems(@PathParam("concept") String concept) {
+		return this.codesystemsJson(concept);
+	}
+	
+	@Path("concept/{concept}/codesystem/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Concept codesystemsJson(@PathParam("concept") String concept) {
 		try {
+			bean.setUrl(uriInfo);
 			return bean.getAllCodeSystemByConcept(concept);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -79,6 +134,7 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_XML })
 	public Concept codesystemsXML(@PathParam("concept") String concept) {
 		try {
+			bean.setUrl(uriInfo);
 			return bean.getAllCodeSystemByConcept(concept);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -94,6 +150,14 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		return this.codesystemJson(concept, codesystem);
+	}
+	
+	@Path("concept/{concept}/codesystem/{codesystem}/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public ConceptList codesystemJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		bean.setUrl(uriInfo);
 		return bean.getObjectByCodeSystem(concept, codesystem);
 	}
 	
@@ -101,6 +165,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList codesystemXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		bean.setUrl(uriInfo);
 		return bean.getObjectByCodeSystem(concept, codesystem);
 	}
 	
@@ -113,7 +178,16 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
+		return this.codeJson(concept, codesystem, code);
+	}
+	
+	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Concept codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+			@PathParam("code") String code) {
 		try {
+			bean.setUrl(uriInfo);
 			return bean.getObject(concept, codesystem, code);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -126,6 +200,7 @@ public class CoreWs {
 	public Concept codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
+			bean.setUrl(uriInfo);
 			return bean.getObject(concept, codesystem, code);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -140,6 +215,14 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Attributes code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		return this.codeJson(concept, codesystem);
+	}
+	
+	@Path("concept/{concept}/codesystem/{codesystem}/attribute/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Attributes codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		bean.setUrl(uriInfo);
 		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
 	}
 	
@@ -147,7 +230,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public Attributes codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+		bean.setUrl(uriInfo);
 		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
 	}
-
 }

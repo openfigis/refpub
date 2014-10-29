@@ -72,6 +72,8 @@ public class RefPubObject {
 	private List<RefPubObject> parents;
 	
 	private List<CodeListDAO> codeList;
+	
+	private URI currentURI;
 
 	public String getPrimary_key_id() {
 		return primary_key_id;
@@ -373,5 +375,11 @@ public class RefPubObject {
 	}
 	public void setParents(List<RefPubObject> parents) {
 		this.parents = parents;
+	}
+	public URI getCurrentURI() {
+		return currentURI;
+	}
+	public void setCurrentURI(URI currentURI) {
+		this.currentURI = currentURI;
 	}
 }

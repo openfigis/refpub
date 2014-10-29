@@ -14,6 +14,7 @@ public class RefPubConcept {
 	private String table_name;
 	private String table_grp_name;
 	private Map<String, String> codelists;
+	private URI currentURI;
 	public String getMeta() {
 		return meta;
 	}
@@ -79,5 +80,11 @@ public class RefPubConcept {
 	}
 	public void setCodelists(Map<String, String> codelists) {
 		this.codelists = codelists;
+	}
+	public URI getCurrentURI() {
+		return currentURI;
+	}
+	public void setCurrentURI(URI currentURI) {
+		this.currentURI = currentURI;
 	}
 }

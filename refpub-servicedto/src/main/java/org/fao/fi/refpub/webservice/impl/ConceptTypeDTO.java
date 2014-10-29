@@ -17,10 +17,8 @@ public class ConceptTypeDTO {
 
 		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 		urlChunks.add(new ResourceKeyValue("concept", concept.getName()));
-		
-		c.setResourceUrl(ResourceUrlDTO.create(urlChunks));
-		//c.setName(concept.getName());
-		c.setCodeList(CodeListTypeDTO.create(concept.getCodelists(), concept.getName()));
+		c.setLink(LinkRelDTO.create(concept, urlChunks, concept.getName()));
+		c.setCodeList(CodeListTypeDTO.create(concept));
 				
 		return c;
 	}
@@ -35,16 +33,13 @@ public class ConceptTypeDTO {
 					urlChunks.add(new ResourceKeyValue("concept", object.getConcept()));
 					urlChunks.add(new ResourceKeyValue("codesystem", cl.getName()));
 					urlChunks.add(new ResourceKeyValue("code", cl.getValue()));
-					c.setResourceUrl(ResourceUrlDTO.create(urlChunks));
+					c.setLink(LinkRelDTO.create(object, urlChunks, object.getConcept()));
 				}
 			}
 			c.setCodeList(CodeListTypeDTO.createList(object, false));
 		}
 		
-		//c.setId(Integer.toString(object.getId()));
 		c.setScientificName(object.getScientific_name());
-		//c.setSysItem(object.getFic_sys_item());
-		//c.setCodeList(CodeListType.createList(object, false));
 		c.setMultilingualName(MultilingualTypeDTO.create(object, "SHORT"));
 		c.setMultilingualFullName(MultilingualTypeDTO.create(object, "FULL"));
 		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "LONG"));

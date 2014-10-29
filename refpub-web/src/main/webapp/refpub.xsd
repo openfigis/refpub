@@ -22,13 +22,15 @@
 
 	<!-- Elements -->
 
-    <element name="ConceptList" type="refpub:ConceptListType"></element>
-	<element name="Concept" type="refpub:ConceptType"></element>
+    <element name="conceptList" type="refpub:ConceptListType"></element>
+	<element name="concept" type="refpub:ConceptType"></element>
 
-	<element name="CodeSystemList" type="refpub:CodeSystemListType"></element>
-	<element name="CodeSystem" type="refpub:CodeSystemType"></element>
-	<element name="Code" type="refpub:CodeType"></element>
-	<element name="Attributes" type="refpub:AttributesList"></element>
+	<element name="codeSystemList" type="refpub:CodeSystemListType"></element>
+	<element name="codeSystem" type="refpub:CodeSystemType"></element>
+	<element name="code" type="refpub:codeType"></element>
+	<element name="attributes" type="refpub:attributesList"></element>
+	
+	<element name="TestRefPub" type="refpub:atomLink"></element>
 
 
 	<!-- Types -->
@@ -45,13 +47,22 @@
 	</complexType>
 	
 	<complexType name="RestType">
-		<attribute name="resourceUrl" type="anyURI"></attribute>
+		<complexContent>
+			<extension base="refpub:atomLink">
+				<sequence>
+					<element name="attributes" type="refpub:atomLink"></element>
+				</sequence>
+			</extension>
+		</complexContent>
 	</complexType>
 	
 	<complexType name="RestTypeSingle">
-		<attribute name="count_records" type="int"></attribute>
-		<attribute name="resourceUrl" type="anyURI"></attribute>
-		<attribute name="error_msg" type="string"></attribute>
+		<complexContent>
+			<extension base="refpub:atomLink">
+				<attribute name="count_records" type="int"></attribute>
+				<attribute name="error_msg" type="string"></attribute>
+			</extension>
+		</complexContent>	
 	</complexType>
 
 	<complexType name="ConceptType">
@@ -77,49 +88,38 @@
 		<complexContent>
 			<extension base="refpub:TreasureType">
 				<sequence>
-					<element name="code" type="refpub:CodeType" maxOccurs="unbounded" minOccurs="1"></element>
+					<element name="code" type="refpub:codeType" maxOccurs="unbounded" minOccurs="1"></element>
 				</sequence>
 			</extension>
 		</complexContent>
 	</complexType>
 
 
+	<complexType name="TextLang">
+		<simpleContent>
+        	<extension base="string">
+				<attribute name="lang" type="string" />
+			</extension>
+		</simpleContent>
+	</complexType>
 
 	<complexType name="MultilingualType">
 		<sequence>
-			<element name="text" type="refpub:TextType" maxOccurs="unbounded"
-				minOccurs="1" nillable="true"></element>
+			<element name="value" type="refpub:TextLang" maxOccurs="unbounded"
+				minOccurs="1" nillable="true" />
 		</sequence>
 	</complexType>
 	
 	<complexType name="CodeListListType">
 		<sequence>
-			<element name="name" type="refpub:CodeList" maxOccurs="unbounded"
+			<element name="code" type="refpub:codeList" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
-			<element name="url" type="refpub:TextType" maxOccurs="unbounded"
-				minOccurs="1"></element>
 		</sequence>
 	</complexType>
 
-	<complexType name="NameValueType">
-		<attribute name="text" type="string" />
-		<attribute name="lang" type="string" />
-	</complexType>
-
-
-
-	<complexType name="TextType">
-		<attribute name="value" type="string" />
-		<attribute name="lang" type="string" />
-	</complexType>
-	
 	<complexType name="TextTypeValuePair">
 		<attribute name="name" type="string" />
-		<attribute name="value" type="string" />
-	</complexType>
-	
-	<complexType name="TextTypeSimple">
 		<attribute name="value" type="string" />
 	</complexType>
 	
@@ -132,7 +132,7 @@
 		</sequence>
 	</complexType>
 	
-	<complexType name="AttributesList">
+	<complexType name="attributesList">
 		<complexContent>
 			<extension base="refpub:RestTypeSingle">
 				<sequence>
@@ -143,10 +143,12 @@
 		</complexContent>
 	</complexType>
 
-	<complexType name="CodeList">
-		<attribute name="name" type="string" />
-		<attribute name="value" type="string" />
-		<attribute name="url" type="string" />
+	<complexType name="codeList">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<attribute name="name"></attribute>
+			</extension>
+		</complexContent>
 	</complexType>
 	
 	<complexType name="ParentList">
@@ -163,39 +165,57 @@
 				<sequence>
 					<!-- <element name="records_count" type="int" minOccurs="1"></element> -->
 					<element name="multilingualName"
-						type="refpub:MultilingualType" nillable="true">
+						type="refpub:MultilingualType">
 					</element>
 					<element name="multilingualFullName"
-						type="refpub:MultilingualType" nillable="true">
+						type="refpub:MultilingualType">
 					</element>
 					<element name="multilingualLongName"
-						type="refpub:MultilingualType" nillable="true">
+						type="refpub:MultilingualType">
 					</element>
 					<element name="multilingualOfficialName"
-						type="refpub:MultilingualType" nillable="true">
+						type="refpub:MultilingualType">
 					</element>
 					<element name="CodeList"
-						type="refpub:CodeListListType" nillable="true">
+						type="refpub:CodeListListType">
 					</element>
 					<element name="scientific_name" type="string" minOccurs="1" nillable="false"></element>
-					<element name="Hierarchy" type="refpub:ParentList" nillable="false">
+					<element name="hierarchy" type="refpub:ParentList" nillable="false">
 					</element>
 				</sequence>
 			</extension>
 		</complexContent>
 	</complexType>
 	
-	<complexType name="CodeType">
+	<complexType name="codeType">
 		<complexContent>
 			<extension base="refpub:RestType">
 				<sequence>
-					<element name="name"
-						type="refpub:MultilingualType" nillable="true">
-					</element>
 				</sequence>
 				<attribute name="code" type="string"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	
+	<complexType name="linkRel">
+		<simpleContent>
+        	<extension base="string">
+				<attribute name="rel" type="string" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	
+    <complexType name="atomLink">
+        <sequence>
+            <element name="link" type="refpub:linkRel" />
+        </sequence>
+    </complexType>
+    
+    <complexType name="simpleText">
+    	<simpleContent>
+    		<extension base="string" />
+    	</simpleContent>
+    </complexType>
 
 </schema>

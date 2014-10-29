@@ -7,7 +7,7 @@ public class ConceptListMock {
 
 	public static ConceptList create() {
 		ConceptList l = new ConceptList();
-		l.setResourceUrl(ResourceUrlMock.create("concepts"));
+		//l.setResourceUrl(ResourceUrlMock.create("concepts"));
 		l.getConcepts().add(ConceptTypeMock.create());
 		l.getConcepts().add(ConceptTypeMock.create());
 		return l;

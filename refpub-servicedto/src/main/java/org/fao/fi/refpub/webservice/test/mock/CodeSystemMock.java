@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fao.fi.refpub.webservice.Code;
 import org.fao.fi.refpub.webservice.CodeSystem;
 import org.fao.fi.refpub.webservice.MultilingualType;
-import org.fao.fi.refpub.webservice.TextType;
+import org.fao.fi.refpub.webservice.TextLang;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -30,15 +30,15 @@ public class CodeSystemMock {
 				String codeValue = nextLine[2];
 				if (!StringUtils.isBlank(codeValue)) {
 					code.setCode(codeValue);
-					code.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem/asfis/code") + codeValue);
+					//code.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem/asfis/code") + codeValue);
 					MultilingualType l = new MultilingualType();
-					code.setName(l);
+					//code.setName(l);
 
-					add2Codes(code.getName().getTexts(), "en", nextLine[4]);
-					add2Codes(code.getName().getTexts(), "fr", nextLine[5]);
-					add2Codes(code.getName().getTexts(), "es", nextLine[6]);
-					add2Codes(code.getName().getTexts(), "la", nextLine[7]);
-					add2Codes(code.getName().getTexts(), "fr", nextLine[8]);
+					//add2Codes(code.getName().getTexts(), "en", nextLine[4]);
+					//add2Codes(code.getName().getTexts(), "fr", nextLine[5]);
+					//add2Codes(code.getName().getTexts(), "es", nextLine[6]);
+					//add2Codes(code.getName().getTexts(), "la", nextLine[7]);
+					//add2Codes(code.getName().getTexts(), "fr", nextLine[8]);
 					cl.getCodes().add(code);
 				}
 			}
@@ -52,13 +52,13 @@ public class CodeSystemMock {
 	public static CodeSystem create() {
 		//cl.setCodelist(CODE);
 		cl.setMultilingualName(MultilingualTypeMock.create());
-		cl.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem") + CODE);
+		//cl.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem") + CODE);
 		return cl;
 	}
 
-	private static void add2Codes(List<TextType> names, String lang, String v) {
+	private static void add2Codes(List<TextLang> names, String lang, String v) {
 		if (!StringUtils.isBlank(v)) {
-			TextType t = new TextType();
+			TextLang t = new TextLang();
 			t.setLang(lang);
 			t.setValue(v);
 			names.add(t);

@@ -9,10 +9,12 @@ import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
+import javax.ws.rs.core.UriInfo;
 
 import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
+import org.fao.fi.refpub.dao.objects.URI;
 import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
@@ -37,6 +39,17 @@ import org.fao.fi.refpub.webservice.objects.Constants;
 @Named("refpub")
 public class RefPubImplementation implements RefPubInterface {
 	@Produces
+	
+	UriInfo URI;
+	
+	@Override
+	public void setUrl(UriInfo uri) {
+		if (uri != null) {
+			URI = uri;
+		} else {
+			URI = null;
+		}
+	}
 	
 	@Override
 	public ConceptList getAllConcept() {
@@ -84,6 +97,8 @@ public class RefPubImplementation implements RefPubInterface {
 		return AttributeListTypeDTO.create(this.attributeListByConceptCodelist(concept, codesystem));
 	}
 	
+
+	
 	private List<RefPubConcept> getAllConcepts() {
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		
@@ -106,7 +121,7 @@ public class RefPubImplementation implements RefPubInterface {
 			concept.setCodelists(codemap);
 			
 			// TODO Add lookup to MD-REFOBJECT to retrieve the concept translations
-			
+			concept.setCurrentURI(this.BuildURI());
 			concepts.add(concept);
 		}
 		
@@ -129,7 +144,7 @@ public class RefPubImplementation implements RefPubInterface {
 			codemap.put(code.getCode_column(), code.getCode_name());
 		}
 		concept.setCodelists(codemap);
-		
+		concept.setCurrentURI(this.BuildURI());
 		return concept;
 	}
 	
@@ -150,6 +165,7 @@ public class RefPubImplementation implements RefPubInterface {
 			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
+			obj.setCurrentURI(this.BuildURI());
 			objs.set(counter, obj);
 			counter++;
 		}
@@ -180,7 +196,8 @@ public class RefPubImplementation implements RefPubInterface {
 											 obj.getPrimary_key_id(),
 											 mdconcept.getTable_group_column(),
 											 tbl.getPrimary_key()));
-
+		
+		obj.setCurrentURI(this.BuildURI());
 		return obj;
 	}
 	
@@ -199,7 +216,7 @@ public class RefPubImplementation implements RefPubInterface {
 			l.add(codeListObj);
 		}
 		returnObj.setCodeList(l);
-		
+		returnObj.setCurrentURI(this.BuildURI());
 		return returnObj;
 	}
 	
@@ -221,6 +238,7 @@ public class RefPubImplementation implements RefPubInterface {
 			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
+			obj.setCurrentURI(this.BuildURI());
 			returnList.set(counter, obj);
 			counter++;
 		}
@@ -244,7 +262,7 @@ public class RefPubImplementation implements RefPubInterface {
 			l.add(codeListObj);
 		}
 		returnObj.setCodeList(l);
-		
+		returnObj.setCurrentURI(this.BuildURI());
 		return returnObj;
 	}
 
@@ -265,12 +283,20 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		return retList;
 	}
-
-
 	
+	private URI BuildURI() {
+		URI uri = new URI();
+		
+		if (URI == null) {
+			return null;
+		}
+		uri.setFullURI(URI.getRequestUri().toString());
+		uri.setHost(URI.getRequestUri().getHost());
+		uri.setPath(URI.getBaseUri().getPath());
+		uri.setPort(Integer.toString(URI.getRequestUri().getPort()));
+		
+		return uri;
+	}
 
-	
-
-
-	
+		
 }

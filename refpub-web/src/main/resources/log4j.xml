@@ -18,5 +18,18 @@
     <level value="debug"/>
     <appender-ref ref="APPENDER"/>
 </logger>
+
+<!-- CATALINA -->
+  <logger name="org.apache.catalina.session">
+    <level value="INFO" />
+  </logger>
+  <!-- TOMCAT -->
+  <logger name="org.apache.jasper.compiler">
+     <level value="INFO" />
+  </logger>
+  <!-- COMMONS -->
+  <logger name="org.apache.commons.digester">
+     <level value="INFO" />
+  </logger>
   
 </log4j:configuration>

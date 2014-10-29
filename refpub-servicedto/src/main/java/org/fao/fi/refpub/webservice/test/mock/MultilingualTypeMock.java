@@ -1,7 +1,7 @@
 package org.fao.fi.refpub.webservice.test.mock;
 
 import org.fao.fi.refpub.webservice.MultilingualType;
-import org.fao.fi.refpub.webservice.TextType;
+import org.fao.fi.refpub.webservice.TextLang;
 
 
 public class MultilingualTypeMock {
@@ -9,16 +9,16 @@ public class MultilingualTypeMock {
 	public static MultilingualType create() {
 
 		MultilingualType n = new MultilingualType();
-		TextType en = new TextType();
+		TextLang en = new TextLang();
 		en.setLang("en");
 		en.setValue("In the English Language");
 
-		TextType fr = new TextType();
+		TextLang fr = new TextLang();
 		fr.setLang("fr");
 		fr.setValue("En langue francaise");
 
-		n.getTexts().add(en);
-		n.getTexts().add(fr);
+		n.getValues().add(en);
+		n.getValues().add(fr);
 
 		return n;
 	}
