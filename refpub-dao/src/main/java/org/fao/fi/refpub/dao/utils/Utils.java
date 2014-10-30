@@ -1,5 +1,11 @@
 package org.fao.fi.refpub.dao.utils;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,39 +18,37 @@ public class Utils {
 		List<CodeListDAO> codemap = new ArrayList<CodeListDAO>();
 		for (MDCodelist cl : codelists) {
 			CodeListDAO clobj = new CodeListDAO();
-			String column = cl.getCode_column();
-			if (column.equalsIgnoreCase("ALPHA3CODE")) {
-				clobj.setName(cl.getCode_name());
-				clobj.setValue(obj.getAlpha3code());
-				clobj.setIsDefault(cl.getIsDefault());
-			}
-			if (column.equalsIgnoreCase("AREA")) {
-				clobj.setName(cl.getCode_name());
-				clobj.setValue(obj.getArea());
-				clobj.setIsDefault(cl.getIsDefault());
-			}
-			if (column.equalsIgnoreCase("FIC_ITEM")) {
-				clobj.setName(cl.getCode_name());
-				clobj.setValue(obj.getFic_item());
-				clobj.setIsDefault(cl.getIsDefault());
-			}
-			if (column.equalsIgnoreCase("FIC_SYS_ITEM")) {
-				clobj.setName(cl.getCode_name());
-				clobj.setValue(obj.getFic_sys_item());
-				clobj.setIsDefault(cl.getIsDefault());
-			}
-			if (column.equalsIgnoreCase("ISO_2_CODE")) {
-				clobj.setName(cl.getCode_name());
-				clobj.setValue(obj.getIso_2_code());
-				clobj.setIsDefault(cl.getIsDefault());
-			}
-			if (column.equalsIgnoreCase("ISO_3_CODE")) {
-				clobj.setName(cl.getCode_name());
-				clobj.setValue(obj.getIso_3_code());
-				clobj.setIsDefault(cl.getIsDefault());
-			}
+			clobj.setName(cl.getCode_name());
+			clobj.setValue(getBeanProperty(obj, cl.getCode_column()));
+			clobj.setIsDefault(cl.getIsDefault());
 			codemap.add(clobj);
 		}
 		return codemap;
 	}
+	
+	public static String getBeanProperty(RefPubObject bean, String column) {  
+	    BeanInfo info;
+		try {
+			info = Introspector.getBeanInfo(bean.getClass(), Object.class);
+			PropertyDescriptor[] props = info.getPropertyDescriptors();  
+		    for (PropertyDescriptor pd : props) {  
+		        if (pd.getName().equalsIgnoreCase(column)) {  
+		        	Method getter = pd.getReadMethod();  
+		        	/*Class<?> type = pd.getPropertyType();*/  
+		  
+		        	Object value = getter.invoke(bean);
+		        	return (String) value; 
+		        }
+		    }  
+		} catch (IntrospectionException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}  
+	    return null;
+	}  
 }

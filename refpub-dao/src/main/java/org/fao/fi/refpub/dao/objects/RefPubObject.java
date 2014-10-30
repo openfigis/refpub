@@ -68,12 +68,30 @@ public class RefPubObject {
 	private String official_name_a;
 	private String official_name_r;
 	private String official_name_c;
+	
+	private String short_desc_e;
+	private String short_desc_f;
+	private String short_desc_s;
+	private String short_desc_a;
+	private String short_desc_r;
+	private String short_desc_c;
+	
 	private String group_name;
+	
+	private String isscfg_code;
+	private String std_abbrev;
+	private String grp_ind;
+	private String grp_lev;
+	private String entry_date;
+	
+	
 	private List<RefPubObject> parents;
 	
 	private List<CodeListDAO> codeList;
 	
 	private URI currentURI;
+	
+	private int total;
 
 	public String getPrimary_key_id() {
 		return primary_key_id;
@@ -355,7 +373,7 @@ public class RefPubObject {
 	public String getOfficial_name_c() {
 		return official_name_c;
 	}
-	public void setOfficial_name_c(String official_name_c) {
+	public void setOfficial_name_c(String official_name_c) {https://www.facebook.com/
 		this.official_name_c = official_name_c;
 	}
 	public List<CodeListDAO> getCodeList() {
@@ -381,5 +399,77 @@ public class RefPubObject {
 	}
 	public void setCurrentURI(URI currentURI) {
 		this.currentURI = currentURI;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public String getShort_desc_e() {
+		return short_desc_e;
+	}
+	public void setShort_desc_e(String short_desc_e) {
+		this.short_desc_e = short_desc_e;
+	}
+	public String getShort_desc_f() {
+		return short_desc_f;
+	}
+	public void setShort_desc_f(String short_desc_f) {
+		this.short_desc_f = short_desc_f;
+	}
+	public String getShort_desc_s() {
+		return short_desc_s;
+	}
+	public void setShort_desc_s(String short_desc_s) {
+		this.short_desc_s = short_desc_s;
+	}
+	public String getShort_desc_a() {
+		return short_desc_a;
+	}
+	public void setShort_desc_a(String short_desc_a) {
+		this.short_desc_a = short_desc_a;
+	}
+	public String getShort_desc_r() {
+		return short_desc_r;
+	}
+	public void setShort_desc_r(String short_desc_r) {
+		this.short_desc_r = short_desc_r;
+	}
+	public String getShort_desc_c() {
+		return short_desc_c;
+	}
+	public void setShort_desc_c(String short_desc_c) {
+		this.short_desc_c = short_desc_c;
+	}
+	public String getIsscfg_code() {
+		return isscfg_code;
+	}
+	public void setIsscfg_code(String isscfg_code) {
+		this.isscfg_code = isscfg_code;
+	}
+	public String getStd_abbrev() {
+		return std_abbrev;
+	}
+	public void setStd_abbrev(String std_abbrev) {
+		this.std_abbrev = std_abbrev;
+	}
+	public String getGrp_ind() {
+		return grp_ind;
+	}
+	public void setGrp_ind(String grp_ind) {
+		this.grp_ind = grp_ind;
+	}
+	public String getGrp_lev() {
+		return grp_lev;
+	}
+	public void setGrp_lev(String grp_lev) {
+		this.grp_lev = grp_lev;
+	}
+	public String getEntry_date() {
+		return entry_date;
+	}
+	public void setEntry_date(String entry_date) {
+		this.entry_date = entry_date;
 	}
 }

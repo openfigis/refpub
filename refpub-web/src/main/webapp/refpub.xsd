@@ -30,9 +30,6 @@
 	<element name="code" type="refpub:codeType"></element>
 	<element name="attributes" type="refpub:attributesList"></element>
 	
-	<element name="TestRefPub" type="refpub:atomLink"></element>
-
-
 	<!-- Types -->
 	<complexType name="ConceptListType">
 		<complexContent>
@@ -61,6 +58,7 @@
 			<extension base="refpub:atomLink">
 				<attribute name="count_records" type="int"></attribute>
 				<attribute name="error_msg" type="string"></attribute>
+				<attribute name="total_records" type="int"></attribute>
 			</extension>
 		</complexContent>	
 	</complexType>
@@ -176,7 +174,7 @@
 					<element name="multilingualOfficialName"
 						type="refpub:MultilingualType">
 					</element>
-					<element name="CodeList"
+					<element name="codeList"
 						type="refpub:CodeListListType">
 					</element>
 					<element name="scientific_name" type="string" minOccurs="1" nillable="false"></element>
@@ -208,6 +206,8 @@
 	
     <complexType name="atomLink">
         <sequence>
+            <element name="link" type="refpub:linkRel" />
+            <element name="link" type="refpub:linkRel" />
             <element name="link" type="refpub:linkRel" />
         </sequence>
     </complexType>

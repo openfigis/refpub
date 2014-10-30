@@ -10,6 +10,7 @@ import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.webservice.AtomLink;
 import org.fao.fi.refpub.webservice.CodeList;
 import org.fao.fi.refpub.webservice.CodeListListType;
+import org.fao.fi.refpub.webservice.LinkRel;
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
 public class CodeListTypeDTO {
@@ -36,12 +37,12 @@ public class CodeListTypeDTO {
 			urlChunks.add(new ResourceKeyValue("concept", concept.getName()));
 			urlChunks.add(new ResourceKeyValue("codesystem", entry.getValue()));
 
-			cl.setLink(LinkRelDTO.create(concept, urlChunks, "cl_" + entry.getValue().toLowerCase()));
+			cl.getLinks().add(LinkRelDTO.create(concept, urlChunks, "cl_" + entry.getValue().toLowerCase()));
 			cl.setName(entry.getValue());
 			
 			urlChunks.add(new ResourceKeyValue("attribute", ""));
 			AtomLink attributesLink = new AtomLink();
-			attributesLink.setLink(LinkRelDTO.create(concept, urlChunks, "attr_" + entry.getValue().toLowerCase()));
+			attributesLink.getLinks().add(LinkRelDTO.create(concept, urlChunks, "attr_" + entry.getValue().toLowerCase()));
 			cl.setAttributes(attributesLink);
 			n.getCodes().add(cl);
 		}
@@ -64,7 +65,7 @@ public class CodeListTypeDTO {
 					urlChunks.add(new ResourceKeyValue("concept", obj.getConcept()));
 					urlChunks.add(new ResourceKeyValue("codesystem", cldto.getName()));
 					urlChunks.add(new ResourceKeyValue("code", cl.getValue()));
-					cldto.setLink(LinkRelDTO.create(obj, urlChunks, "cl_" + cldto.getName().toLowerCase()));
+					cldto.getLinks().add(LinkRelDTO.create(obj, urlChunks, "cl_" + cldto.getName().toLowerCase()));
 				}
 			}
 			

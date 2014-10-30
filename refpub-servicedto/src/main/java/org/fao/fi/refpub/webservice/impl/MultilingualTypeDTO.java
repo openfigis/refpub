@@ -12,6 +12,7 @@ public class MultilingualTypeDTO {
 		else if (type.equalsIgnoreCase("long")) { return MultilingualTypeDTO.getLongNames(cat); }
 		else if (type.equalsIgnoreCase("full")) { return MultilingualTypeDTO.getFullNames(cat); }
 		else if (type.equalsIgnoreCase("official")) { return MultilingualTypeDTO.getOfficialNames(cat); }
+		else if (type.equalsIgnoreCase("short_desc")) { return MultilingualTypeDTO.getShortDesc(cat); }
 		else { return MultilingualTypeDTO.getNames(cat); }
 	}
 	
@@ -202,6 +203,54 @@ public class MultilingualTypeDTO {
 			zh.setValue(cat.getOfficial_name_c());
 			n.getValues().add(zh);
 		}
+		return n;
+	}
+	
+	private static MultilingualType getShortDesc(RefPubObject cat) {
+		MultilingualType n = new MultilingualType();
+		
+		if (cat.getShort_desc_a()!=null && !cat.getShort_desc_a().equalsIgnoreCase("")) {
+			TextLang ar = new TextLang();
+			ar.setLang("ar");
+			ar.setValue(cat.getShort_desc_a());
+			n.getValues().add(ar);
+		}
+		
+		if (cat.getShort_desc_e()!=null && !cat.getShort_desc_e().equalsIgnoreCase("")) {
+			TextLang en = new TextLang();
+			en.setLang("en");
+			en.setValue(cat.getShort_desc_e());
+			n.getValues().add(en);
+		}
+		
+		if (cat.getShort_desc_s()!=null && !cat.getShort_desc_s().equalsIgnoreCase("")) {
+			TextLang es = new TextLang();
+			es.setLang("es");
+			es.setValue(cat.getShort_desc_s());
+			n.getValues().add(es);
+		}
+		
+		if (cat.getShort_desc_f()!=null && !cat.getShort_desc_f().equalsIgnoreCase("")) {
+			TextLang fr = new TextLang();
+			fr.setLang("fr");
+			fr.setValue(cat.getShort_desc_f());
+			n.getValues().add(fr);
+		}
+		
+		if (cat.getShort_desc_r()!=null && !cat.getShort_desc_r().equalsIgnoreCase("")) {
+			TextLang ru = new TextLang();
+			ru.setLang("ru");
+			ru.setValue(cat.getShort_desc_r());
+			n.getValues().add(ru);
+		}
+		
+		if (cat.getShort_desc_c()!=null && !cat.getShort_desc_c().equalsIgnoreCase("")) {
+			TextLang zh = new TextLang();
+			zh.setLang("zh");
+			zh.setValue(cat.getShort_desc_c());
+			n.getValues().add(zh);
+		}
+		
 		return n;
 	}
 

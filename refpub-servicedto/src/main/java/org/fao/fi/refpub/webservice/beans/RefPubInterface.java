@@ -21,7 +21,7 @@ public interface RefPubInterface {
 	 * @return ConceptList
 	 */
 	//List<RefPubConcept> getConcepts();
-	ConceptList getAllConcept();
+	ConceptList getAllConcept(String count, String page);
 	
 	/*
 	 * getConcept()
@@ -30,7 +30,7 @@ public interface RefPubInterface {
 	 * @return Concept
 	 */
 	//RefPubConcept getConcept(String concept);
-	Concept getConcept(String concept);
+	Concept getConcept(String concept, String count, String page);
 	
 	/*
 	 * getAllObjectByConcept()
@@ -39,7 +39,7 @@ public interface RefPubInterface {
 	 * @return ConceptList
 	 */
 	//List<RefPubObject> getObjects(String concept);
-	ConceptList getAllObjectByConcept(String concept);
+	ConceptList getAllObjectByConcept(String concept, String count, String page);
 	
 	/*
 	 * getObject()
@@ -52,11 +52,22 @@ public interface RefPubInterface {
 	Concept getObject(String concept, String codesystem, String code);
 	
 	/*
+	 * getAttributeForObject()
+	 * Returns a single object's attribute by its concept, codelist and codelist's code
+	 * @param concept : The name of the concept
+	 * @param codesystem : The name of the codelist
+	 * @param code : The codelist's code
+	 * @param attribute : The object's attribute
+	 * @return Concept
+	 */
+	Concept getAttributeForObject(String concept, String codesystem, String code, String attribute);
+	
+	/*
 	 * getAllCodeSystem
 	 * Return a list of codelist
 	 * @return Concept
 	 */
-	Concept getAllCodeSystem();
+	Concept getAllCodeSystem(String count, String page);
 	
 	/*
 	 * getObjectByCodeSystem()
@@ -65,7 +76,7 @@ public interface RefPubInterface {
 	 * @param codelist : The name of the codelist
 	 * @return ConceptList
 	 */
-	ConceptList getObjectByCodeSystem(String concept, String codesystem);
+	ConceptList getObjectByCodeSystem(String concept, String codesystem, String count, String page);
 	
 	/*
 	 * getAllCodeSystemByConcept()

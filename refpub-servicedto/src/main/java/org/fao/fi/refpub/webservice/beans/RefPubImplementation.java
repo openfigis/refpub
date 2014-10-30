@@ -11,6 +11,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
@@ -52,20 +53,20 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	@Override
-	public ConceptList getAllConcept() {
-		return ConceptListDTO.create(this.getAllConcepts());
+	public ConceptList getAllConcept(String count, String page) {
+		return ConceptListDTO.create(this.getAllConcepts(count, page));
 	}
 
 
 	@Override
-	public Concept getConcept(String concept) {
+	public Concept getConcept(String concept, String count, String page) {
 		return null;
 	}
 
 
 	@Override
-	public ConceptList getAllObjectByConcept(String concept) {
-		return ConceptListDTO.createObj(this.getAllObjectsForConcept(concept));
+	public ConceptList getAllObjectByConcept(String concept, String count, String page) {
+		return ConceptListDTO.createObj(this.getAllObjectsForConcept(concept, count, page));
 	}
 
 
@@ -73,23 +74,33 @@ public class RefPubImplementation implements RefPubInterface {
 	public Concept getObject(String concept, String codesystem, String code) {
 		return CodeDTO.create(this.getSingleObject(concept, codesystem, code));
 	}
-
-
+	
+	
 	@Override
-	public Concept getAllCodeSystem() {
-		return CodeListListDTO.create(this.getAllCodeList());
+	///////////////////////////
+	public Concept getAttributeForObject(String concept, String codesystem,
+			String code, String attribute) {
+		return CodeDTO.create(this.getSingleAttributeForSingleObject(concept, codesystem, code, attribute));
 	}
 
 
 	@Override
-	public ConceptList getObjectByCodeSystem(String concept, String codesystem) {
-		return ConceptListDTO.createObj(this.getObjectsByCodeList(concept, codesystem));
+	public Concept getAllCodeSystem(String count, String page) {
+		return CodeListListDTO.create(this.getAllCodeList(count, page));
 	}
+	
+
+	@Override
+	public ConceptList getObjectByCodeSystem(String concept, String codesystem, String count, String page) {
+		return ConceptListDTO.createObj(this.getObjectsByCodeList(concept, codesystem, count, page));
+	}
+	
 	
 	@Override
 	public Concept getAllCodeSystemByConcept(String concept) {
 		return CodeListListDTO.create(this.getCodeSystemByConcept(concept));
 	}
+	
 	
 	@Override
 	public Attributes getAllAttributesForConceptAndCodesystem(
@@ -97,9 +108,16 @@ public class RefPubImplementation implements RefPubInterface {
 		return AttributeListTypeDTO.create(this.attributeListByConceptCodelist(concept, codesystem));
 	}
 	
+	
+	
 
 	
-	private List<RefPubConcept> getAllConcepts() {
+	private List<RefPubConcept> getAllConcepts(String count, String page) {
+		String min = this.calculateQueryPagination("min", count, page);
+		String max = this.calculateQueryPagination("max", count, page);
+		if (count == null) { count = max; }
+		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
+		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		
 		List<RefPubConcept> concepts = new ArrayList<RefPubConcept>();
@@ -110,7 +128,7 @@ public class RefPubImplementation implements RefPubInterface {
 			concept.setName(c.getRest_concept());
 			concept.setTable_name(c.getTable_name());
 			concept.setTable_grp_name(c.getTable_group());
-			concept.setMeta(c.getFic_meta());
+			concept.setMeta(c.getMeta_id());
 			
 			List<MDCodelist> codelists = ps.getCodelistForConcept(concept.getName());
 			
@@ -121,7 +139,7 @@ public class RefPubImplementation implements RefPubInterface {
 			concept.setCodelists(codemap);
 			
 			// TODO Add lookup to MD-REFOBJECT to retrieve the concept translations
-			concept.setCurrentURI(this.BuildURI());
+			concept.setCurrentURI(this.BuildURI(count, page));
 			concepts.add(concept);
 		}
 		
@@ -136,7 +154,7 @@ public class RefPubImplementation implements RefPubInterface {
 		concept.setName(c.getRest_concept());
 		concept.setTable_name(c.getTable_name());
 		concept.setTable_grp_name(c.getTable_group());
-		concept.setMeta(c.getFic_meta());
+		concept.setMeta(c.getMeta_id());
 		
 		List<MDCodelist> codelists = ps.getCodelistForConcept(concept.getName());
 		Map<String,String> codemap = new HashMap<String, String>();
@@ -144,19 +162,28 @@ public class RefPubImplementation implements RefPubInterface {
 			codemap.put(code.getCode_column(), code.getCode_name());
 		}
 		concept.setCodelists(codemap);
-		concept.setCurrentURI(this.BuildURI());
+		concept.setCurrentURI(this.BuildURI("all", null));
 		return concept;
 	}
 	
 	
-	private List<RefPubObject> getAllObjectsForConcept(String concept) {
+	private List<RefPubObject> getAllObjectsForConcept(String concept, String count, String page) {
+		String min = this.calculateQueryPagination("min", count, page);
+		String max = this.calculateQueryPagination("max", count, page);
+		if (count == null) { count = max; }
+		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
+		
 		RefPubConcept cp = this.getSingleConcept(concept); 
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		
 		MDConcept mdconcept = ps.getConcept(concept);
 		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
 		
-		List<RefPubObject> objs = ps.getObjects(cp.getMeta(), "FIGIS." + cp.getTable_name(), tbl.getPrimary_key());
+		List<RefPubObject> objs = ps.getObjects(cp.getMeta(),
+												mdconcept.getMeta_column(),
+												"FIGIS." + cp.getTable_name(), 
+												tbl.getPrimary_key(),
+												min, max);
 		if (objs == null) { return new ArrayList<RefPubObject>(); }
 		List<MDCodelist> codelists = ps.getCodelistForConcept(concept);
 		
@@ -165,7 +192,7 @@ public class RefPubImplementation implements RefPubInterface {
 			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
-			obj.setCurrentURI(this.BuildURI());
+			obj.setCurrentURI(this.BuildURI(count, page));
 			objs.set(counter, obj);
 			counter++;
 		}
@@ -192,16 +219,40 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		obj.setParents(ps.getParentHierarchy("FIGIS." + mdconcept.getTable_name(),
 											 "FIGIS." +  mdconcept.getTable_group(), 
-											 mdconcept.getTable_group_member(), 
+											 mdconcept.getTable_group_member(),
+											 mdconcept.getMeta_column(),
 											 obj.getPrimary_key_id(),
 											 mdconcept.getTable_group_column(),
 											 tbl.getPrimary_key()));
 		
-		obj.setCurrentURI(this.BuildURI());
+		obj.setCurrentURI(this.BuildURI(null, null));
 		return obj;
 	}
 	
-	private RefPubObject getAllCodeList() {
+	private RefPubObject getSingleAttributeForSingleObject(String concept, String codelist, String code, String attribute) {
+		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
+		MDConcept mdconcept = ps.getConcept(concept);
+		MDCodelist mdcodelist =  ps.getCodeList(concept, codelist);
+		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
+		
+		RefPubObject obj = ps.getAttributeForSingleObject("FIGIS." + mdconcept.getTable_name(), 
+														  mdcodelist.getCode_column(), 
+														  code, 
+														  tbl.getPrimary_key(),
+														  attribute);
+		
+		if (obj == null) {
+			return new RefPubObject();
+		}
+		return obj;
+	}
+	
+	private RefPubObject getAllCodeList(String count, String page) {
+		String min = this.calculateQueryPagination("min", count, page);
+		String max = this.calculateQueryPagination("max", count, page);
+		if (count == null) { count = max; }
+		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
+		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		RefPubObject returnObj = new RefPubObject();
 		
@@ -216,18 +267,27 @@ public class RefPubImplementation implements RefPubInterface {
 			l.add(codeListObj);
 		}
 		returnObj.setCodeList(l);
-		returnObj.setCurrentURI(this.BuildURI());
+		returnObj.setCurrentURI(this.BuildURI(count, page));
 		return returnObj;
 	}
 	
-	private List<RefPubObject> getObjectsByCodeList(String concept, String codelist) {
+	private List<RefPubObject> getObjectsByCodeList(String concept, String codelist, String count, String page) {
+		String min = this.calculateQueryPagination("min", count, page);
+		String max = this.calculateQueryPagination("max", count, page);
+		if (count == null) { count = max; }
+		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
+		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 	
 		MDCodelist cl = ps.getCodeList(concept, codelist);
+		if (cl == null) {
+			return new ArrayList<RefPubObject>();
+		}
 		TableInfo ti = ps.getTableInfo(cl.getTable_name());
 		List<RefPubObject> returnList = ps.getObjectsByCodeList("FIGIS." + cl.getTable_name(), 
 																cl.getCode_column(), 
-																ti.getPrimary_key());
+																ti.getPrimary_key(),
+																min, max);
 		
 		if (returnList == null) { return new ArrayList<RefPubObject>(); }
 		
@@ -238,7 +298,7 @@ public class RefPubImplementation implements RefPubInterface {
 			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
-			obj.setCurrentURI(this.BuildURI());
+			obj.setCurrentURI(this.BuildURI(count, page));
 			returnList.set(counter, obj);
 			counter++;
 		}
@@ -262,7 +322,7 @@ public class RefPubImplementation implements RefPubInterface {
 			l.add(codeListObj);
 		}
 		returnObj.setCodeList(l);
-		returnObj.setCurrentURI(this.BuildURI());
+		returnObj.setCurrentURI(this.BuildURI(null, null));
 		return returnObj;
 	}
 
@@ -284,7 +344,7 @@ public class RefPubImplementation implements RefPubInterface {
 		return retList;
 	}
 	
-	private URI BuildURI() {
+	private URI BuildURI(String count, String page) {
 		URI uri = new URI();
 		
 		if (URI == null) {
@@ -294,9 +354,64 @@ public class RefPubImplementation implements RefPubInterface {
 		uri.setHost(URI.getRequestUri().getHost());
 		uri.setPath(URI.getBaseUri().getPath());
 		uri.setPort(Integer.toString(URI.getRequestUri().getPort()));
-		
+		if (count != null && page != null) {
+			if ("all".equalsIgnoreCase(count)) {
+				uri.setAll(true);
+				uri.setCount(999999999);
+				uri.setPage(1);
+			} else {
+				uri.setCount(Integer.parseInt(count));
+				uri.setPage(Integer.parseInt(page));
+			}
+		}
 		return uri;
 	}
+	
+	/*
+	 * Calculates the pagination min/max offset for the query
+	 * @param minMax is an identifier with value "min" or "max"
+	 * @param count is the count of returned records
+	 * @param page is the page you look for
+	 * @return the min value if the param minMax is "min" / the max value if the param minMax is "max"
+	 * @return null in the case minMax is not set to "min" || "max"
+	 */
+	private String calculateQueryPagination(String minMax, String count, String page) {
+		boolean min = false;
+		boolean max = false;
+		if ("all".equalsIgnoreCase(count)) {
+			count = "9999999";
+			page = "1";
+		}
+		if ("min".equalsIgnoreCase(minMax)) {
+			min = true;
+		} else if ("max".equalsIgnoreCase(minMax)) {
+			max = true;
+		} else {
+			return null;
+		}
+		
+		if (count == null || !NumberUtils.isNumber(count)) {
+			count = "100";
+		} if (page == null || !NumberUtils.isNumber(page)) {
+			page = "1";
+		}
+		
+		String value = "";
+		if (min) {
+			if (Integer.parseInt(page) == 1) {
+				return "0";
+			}
+			value = Integer.toString((Integer.parseInt(count) * (Integer.parseInt(page) - 1)) + 1);
+		} else if (max) {
+			value = Integer.toString(Integer.parseInt(count) * (Integer.parseInt(page)));
+		} else {
+			return null;
+		}
+		
+		return value;
+	}
+
+	
 
 		
 }

@@ -8,7 +8,7 @@ import org.fao.fi.refpub.webservice.Attributes;
 public class AttributeListTypeDTO {
 	public static Attributes create(List<GenericType> list) {
 		Attributes ret = new Attributes();
-		ret.setCountRecords(list.size());
+		ret.setCountRecord(list.size());
 		for (GenericType gt : list) {
 			ret.getAttributes().add(AttributeTypeDTO.create(gt.getKey(), gt.getValue()));
 		}

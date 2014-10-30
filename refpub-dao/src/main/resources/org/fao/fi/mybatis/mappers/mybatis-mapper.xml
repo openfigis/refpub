@@ -5,7 +5,8 @@
 		<result property="table_name" column="TABLE_NAME"/>
 		<result property="table_group" column="GROUP_TABLE"/>
 		<result property="rest_concept" column="REST_CONCEPT"/>
-		<result property="fic_meta" column="FIC_META"/>
+		<result property="meta_id" column="META_ID"/>
+		<result property="meta_column" column="META_COLUMN"/>
 		<result property="table_group_column" column="GROUP_GROUP"/>
 		<result property="table_group_member" column="GROUP_MEMBER"/>
 	</resultMap>
@@ -54,6 +55,12 @@
 		<result property="official_name_s" column="OFFICIAL_NAME_S"/>
 		<result property="official_name_a" column="OFFICIAL_NAME_A"/>
 		<result property="official_name_c" column="OFFICIAL_NAME_C"/>
+		<result property="short_desc_e" column="SHORT_DESC_E"/>
+		<result property="short_desc_f" column="SHORT_DESC_F"/>
+		<result property="short_desc_r" column="SHORT_DESC_R"/>
+		<result property="short_desc_s" column="SHORT_DESC_S"/>
+		<result property="short_desc_a" column="SHORT_DESC_A"/>
+		<result property="short_desc_c" column="SHORT_DESC_C"/>
 		<result property="area" column="AREA"/>
 		<result property="un_code" column="UN_CODE"/>
 		<result property="undp_code" column="UNDP_CODE"/>
@@ -65,6 +72,12 @@
 		<result property="max_lat" column="MAX_LAT"/>
 		<result property="area_size" column="AREA_SIZE"/>
 		<result property="group_name" column="GROUP_NAME"/>
+		<result property="isscfg_code" column="ISSCFG_CODE"/>
+		<result property="std_abbrev" column="STD_ABBREV"/>
+		<result property="grp_ind" column="GRP_IND"/>
+		<result property="grp_lev" column="GRP_LEV"/>
+		<result property="entry_date" column="ENTRY_DATE"/>
+		<result property="total" column="COUNTALL"/>
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">
@@ -106,13 +119,41 @@
 		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column}=#{codelist}
 	</select>
+	
+	<select id="getAttributeForSingleObject" parameterType="map" resultMap="ObjectResults">
+		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
+		SELECT ${table}.${attribute}, ${main_id} AS PKID FROM ${table} WHERE ${column}=#{codelist}
+	</select>
+	
 	<select id="getObjects" parameterType="map" resultMap="ObjectResults">
-		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE META=#{meta}) WHERE ROWNUM <= 100 ]]>
+		<![CDATA[
+		SELECT * FROM (
+			SELECT ${table}.*, ${main_id} AS PKID, 
+				(SELECT 
+					COUNT(*)
+				 FROM 
+				 	${table} 
+				 WHERE ${meta_column}=#{meta})  COUNTALL, 
+				ROW_NUMBER() OVER (ORDER BY ${meta_column}) RNK 
+			FROM ${table} WHERE ${meta_column}=#{meta}) 
+		WHERE RNK BETWEEN #{min} AND #{max}
+		]]>
 	</select>
 	
 	<select id="getObjectsByCodeList" parameterType="map" resultMap="ObjectResults">
-		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
-		<![CDATA[ SELECT * FROM (SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ') WHERE ROWNUM <= 100 ]]>
+		<![CDATA[ 
+			SELECT * FROM (
+				SELECT ${table}.*, ${main_id} AS PKID, 
+				(SELECT 
+					COUNT(*)
+				 FROM 
+				 	${table} 
+				 WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ')  COUNTALL, 
+				ROW_NUMBER() OVER (ORDER BY ${column}) RNK
+				FROM ${table} 
+				WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ') 
+			WHERE RNK BETWEEN #{min} AND #{max} 
+		]]>
 	</select>
 	
 	<select id="getCodelistForConcept" resultMap="CodelistResult">
@@ -131,7 +172,7 @@
 		WHERE 
 			${primary_key} IN 
 				(SELECT ${group_column_key} FROM ${group_table} WHERE ${group_column} = #{id}) 
-			AND A.META = B.ID
+			AND A.${meta_column} = B.ID
 	</select>
 	
 	
@@ -150,6 +191,12 @@
 			cols.table_name, cols.position
 	</select>
 	<select id="getTableColumns" parameterType="map" resultMap="TableColumnResults">
-		SELECT 'attribute' AS ATTRIBUTE, column_name AS COLUMN_NAME from all_tab_columns where table_name=#{table}
+		SELECT 
+			DISTINCT(column_name) AS COLUMN_NAME, 'attribute' AS ATTRIBUTE 
+		FROM 
+			all_tab_columns 
+		WHERE 
+			table_name=#{table} 
+		ORDER BY COLUMN_NAME ASC
 	</select>
 </mapper>

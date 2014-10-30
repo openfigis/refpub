@@ -56,8 +56,9 @@
 	<complexType name="RestTypeSingle">
 		<complexContent>
 			<extension base="refpub:atomLink">
-				<attribute name="count_records" type="int"></attribute>
+				<attribute name="count_record" type="int"></attribute>
 				<attribute name="error_msg" type="string"></attribute>
+				<attribute name="total_record" type="int"></attribute>
 			</extension>
 		</complexContent>	
 	</complexType>
@@ -133,7 +134,7 @@
 		<complexContent>
 			<extension base="refpub:RestTypeSingle">
 				<sequence>
-					<element name="attributes" type="refpub:TextTypeValuePair" minOccurs="1" maxOccurs="unbounded">
+					<element name="attribute" type="refpub:TextTypeValuePair" minOccurs="1" maxOccurs="unbounded">
 					</element>
 				</sequence>
 			</extension>
@@ -173,6 +174,9 @@
 					<element name="multilingualOfficialName"
 						type="refpub:MultilingualType">
 					</element>
+					<element name="multilingualShortDescription"
+						type="refpub:MultilingualType">
+					</element>
 					<element name="codeList"
 						type="refpub:CodeListListType">
 					</element>
@@ -205,6 +209,8 @@
 	
     <complexType name="atomLink">
         <sequence>
+            <element name="link" type="refpub:linkRel" />
+            <element name="link" type="refpub:linkRel" />
             <element name="link" type="refpub:linkRel" />
         </sequence>
     </complexType>

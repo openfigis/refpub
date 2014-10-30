@@ -17,7 +17,7 @@ public class ConceptTypeDTO {
 
 		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 		urlChunks.add(new ResourceKeyValue("concept", concept.getName()));
-		c.setLink(LinkRelDTO.create(concept, urlChunks, concept.getName()));
+		c.getLinks().add(LinkRelDTO.create(concept, urlChunks, concept.getName()));
 		c.setCodeList(CodeListTypeDTO.create(concept));
 				
 		return c;
@@ -33,7 +33,7 @@ public class ConceptTypeDTO {
 					urlChunks.add(new ResourceKeyValue("concept", object.getConcept()));
 					urlChunks.add(new ResourceKeyValue("codesystem", cl.getName()));
 					urlChunks.add(new ResourceKeyValue("code", cl.getValue()));
-					c.setLink(LinkRelDTO.create(object, urlChunks, object.getConcept()));
+					c.getLinks().add(LinkRelDTO.create(object, urlChunks, object.getConcept()));
 				}
 			}
 			c.setCodeList(CodeListTypeDTO.createList(object, false));
@@ -44,6 +44,7 @@ public class ConceptTypeDTO {
 		c.setMultilingualFullName(MultilingualTypeDTO.create(object, "FULL"));
 		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "LONG"));
 		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "OFFICIAL"));
+		c.setMultilingualShortDescription(MultilingualTypeDTO.create(object, "SHORT_DESC"));
 		
 		try {
 			c.setHierarchy(HierarchyListTypeDTO.create(object.getParents()));

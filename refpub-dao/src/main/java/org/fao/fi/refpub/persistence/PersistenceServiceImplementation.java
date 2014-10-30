@@ -23,11 +23,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 	
-	public List<RefPubObject> getObjects(String id, String table, String pk_column) {
+	public List<RefPubObject> getObjects(String id, String id_column, String table, String pk_column, String min, String max) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getObjects(id, table, pk_column);
+			return mapper.getObjects(id, id_column, table, pk_column, min, max);
 		} finally {
 			sqlSession.close();
 		}
@@ -106,11 +106,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 
 	@Override
 	public List<RefPubObject> getParentHierarchy(String table, String group_table,
-			String group_column, String id, String group_column_key, String primary_key) {
+			String group_column, String meta_column, String id, String group_column_key, String primary_key) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getParentHierarchy(table, group_table, group_column, id, group_column_key, primary_key);
+			return mapper.getParentHierarchy(table, group_table, group_column, meta_column, id, group_column_key, primary_key);
 		} finally {
 			sqlSession.close();
 		}
@@ -142,11 +142,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 
 
 	@Override
-	public List<RefPubObject> getObjectsByCodeList(String table, String column, String pk_column) {
+	public List<RefPubObject> getObjectsByCodeList(String table, String column, String pk_column, String min, String max) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getObjectsByCodeList(table, column, pk_column);
+			return mapper.getObjectsByCodeList(table, column, pk_column, min, max);
 		} finally {
 			sqlSession.close();
 		}
@@ -171,6 +171,20 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
 			return mapper.getTableColumns(table);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+
+	@Override
+	public RefPubObject getAttributeForSingleObject(String table,
+			String column, String codelistvalue, String pk_column,
+			String attribute) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getAttributeForSingleObject(table, column, codelistvalue, pk_column, attribute);
 		} finally {
 			sqlSession.close();
 		}

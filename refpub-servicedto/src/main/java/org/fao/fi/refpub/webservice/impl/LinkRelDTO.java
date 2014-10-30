@@ -21,6 +21,26 @@ public class LinkRelDTO {
 	private static LinkRel build(URI uri, List<ResourceKeyValue> urlChunks, String rel) {
 		LinkRel relObj = new LinkRel();
 		relObj.setRel(rel);
+		if ("self".equalsIgnoreCase(rel)) {
+			relObj.setValue(uri.getFullURI());
+			return relObj;
+		}
+		if ("next".equalsIgnoreCase(rel)) {
+			if (uri.isAll()) {
+				return relObj;
+			}
+			String page = Integer.toString(uri.getPage() + 1);
+			relObj.setValue(uri.getFullURI().split("\\?")[0] + "?page=" + page + "&count=" + uri.getCount());
+			return relObj;
+		}
+		if ("prev".equalsIgnoreCase(rel)) {
+			if (uri.isAll()) {
+				return relObj;
+			}
+			String page = Integer.toString(uri.getPage() - 1);
+			relObj.setValue(uri.getFullURI().split("\\?")[0] + "?page=" + page + "&count=" + uri.getCount());
+			return relObj;
+		}
 		if (uri == null) {
 			relObj.setValue(getPathFromChunks(urlChunks));
 			return relObj;
@@ -38,11 +58,11 @@ public class LinkRelDTO {
 	}
 	
 	private static String getOutputVersion(String path) {
-		if (path.toLowerCase().endsWith("csv")) {
+		if (path.split("\\?")[0].toLowerCase().endsWith("csv")) {
 			return "csv";
-		} else if (path.toLowerCase().endsWith("json")) {
+		} else if (path.split("\\?")[0].toLowerCase().endsWith("json")) {
 			return "json";
-		} else if (path.toLowerCase().endsWith("xml")) {
+		} else if (path.split("\\?")[0].toLowerCase().endsWith("xml")) {
 			return "xml";
 		} else {
 			return "json";

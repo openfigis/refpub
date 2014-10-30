@@ -4,7 +4,8 @@ public class MDConcept {
 	private String table_name;
 	private String table_group;
 	private String rest_concept;
-	private String fic_meta;
+	private String meta_id;
+	private String meta_column;
 	private String table_group_column;
 	private String table_group_member;
 	public String getTable_name() {
@@ -25,11 +26,17 @@ public class MDConcept {
 	public void setRest_concept(String rest_concept) {
 		this.rest_concept = rest_concept;
 	}
-	public String getFic_meta() {
-		return fic_meta;
+	public String getMeta_id() {
+		return meta_id;
 	}
-	public void setFic_meta(String fic_meta) {
-		this.fic_meta = fic_meta;
+	public void setMeta_id(String meta_id) {
+		this.meta_id = meta_id;
+	}
+	public String getMeta_column() {
+		return meta_column;
+	}
+	public void setMeta_column(String meta_column) {
+		this.meta_column = meta_column;
 	}
 	public String getTable_group_column() {
 		return table_group_column;
