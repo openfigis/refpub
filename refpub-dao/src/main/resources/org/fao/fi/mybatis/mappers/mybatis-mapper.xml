@@ -74,10 +74,11 @@
 		<result property="group_name" column="GROUP_NAME"/>
 		<result property="isscfg_code" column="ISSCFG_CODE"/>
 		<result property="std_abbrev" column="STD_ABBREV"/>
+		<result property="cd_gear_type" column="CD_GEAR_TYPE"/>
 		<result property="grp_ind" column="GRP_IND"/>
 		<result property="grp_lev" column="GRP_LEV"/>
 		<result property="entry_date" column="ENTRY_DATE"/>
-		<result property="total" column="COUNTALL"/>
+		<result property="total" column="COUNTALL"/>		
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">

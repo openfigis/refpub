@@ -11,6 +11,7 @@ public class RefPubApplication extends ResourceConfig {
 
 	public RefPubApplication() {
 		register(new RefPubBeanRegistration());
+		register(new CorsFilter());
 		register(JacksonJsonProvider.class);
 		packages("org.refpub.webservice.core");
 	}

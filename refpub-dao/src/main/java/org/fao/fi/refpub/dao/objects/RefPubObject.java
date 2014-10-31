@@ -77,7 +77,7 @@ public class RefPubObject {
 	private String short_desc_c;
 	
 	private String group_name;
-	
+	private String cd_gear_type;
 	private String isscfg_code;
 	private String std_abbrev;
 	private String grp_ind;
@@ -387,6 +387,12 @@ public class RefPubObject {
 	}
 	public void setGroup_name(String group_name) {
 		this.group_name = group_name;
+	}
+	public String getCd_gear_type() {
+		return cd_gear_type;
+	}
+	public void setCd_gear_type(String cd_gear_type) {
+		this.cd_gear_type = cd_gear_type;
 	}
 	public List<RefPubObject> getParents() {
 		return parents;
