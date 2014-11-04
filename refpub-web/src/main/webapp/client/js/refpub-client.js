@@ -6,7 +6,7 @@ function refpub (attributes) {
 		var self = this;
 		$.ajax({
 		      type: 'GET',
-		      url: 'http://localhost:8080/refpub-web/rest/concept',
+		      url: 'http://168.202.54.210:8080/refpub-web/rest/concept',
 		      crossDomain: true,
 		      cache: false,
 		      success: function(data) {

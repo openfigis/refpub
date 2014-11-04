@@ -5,10 +5,10 @@
   <parent>
     <groupId>org.refpub</groupId>
     <artifactId>refpub</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1</version>
   </parent>
-  <artifactId>refpub-dao</artifactId>
-  <name>refpub-dao</name>
+  <artifactId>refpub-solr</artifactId>
+  <name>refpub-solr</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,24 +17,18 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <!-- <dependency>
-	    <groupId>oracle</groupId>
-	    <artifactId>ojdbcOracle</artifactId>
-	    <version>10g</version>
-	</dependency> -->
-	<dependency>
-	    <groupId>com.oracle</groupId>
-	    <artifactId>ojdbc7</artifactId>
-	    <version>12.1.0.1</version>
-	</dependency>
     <dependency>
-	  <groupId>org.mybatis</groupId>
-	  <artifactId>mybatis</artifactId>
-	  <version>3.2.8</version>
+		<groupId>org.apache.solr</groupId>
+		<artifactId>solr-dataimporthandler</artifactId>
+		<version>4.10.2</version>
 	</dependency>
-
+	<dependency>
+	    <groupId>com.googlecode.json-simple</groupId>
+	    <artifactId>json-simple</artifactId>
+	    <version>1.1</version>
+	</dependency>
+	
   </dependencies>
 </project>
