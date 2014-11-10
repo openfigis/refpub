@@ -221,7 +221,9 @@
 					<element name="codeList"
 						type="refpub:CodeListListType">
 					</element>
-					<element name="scientific_name" type="string" minOccurs="1" nillable="false"></element>
+					<element name="attr" 
+						type="refpub:attrList">
+					</element>
 					<element name="hierarchy" type="refpub:HierarchyList" nillable="false">
 					</element>
 				</sequence>
@@ -258,8 +260,17 @@
     
     <complexType name="simpleText">
     	<simpleContent>
-    		<extension base="string" />
+    		<extension base="string">
+    			<attribute name="name" type="string"></attribute>
+    		</extension>
     	</simpleContent>
+    </complexType>
+    	
+    <complexType name="attrList">
+    	<sequence>
+    		<element type="refpub:simpleText" name="value" maxOccurs="unbounded"
+				minOccurs="1" nillable="true" />
+    	</sequence>
     </complexType>
     
     <complexType name="ValueAttrName">

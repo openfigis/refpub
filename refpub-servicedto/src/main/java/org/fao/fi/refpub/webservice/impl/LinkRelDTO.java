@@ -58,11 +58,12 @@ public class LinkRelDTO {
 	}
 	
 	private static String getOutputVersion(String path) {
-		if (path.split("\\?")[0].toLowerCase().endsWith("csv")) {
+		String pathWithoutParameters = path.split("\\?")[0].replaceAll("/\\z", ""); 
+		if (pathWithoutParameters.toLowerCase().endsWith("csv")) {
 			return "csv";
-		} else if (path.split("\\?")[0].toLowerCase().endsWith("json")) {
+		} else if (pathWithoutParameters.toLowerCase().endsWith("json")) {
 			return "json";
-		} else if (path.split("\\?")[0].toLowerCase().endsWith("xml")) {
+		} else if (pathWithoutParameters.toLowerCase().endsWith("xml")) {
 			return "xml";
 		} else {
 			return "json";

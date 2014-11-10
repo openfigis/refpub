@@ -39,7 +39,7 @@ public class ConceptTypeDTO {
 			c.setCodeList(CodeListTypeDTO.createList(object, false));
 		}
 		
-		c.setScientificName(object.getScientific_name());
+		c.setAttr(AttrListDTO.create(object));
 		c.setMultilingualName(MultilingualTypeDTO.create(object, "SHORT"));
 		c.setMultilingualFullName(MultilingualTypeDTO.create(object, "FULL"));
 		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "LONG"));
@@ -48,7 +48,6 @@ public class ConceptTypeDTO {
 		
 		try {
 			c.setHierarchy(HierarchyListTypeDTO.create(object.getParents(), object.getChildrens()));
-			//c.setHierarchy(HierarchyListTypeDTO.create(object.getParents()));
 		} catch (Exception ex) {
 			c.setHierarchy(null);
 		}
