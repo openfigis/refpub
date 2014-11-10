@@ -50,6 +50,7 @@ public interface RefPubInterface {
 	 * @return Concept
 	 */
 	Concept getObject(String concept, String codesystem, String code);
+	Concept getObject(String concept, String code);
 	
 	/*
 	 * getAttributeForObject()

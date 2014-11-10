@@ -11,10 +11,10 @@ function refpub (attributes) {
 		      cache: false,
 		      success: function(data) {
 		      	var selfSucc = self;
-		      	$.each(data['concepts'], function(index, value) {
+		      	$.each(data['concept'], function(index, value) {
 		      		var selfEach = selfSucc;
-		      		var nameEntry = value['links'][0]['rel'];
-		      		window['refpub_' + nameEntry] = value['links'][0]['value'];
+		      		var nameEntry = value['link'][0]['rel'];
+		      		window['refpub_' + nameEntry] = value['link'][0]['value'];
   					var entry = $("<button></button>").attr("class", "primary-button pure-button").attr("id", nameEntry).text(nameEntry).click(function() {
   						var selfClick = selfEach;
 
@@ -40,9 +40,9 @@ function refpub (attributes) {
 		    	var list = $( "#list" );
 		    	list.empty();
 		    	var counter = 0;
-		    	$.each(data['concepts'], function(index, value) {
+		    	$.each(data['concept'], function(index, value) {
 		    		var selfEach = selfSuccess;
-		    		var link = value['links'][0]['value'];
+		    		var link = value['link'][0]['value'];
 		    		var newObjId = 'refpub_obj_' + counter;
 		    		window[newObjId] = link;
 
@@ -51,32 +51,32 @@ function refpub (attributes) {
 
 		    		var nameFinal = "";
 
-		    		if (value['multilingualName']['values'] != null) {
-			    		var length = value['multilingualName']['values'].length;   
+		    		if (value['multilingualName']['value'] != null) {
+			    		var length = value['multilingualName']['value'].length;   
 						for (var i = 0; i < length; i++) {
-							if (value['multilingualName']['values'][i]['lang'] == 'en') {
-								nameFinal = value['multilingualName']['values'][i]['value'];
+							if (value['multilingualName']['value'][i]['lang'] == 'en') {
+								nameFinal = value['multilingualName']['value'][i]['value'];
 							}
 						}
-					} else if (value['multilingualFullName']['values'] != null) {
-						var length = value['multilingualFullName']['values'].length;   
+					} else if (value['multilingualFullName']['value'] != null) {
+						var length = value['multilingualFullName']['value'].length;   
 						for (var i = 0; i < length; i++) {
-							if (value['multilingualFullName']['values'][i]['lang'] == 'en') {
-								nameFinal = value['multilingualFullName']['values'][i]['value'];
+							if (value['multilingualFullName']['value'][i]['lang'] == 'en') {
+								nameFinal = value['multilingualFullName']['value'][i]['value'];
 							}
 						}	
-					} else if (value['multilingualLongName']['values'] != null) {
-						var length = value['multilingualLongName']['values'].length;   
+					} else if (value['multilingualLongName']['value'] != null) {
+						var length = value['multilingualLongName']['value'].length;   
 						for (var i = 0; i < length; i++) {
-							if (value['multilingualLongName']['values'][i]['lang'] == 'en') {
-								nameFinal = value['multilingualLongName']['values'][i]['value'];
+							if (value['multilingualLongName']['value'][i]['lang'] == 'en') {
+								nameFinal = value['multilingualLongName']['value'][i]['value'];
 							}
 						}	
-					} else if (value['multilingualShortDescription']['values'] != null) {
-						var length = value['multilingualLongName']['values'].length;   
+					} else if (value['multilingualShortDescription']['value'] != null) {
+						var length = value['multilingualLongName']['value'].length;   
 						for (var i = 0; i < length; i++) {
-							if (value['multilingualShortDescription']['values'][i]['lang'] == 'en') {
-								nameFinal = value['multilingualShortDescription']['values'][i]['value'];
+							if (value['multilingualShortDescription']['value'][i]['lang'] == 'en') {
+								nameFinal = value['multilingualShortDescription']['value'][i]['value'];
 							}
 						}	
 					}
@@ -119,44 +119,44 @@ function refpub (attributes) {
 		    	var html = "";
 		    	if (data['multilingualName'] != null && Object.keys(data['multilingualName']).length > 0) {
 		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Name</div></div>"
-		    		for (var i = 0; i < data['multilingualName'].values.length ; i++) {
-		    			var l = data['multilingualName']['values'][i]['lang'];
-		    			var v = data['multilingualName']['values'][i]['value'];
+		    		for (var i = 0; i < data['multilingualName'].value.length ; i++) {
+		    			var l = data['multilingualName']['value'][i]['lang'];
+		    			var v = data['multilingualName']['value'][i]['value'];
 		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    		}
 		    	}
 		    	if (data['multilingualFullName'] != null && Object.keys(data['multilingualFullName']).length > 0) {
 		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Full Name</div></div>"
-		    		for (var i = 0; i < data['multilingualFullName'].values.length ; i++) {
-		    			var l = data['multilingualFullName']['values'][i]['lang'];
-		    			var v = data['multilingualFullName']['values'][i]['value'];
+		    		for (var i = 0; i < data['multilingualFullName'].value.length ; i++) {
+		    			var l = data['multilingualFullName']['value'][i]['lang'];
+		    			var v = data['multilingualFullName']['value'][i]['value'];
 		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    		}
 		    	}
 		    	if (data['multilingualLongName'] != null && Object.keys(data['multilingualLongName']).length > 0) {
 		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Long Name</div></div>"
-		    		for (var i = 0; i < data['multilingualLongName'].values.length ; i++) {
-		    			var l = data['multilingualLongName']['values'][i]['lang'];
-		    			var v = data['multilingualLongName']['values'][i]['value'];
+		    		for (var i = 0; i < data['multilingualLongName'].value.length ; i++) {
+		    			var l = data['multilingualLongName']['value'][i]['lang'];
+		    			var v = data['multilingualLongName']['value'][i]['value'];
 		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    		}
 		    	}
 		    	if (data['multilingualShortDescription'] != null && Object.keys(data['multilingualShortDescription']).length > 0) {
 		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Short Description</div></div>"
-		    		for (var i = 0; i < data['multilingualShortDescription'].values.length ; i++) {
-		    			var l = data['multilingualShortDescription']['values'][i]['lang'];
-		    			var v = data['multilingualShortDescription']['values'][i]['value'];
+		    		for (var i = 0; i < data['multilingualShortDescription'].value.length ; i++) {
+		    			var l = data['multilingualShortDescription']['value'][i]['lang'];
+		    			var v = data['multilingualShortDescription']['value'][i]['value'];
 		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    		}
 		    	}
 		    	if (data['hierarchy'] != null && Object.keys(data['hierarchy']).length > 0) {
 
 		    		html += "<div class='mainDivisors'><div class='h2div'>Hierarchy</div></div>";
-		    		for (var i = 0; i < data['hierarchy'].values.length ; i++) {
+		    		for (var i = 0; i < data['hierarchy'].value.length ; i++) {
 		    			html += "&nbsp;&nbsp;<div class='headerH'>" + data['hierarchy'].values[i]['names'][0] + "</div><hr />";
-		    			for (var j = 0; j < data['hierarchy'].values[i]['values'].length ; j++) {
-		    				html += "<div class='mainDivisors'><div class='header'>" + data['hierarchy'].values[i]['values'][j]['name'] + ":</div>";
-		    				html += "<div class='valH'>" + data['hierarchy'].values[i]['values'][j]['value'] + "</div></div>";
+		    			for (var j = 0; j < data['hierarchy'].values[i]['value'].length ; j++) {
+		    				html += "<div class='mainDivisors'><div class='header'>" + data['hierarchy'].values[i]['value'][j]['name'] + ":</div>";
+		    				html += "<div class='valH'>" + data['hierarchy'].values[i]['value'][j]['value'] + "</div></div>";
 		    			}
 		    		}
 		    	}
@@ -176,4 +176,55 @@ function refpub (attributes) {
     </p>
 </div>
 */
+}
+
+//http://168.202.54.210:8090/solr/RefPub/select?q=text%3Aar*&wt=json
+function getSolrEntries(text) {
+	var dataList = document.getElementById('json-datalist');
+	var input = document.getElementById('ajax');
+	var inputVal = input.value;
+	var solrURL = "http://168.202.54.210:8090/solr/RefPub/select";
+
+	var url = solrURL + "?q=text:" + encodeURIComponent(inputVal) + "*&wt=json";
+	//alert (solrURL + path);
+
+	$.ajax({
+		type: 'GET',
+		url: url,	
+		success : function(data) {
+			var limUp = 10;
+			if (data.response.docs < 10) {
+				limUp = data.response.docs;
+			}
+			var dataList = document.getElementById('json-datalist');
+			while (dataList.firstChild) {
+    			dataList.removeChild(dataList.firstChild);
+			}
+			//dataList.empty();
+			for (var i = 0; i < limUp; i++) {
+				//data.response.docs[i].name_e
+				var option = document.createElement('option');
+				if (data.response.docs[i].name_e != undefined && data.response.docs[i].name_e != null && data.response.docs[i].name_e != "") {
+					option.value = data.response.docs[i].name_e;
+				} else if (data.response.docs[i].full_name_e != undefined && data.response.docs[i].full_name_e != null && data.response.docs[i].full_name_e != "") {
+					option.value = data.response.docs[i].full_name_e;
+				} else if (data.response.docs[i].long_name_e != undefined && data.response.docs[i].long_name_e != null && data.response.docs[i].long_name_e != "") {
+					option.value = data.response.docs[i].long_name_e;
+				} else if (data.response.docs[i].official_name_e != undefined && data.response.docs[i].official_name_e != null && data.response.docs[i].official_name_e != "") {
+					option.value = data.response.docs[i].official_name_e;
+				} else if (data.response.docs[i].short_description_e != undefined && data.response.docs[i].short_description_e != null && data.response.docs[i].short_description_e != "") {
+					option.value = data.response.docs[i].short_description_e;
+				}
+				dataList.appendChild(option);
+			}
+				
+		},
+		dataType: 'jsonp',
+  		jsonp: 'json.wrf'
+	});
+
+}
+
+function solrCallback(data) {
+	alert("JSONP DONE!");
 }

@@ -43,11 +43,12 @@ public class ConceptTypeDTO {
 		c.setMultilingualName(MultilingualTypeDTO.create(object, "SHORT"));
 		c.setMultilingualFullName(MultilingualTypeDTO.create(object, "FULL"));
 		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "LONG"));
-		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "OFFICIAL"));
+		c.setMultilingualOfficialName(MultilingualTypeDTO.create(object, "OFFICIAL"));
 		c.setMultilingualShortDescription(MultilingualTypeDTO.create(object, "SHORT_DESC"));
 		
 		try {
-			c.setHierarchy(HierarchyListTypeDTO.create(object.getParents()));
+			c.setHierarchy(HierarchyListTypeDTO.create(object.getParents(), object.getChildrens()));
+			//c.setHierarchy(HierarchyListTypeDTO.create(object.getParents()));
 		} catch (Exception ex) {
 			c.setHierarchy(null);
 		}

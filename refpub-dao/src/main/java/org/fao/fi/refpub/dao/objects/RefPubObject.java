@@ -6,8 +6,7 @@ public class RefPubObject {
 	private int id;
 	
 	private String primary_key_id;
-	/*private int codelist_id;
-	private String codelist_name;*/
+
 	private String Concept;
 	
 	public String getConcept() {
@@ -86,6 +85,7 @@ public class RefPubObject {
 	
 	
 	private List<RefPubObject> parents;
+	private List<RefPubObject> childrens;
 	
 	private List<CodeListDAO> codeList;
 	
@@ -105,18 +105,6 @@ public class RefPubObject {
 	public void setId(int id) {
 		this.id = id;
 	}
-	/*public int getCodelist_id() {
-		return codelist_id;
-	}
-	public void setCodelist_id(int codelist_id) {
-		this.codelist_id = codelist_id;
-	}
-	public String getCodelist_name() {
-		return codelist_name;
-	}
-	public void setCodelist_name(String codelist_name) {
-		this.codelist_name = codelist_name;
-	}*/
 	public String getFic_sys_item() {
 		return fic_sys_item;
 	}
@@ -373,7 +361,7 @@ public class RefPubObject {
 	public String getOfficial_name_c() {
 		return official_name_c;
 	}
-	public void setOfficial_name_c(String official_name_c) {https://www.facebook.com/
+	public void setOfficial_name_c(String official_name_c) {
 		this.official_name_c = official_name_c;
 	}
 	public List<CodeListDAO> getCodeList() {
@@ -399,6 +387,12 @@ public class RefPubObject {
 	}
 	public void setParents(List<RefPubObject> parents) {
 		this.parents = parents;
+	}
+	public List<RefPubObject> getChildrens() {
+		return childrens;
+	}
+	public void setChildrens(List<RefPubObject> childrens) {
+		this.childrens = childrens;
 	}
 	public URI getCurrentURI() {
 		return currentURI;

@@ -37,7 +37,7 @@ public class Utils {
 		        	/*Class<?> type = pd.getPropertyType();*/  
 		  
 		        	Object value = getter.invoke(bean);
-		        	return (String) value; 
+		        	return Utils.getStringFromObject(value); 
 		        }
 		    }  
 		} catch (IntrospectionException e) {
@@ -51,4 +51,14 @@ public class Utils {
 		}  
 	    return null;
 	}  
+	
+	private static String getStringFromObject(Object object) {
+		if(object instanceof Integer) {
+			return Integer.toString((int) object);
+		}
+		if (object instanceof Float) {
+			return Float.toString((float) object);
+		}
+		return (String) object;
+	}
 }

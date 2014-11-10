@@ -149,9 +149,50 @@
 		</complexContent>
 	</complexType>
 	
-	<complexType name="ParentList">
+	<complexType name="Parent">
 		<sequence>
-			<element name="value" type="refpub:TextTypeValueList" maxOccurs="unbounded"
+			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Parents">
+		<sequence>
+			<element name="parent" type="refpub:Parent" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Childrens">
+		<sequence>
+			<element name="child" type="refpub:Child" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Child">
+		<sequence>
+			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="HierarchyList">
+		<sequence>
+			<element name="parents" type="refpub:Parents" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="childrens" type="refpub:Childrens" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
 		</sequence>
@@ -181,7 +222,7 @@
 						type="refpub:CodeListListType">
 					</element>
 					<element name="scientific_name" type="string" minOccurs="1" nillable="false"></element>
-					<element name="hierarchy" type="refpub:ParentList" nillable="false">
+					<element name="hierarchy" type="refpub:HierarchyList" nillable="false">
 					</element>
 				</sequence>
 			</extension>
@@ -219,6 +260,16 @@
     	<simpleContent>
     		<extension base="string" />
     	</simpleContent>
+    </complexType>
+    
+    <complexType name="ValueAttrName">
+    	<simpleContent>
+    		<extension base="string">
+    			<attribute name="name" type="string"></attribute>
+    			<attribute name="lang" type="string"></attribute>
+    			<attribute name="type" type="string"></attribute>
+    		</extension>
+      	</simpleContent>
     </complexType>
 
 </schema>

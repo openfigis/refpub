@@ -274,6 +274,37 @@ public class CoreWs {
 		}
 	}
 	
+	@Path("concept/{concept}/group/{group}")
+	@GET
+	@Produces({ MediaType.APPLICATION_XML })
+	public Concept group(@PathParam("concept") String concept, @PathParam("group") String groupId) {
+		return this.groupJson(concept, groupId);
+	}
+	
+	@Path("concept/{concept}/group/{group}/json")
+	@GET
+	@Produces({ MediaType.APPLICATION_XML })
+	public Concept groupJson(@PathParam("concept") String concept, @PathParam("group") String groupId) {
+		try {
+			bean.setUrl(uriInfo);
+			return bean.getObject(concept, groupId);
+		} catch (Exception ex) {
+			return CodeDTO.error(ex.getMessage());
+		}
+	}
+	
+	@Path("concept/{concept}/group/{group}/xml")
+	@GET
+	@Produces({ MediaType.APPLICATION_XML })
+	public Concept groupXML(@PathParam("concept") String concept, @PathParam("group") String groupId) {
+		try {
+			bean.setUrl(uriInfo);
+			return bean.getObject(concept, groupId);
+		} catch (Exception ex) {
+			return CodeDTO.error(ex.getMessage());
+		}
+	}
+	
 	
 	
 	/* Private Methods*/

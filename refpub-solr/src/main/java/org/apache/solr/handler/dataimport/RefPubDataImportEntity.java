@@ -130,13 +130,13 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
     		InputStream in = new URL( url ).openStream();
             String genreJson = IOUtils.toString(in);
             JSONObject conceptJsonObject = (JSONObject) JSONValue.parseWithException(genreJson);
-            JSONArray conceptArray = (JSONArray) conceptJsonObject.get("concepts");
+            JSONArray conceptArray = (JSONArray) conceptJsonObject.get("concept");
             List<Map<String, String>> returnVal = new ArrayList<Map<String, String>>();
             
             for (int i = 0; i < conceptArray.size(); i++) {
 	            JSONObject conceptArrayLinks = (JSONObject) conceptArray.get(i);
 	            
-	            JSONArray arrayOfConceptsLinks = (JSONArray) conceptArrayLinks.get("links");
+	            JSONArray arrayOfConceptsLinks = (JSONArray) conceptArrayLinks.get("link");
 	            
 	            JSONObject c = (JSONObject) arrayOfConceptsLinks.get(0);
 	            
@@ -161,7 +161,7 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
     		InputStream in = new URL( url ).openStream();
             String genreJson = IOUtils.toString(in);
             JSONObject conceptJsonObject = (JSONObject) JSONValue.parseWithException(genreJson);
-            JSONArray conceptArray = (JSONArray) conceptJsonObject.get("concepts");
+            JSONArray conceptArray = (JSONArray) conceptJsonObject.get("concept");
             for (int i = 0; i < conceptArray.size(); i++) {
             	JSONObject ca = (JSONObject) conceptArray.get(i);
             	JSONObject multilingualLongName = (JSONObject) ca.get("multilingualLongName");
@@ -169,7 +169,7 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             	JSONObject multilingualFullName = (JSONObject) ca.get("multilingualFullName");
             	JSONObject multilingualOfficialName = (JSONObject) ca.get("multilingualOfficialName");
             	JSONObject multilingualShortDescription = (JSONObject) ca.get("multilingualShortDescription");
-            	JSONArray link = (JSONArray) ca.get("links");
+            	JSONArray link = (JSONArray) ca.get("link");
             	FIGISObject figis = new FIGISObject();
             	for (int j = 0; j < link.size(); j++) {
             		JSONObject la = (JSONObject) link.get(j);
@@ -177,8 +177,8 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             		figis.setUrl((String) la.get("value"));
             	}
              	
-            	if (multilingualName != null && multilingualName.get("values") != null) {
-            		JSONArray arr = (JSONArray) multilingualName.get("values");
+            	if (multilingualName != null && multilingualName.get("value") != null) {
+            		JSONArray arr = (JSONArray) multilingualName.get("value");
             		for (int j = 0; j < arr.size(); j++) {
             			JSONObject caa = (JSONObject) arr.get(j);
             			String lang = (String) caa.get("lang");
@@ -203,8 +203,8 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             		}
             	}
             	
-            	if (multilingualFullName != null && multilingualFullName.get("values") != null) {
-            		JSONArray arr = (JSONArray) multilingualFullName.get("values");
+            	if (multilingualFullName != null && multilingualFullName.get("value") != null) {
+            		JSONArray arr = (JSONArray) multilingualFullName.get("value");
             		for (int j = 0; j < arr.size(); j++) {
             			JSONObject caa = (JSONObject) arr.get(j);
             			String lang = (String) caa.get("lang");
@@ -229,8 +229,8 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             		}
             	}
             	
-            	if (multilingualLongName != null && multilingualLongName.get("values") != null) {
-            		JSONArray arr = (JSONArray) multilingualLongName.get("values");
+            	if (multilingualLongName != null && multilingualLongName.get("value") != null) {
+            		JSONArray arr = (JSONArray) multilingualLongName.get("value");
             		for (int j = 0; j < arr.size(); j++) {
             			JSONObject caa = (JSONObject) arr.get(j);
             			String lang = (String) caa.get("lang");
@@ -255,8 +255,8 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             		}
             	}
             	
-            	if (multilingualOfficialName != null && multilingualOfficialName.get("values") != null) {
-            		JSONArray arr = (JSONArray) multilingualOfficialName.get("values");
+            	if (multilingualOfficialName != null && multilingualOfficialName.get("value") != null) {
+            		JSONArray arr = (JSONArray) multilingualOfficialName.get("value");
             		for (int j = 0; j < arr.size(); j++) {
             			JSONObject caa = (JSONObject) arr.get(j);
             			String lang = (String) caa.get("lang");
@@ -281,8 +281,8 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             		}
             	}
             	
-            	if (multilingualShortDescription != null && multilingualShortDescription.get("values") != null) {
-            		JSONArray arr = (JSONArray) multilingualShortDescription.get("values");
+            	if (multilingualShortDescription != null && multilingualShortDescription.get("value") != null) {
+            		JSONArray arr = (JSONArray) multilingualShortDescription.get("value");
             		for (int j = 0; j < arr.size(); j++) {
             			JSONObject caa = (JSONObject) arr.get(j);
             			String lang = (String) caa.get("lang");

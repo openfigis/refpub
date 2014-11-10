@@ -71,14 +71,15 @@
 		<result property="min_lat" column="MIN_LAT"/>
 		<result property="max_lat" column="MAX_LAT"/>
 		<result property="area_size" column="AREA_SIZE"/>
-		<result property="group_name" column="GROUP_NAME"/>
+		<result property="group_name" column="MKP_GROUP_NAME"/>
 		<result property="isscfg_code" column="ISSCFG_CODE"/>
 		<result property="std_abbrev" column="STD_ABBREV"/>
 		<result property="cd_gear_type" column="CD_GEAR_TYPE"/>
 		<result property="grp_ind" column="GRP_IND"/>
 		<result property="grp_lev" column="GRP_LEV"/>
 		<result property="entry_date" column="ENTRY_DATE"/>
-		<result property="total" column="COUNTALL"/>		
+		<result property="total" column="COUNTALL"/>	
+		<result property="id" column="TBL_PK"/>	
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">
@@ -121,6 +122,11 @@
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${column}=#{codelist}
 	</select>
 	
+	<select id="getObjectById" parameterType="map" resultMap="ObjectResults">
+		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
+		SELECT ${table}.*, ${main_id} AS PKID FROM ${table} WHERE ${main_id}=#{id}
+	</select>
+	
 	<select id="getAttributeForSingleObject" parameterType="map" resultMap="ObjectResults">
 		<!-- SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.${attribute}, ${main_id} AS PKID FROM ${table} WHERE ${column}=#{codelist}
@@ -152,7 +158,7 @@
 				 WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ')  COUNTALL, 
 				ROW_NUMBER() OVER (ORDER BY ${column}) RNK
 				FROM ${table} 
-				WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ') 
+				WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ' AND ${meta_column}=#{meta_id}) 
 			WHERE RNK BETWEEN #{min} AND #{max} 
 		]]>
 	</select>
@@ -161,19 +167,54 @@
 		SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept}
 	</select>
 	
+	<select id="getDefaultCodelistFromConcept" resultMap="CodelistResult">
+		SELECT * FROM FIGIS.MD_CODELIST WHERE REST_CONCEPT=#{concept} AND IS_RESOURCEURL=1
+	</select>
+	
 	<select id="getRefTable" parameterType="int" resultMap="ClassInitResults">
 		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM FIGIS.MD_CLASSINIT WHERE ID=#{id}
 	</select>
 	
 	<select id="getParentHierarchy" parameterType="map" resultMap="ObjectResults">
-		SELECT 
+		<!-- SELECT 
 			A.*, B.NAME_E AS GROUP_NAME
 		FROM 
 			${table} A, FIGIS.MD_REFOBJECT B
 		WHERE 
 			${primary_key} IN 
 				(SELECT ${group_column_key} FROM ${group_table} WHERE ${group_column} = #{id}) 
-			AND A.${meta_column} = B.ID
+			AND A.${meta_column} = B.ID -->
+		SELECT 
+			A.*, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
+		FROM 
+			${table} A, FIGIS.MD_REFOBJECT B 
+		WHERE 
+			${primary_key} IN (
+				SELECT 
+					${group_column_key}
+				FROM 
+					${group_table}
+				WHERE 
+					${group_column} = #{id} )
+			AND ${primary_key} != #{id}
+			AND B.ID = A.${meta_column}
+	</select>
+	
+	<select id="getChildrenHierarchy" parameterType="map" resultMap="ObjectResults">
+		SELECT 
+			A.*, B.NAME_E AS MKP_GROUP_NAME
+		FROM 
+			${table} A, FIGIS.MD_REFOBJECT B 
+		WHERE 
+			${primary_key} IN (
+				SELECT 
+					${group_column}
+				FROM 
+					${group_table}
+				WHERE 
+					${group_column_key} = #{id} )
+			AND ${primary_key} != #{id}
+			AND B.ID = A.${meta_column}
 	</select>
 	
 	
