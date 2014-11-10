@@ -42,6 +42,7 @@ public class RefPubImplementation implements RefPubInterface {
 	@Produces
 	
 	UriInfo URI;
+	private static String DEFAULT_COUNT = "100";
 	
 	@Override
 	public void setUrl(UriInfo uri) {
@@ -121,7 +122,7 @@ public class RefPubImplementation implements RefPubInterface {
 	private List<RefPubConcept> getAllConcepts(String count, String page) {
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
-		if (count == null) { count = max; }
+		if (count == null) { count = DEFAULT_COUNT; }
 		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
 		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
@@ -176,7 +177,7 @@ public class RefPubImplementation implements RefPubInterface {
 	private List<RefPubObject> getAllObjectsForConcept(String concept, String count, String page) {
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
-		if (count == null) { count = max; }
+		if (count == null) { count = DEFAULT_COUNT; }
 		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
 		
 		RefPubConcept cp = this.getSingleConcept(concept); 
@@ -324,7 +325,7 @@ public class RefPubImplementation implements RefPubInterface {
 	private RefPubObject getAllCodeList(String count, String page) {
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
-		if (count == null) { count = max; }
+		if (count == null) { count = DEFAULT_COUNT; }
 		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
 		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
@@ -348,7 +349,7 @@ public class RefPubImplementation implements RefPubInterface {
 	private List<RefPubObject> getObjectsByCodeList(String concept, String codelist, String count, String page) {
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
-		if (count == null) { count = max; }
+		if (count == null) { count = DEFAULT_COUNT; }
 		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
 		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
