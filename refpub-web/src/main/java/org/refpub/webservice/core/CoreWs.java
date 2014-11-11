@@ -8,7 +8,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.fao.fi.refpub.webservice.Attributes;
@@ -276,14 +275,14 @@ public class CoreWs {
 	
 	@Path("concept/{concept}/group/{group}")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept group(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		return this.groupJson(concept, groupId);
 	}
 	
 	@Path("concept/{concept}/group/{group}/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept groupJson(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		try {
 			bean.setUrl(uriInfo);

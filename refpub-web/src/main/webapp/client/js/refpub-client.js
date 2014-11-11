@@ -1,61 +1,130 @@
 function refpub (attributes) {
 	this.endpoint = attributes['endpoint'];
+	this.solrEndpoint = attributes['solr_endpoint'];
+	this.countOfMaxElements = attributes['pagination_count'] || "50";
+
 
 
 	this.init = function() {
+		$.support.cors = true;
+		window['scrollbinded'] = false;
 		var self = this;
+		$body = $("body");
 		$.ajax({
 		      type: 'GET',
-		      url: 'http://168.202.54.210:8080/refpub-web/rest/concept',
+		      url: self.endpoint + '/concept',
 		      crossDomain: true,
 		      cache: false,
-		      success: function(data) {
+		      dataType : 'json',
+		      beforeSend: function() { $body.addClass("loading"); },
+		      success: function(data,textStatus,jqXHR) {
+		      	$body.removeClass("loading");
 		      	var selfSucc = self;
+		      	var nav = $("#nav-inner");
 		      	$.each(data['concept'], function(index, value) {
 		      		var selfEach = selfSucc;
 		      		var nameEntry = value['link'][0]['rel'];
 		      		window['refpub_' + nameEntry] = value['link'][0]['value'];
   					var entry = $("<button></button>").attr("class", "primary-button pure-button").attr("id", nameEntry).text(nameEntry).click(function() {
+  						$("#list").scrollTop(0);
   						var selfClick = selfEach;
-
   						var self = this;
-
-  						selfClick.getObjects(window['refpub_' + self.id]);
-  						//alert (window['refpub_' + self.id]);
+  						selfClick.getObjects(window['refpub_' + self.id] + "?count=" + selfClick.countOfMaxElements, true);
   					});
-		      		var nav = $("#nav-inner");
+		      		
 		      		nav.append(entry);
 				});
 		      }
 		    });
-	}
+		this.initFreeText(this, $('#nav'));
+	};
 
-	this.getObjects = function(endpoint) {
+	this.initFreeText = function(self, div) {
+		var freetext = $("<input />").attr("type", "text").attr("id", "autocomplete").attr("placeholder", "Free Text Search");
+		div.append(freetext);
+		freetext.autocomplete({
+            serviceUrl: self.solrEndpoint + '/select?wt=json',
+            paramName: 'q=text:',
+            onSelect: function (suggestion) {
+                self.getSingle(suggestion.data);
+            },
+            transformResult: function(response) {
+                var x=0;
+                var out={};
+                var docs = response.response.docs;
+                for (var i=0; i < docs.length; i++) {
+                    var doc = docs[i];
+                    if (doc['full_name_e'] != undefined && doc['full_name_e'] != null) {
+                        out[x] = {value: doc.url, data: doc['full_name_e']}; 
+                        x=x+1;
+                    } else if (doc['long_name_e'] != undefined && doc['long_name_e'] != null) {
+                        out[x] = {value: doc.url, data: doc['long_name_e']}; 
+                        x=x+1;
+                    } else if (doc['official_name_e'] != undefined && doc['official_name_e'] != null) {
+                        out[x] = {value: doc.url, data: doc['name_e']}; 
+                        x=x+1;
+                    } else if (doc['name_e'] != undefined && doc['name_e'] != null) {
+                        out[x] = {value: doc.url, data: doc['name_e']}; 
+                        x=x+1;
+                    }
+                }
+                return {
+                    suggestions: $.map(out, function(dataItem) {
+                        return { value: dataItem.data, data: dataItem.value };
+                    })
+                };
+            }
+        });
+		ftself = self;
+		freetext.keypress(function(e) {
+  			if (!e) e = window.event;
+		    var keyCode = e.keyCode || e.which;
+		    if (keyCode == '13'){
+		      ftself.getObjectsSolr(ftself, freetext.val());
+		    }
+		});
+	};
+
+	this.getObjects = function(endpoint, clean) {
+		window['refpub_retrievingdata'] = true;
 		var self = this;
+		$body = $("body");
+		if (clean == undefined) { clean = false; }
 		$.ajax({
 			type: 'GET',
-		    url: endpoint + "?count=200",	
+		    url: endpoint,
+		    dataType : 'json',
+		    beforeSend: function() { $body.addClass("loading"); },	
 		    success : function(data) {
+		    	$body.removeClass("loading");
 		    	var selfSuccess = self;
+
+		    	if (data['link'] != undefined && data['link'].length > 0) {
+		    		window['refpub_linknext'] = null;
+		    		for (var i = 0; i < data['link'].length; i++) {
+		    			if (data['link'][i]['rel'].toLowerCase() == "next") {
+		    				window['refpub_linknext'] = data['link'][i]['value'];
+		    			}
+		    		}
+		    	}
+
 		    	var list = $( "#list" );
-		    	list.empty();
+		    	if (clean) {
+		    		list.empty();
+		    	}
 		    	var counter = 0;
 		    	$.each(data['concept'], function(index, value) {
 		    		var selfEach = selfSuccess;
 		    		var link = value['link'][0]['value'];
 		    		var newObjId = 'refpub_obj_' + counter;
 		    		window[newObjId] = link;
-
-		    		var mainDiv = $("<div></div>").attr("class", "email-name");
-		    		var name = $("<h5></h5>").attr("class", "email-name");
-
 		    		var nameFinal = "";
 
-		    		if (value['multilingualName']['value'] != null) {
-			    		var length = value['multilingualName']['value'].length;   
+		    		if (value['multilingualLongName']['value'] != null) {
+			    		var length = value['multilingualLongName']['value'].length;   
 						for (var i = 0; i < length; i++) {
-							if (value['multilingualName']['value'][i]['lang'] == 'en') {
-								nameFinal = value['multilingualName']['value'][i]['value'];
+							if (value['multilingualLongName']['value'][i]['lang'] == 'en') {
+								nameFinal = value['multilingualLongName']['value'][i]['value'];
 							}
 						}
 					} else if (value['multilingualFullName']['value'] != null) {
@@ -65,11 +134,11 @@ function refpub (attributes) {
 								nameFinal = value['multilingualFullName']['value'][i]['value'];
 							}
 						}	
-					} else if (value['multilingualLongName']['value'] != null) {
-						var length = value['multilingualLongName']['value'].length;   
+					} else if (value['multilingualName']['value'] != null) {
+						var length = value['multilingualName']['value'].length;   
 						for (var i = 0; i < length; i++) {
-							if (value['multilingualLongName']['value'][i]['lang'] == 'en') {
-								nameFinal = value['multilingualLongName']['value'][i]['value'];
+							if (value['multilingualName']['value'][i]['lang'] == 'en') {
+								nameFinal = value['multilingualName']['value'][i]['value'];
 							}
 						}	
 					} else if (value['multilingualShortDescription']['value'] != null) {
@@ -84,12 +153,10 @@ function refpub (attributes) {
 
 					var divA = $("<div></div>").attr("class", "email-item email-item-unread pure-g").attr("id", 'refpub_obj_' + counter).click(function() {
   						var selfClick = selfEach;
-
   						var self = this;
-
   						selfClick.getSingle(window[self.id]);
-  						//alert (window['refpub_' + self.id]);
   					});
+
 					var divB = $("<div></div>").attr("class", "pure-u-3-4");
 
 					divA.append(divB.append(name));
@@ -98,133 +165,235 @@ function refpub (attributes) {
 					if (nameFinal != null && nameFinal != "" && nameFinal != " ") {
 						list.append(divA);
 					}
-
 		    		counter++;
 		    	});
+				if (!window['scrollbinded']) {
+					self.bindScrollToDiv(self, $("#list"));
+				}
+				window['refpub_retrievingdata'] = false;
 		    }
 		});
-	}
+	};
+
+	this.getObjectsSolr = function(self, value) {
+		var selfjson = self
+		$body = $("body");
+		var url = self.solrEndpoint +  '/select?wt=json&q=text:' + encodeURIComponent(value) + "*";
+		$.ajax({
+			type: 'GET',
+			url: url,
+		    dataType : 'json',
+			beforeSend: function() { $body.addClass("loading"); },
+			success : function(data) {
+				$body.removeClass("loading"); 
+				var list = $( "#list" );
+		    	list.empty();
+				var docs = data.response.docs;
+
+				for (var i = 0; i < docs.length; i++) {
+					var newObjId = 'refpub_obj_' + i;
+		    		window[newObjId] = docs[i]['url'];
+					var nameFinal = null;
+					if (docs[i]['full_name_e'] != undefined && docs[i]['full_name_e'] != null && docs[i]['full_name_e'] != "" && docs[i]['full_name_e'] != " ") {
+						nameFinal = docs[i]['full_name_e'];
+					} else if (docs[i]['long_name_e'] != undefined && docs[i]['long_name_e'] != null && docs[i]['long_name_e'] != "" && docs[i]['long_name_e'] != " ") {
+						nameFinal = docs[i]['long_name_e'];
+					} else if (docs[i]['name_e'] != undefined && docs[i]['name_e'] != null && docs[i]['name_e'] != "" && docs[i]['name_e'] != " ") {
+						nameFinal = docs[i]['name_e'];
+					}
+					if (nameFinal != null) {
+						var name = $("<h5></h5>").attr("class", "email-name").text(nameFinal);
+						var divA = $("<div></div>").attr("class", "email-item email-item-unread pure-g").attr("id", 'refpub_obj_' + i).click(function() {
+	  						var selfClick = selfjson;
+	  						var self = this;
+	  						selfClick.getSingle(window[self.id]);
+	  					});	
+	  					var divB = $("<div></div>").attr("class", "pure-u-3-4");
+						divA.append(divB.append(name));
+						var list = $( "#list" );
+						list.append(divA);
+					}
+				}
+			},
+			dataType: 'jsonp',
+	  		jsonp: 'json.wrf'
+		});
+	};
 
 	this.getSingle = function(endpoint) {
 		var main = $( "#main" );
+		$body = $("body");
 		main.empty();
-		//main.append($("<div></div>").text(endpoint));
 		var self = this;
 		$.ajax({
 			type: 'GET',
-		    url: endpoint,	
+		    url: endpoint,
+			dataType : 'json',
+		    beforeSend: function() { $body.addClass("loading"); },	
 		    success : function(data) {
+		   		$body.removeClass("loading"); 
 		    	selfJson = self;
 		    	var content = $("<div></div>").attr("class", "email-content");
-		    	var html = "";
-		    	if (data['multilingualName'] != null && Object.keys(data['multilingualName']).length > 0) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Name</div></div>"
-		    		for (var i = 0; i < data['multilingualName'].value.length ; i++) {
+		    	var html = "<div class='topResContainer'><div class='topResLeft'>Source&nbsp;<a href='" + endpoint + "' target='_blank'>JSON</a>/<a href='" + endpoint.replace(/\/json/g, "/xml") + "' target='_blank'>XML</a></div>";
+		    	html += "<div class='topResRight'>Concept Type: <span class='enphasy'>" + data['link'][0]['rel'] + "</span></div>";
+		    	html += "</div><hr/>";
+		    	if (data['multilingualName'] != null && Object.keys(data['multilingualName']).length > 0 && data['multilingualName']['value'] != null) {
+		    		html += "<div class='mainDivisors'><div class='h2div'>Name</div></div>"
+		    		for (var i = 0; i < data['multilingualName']['value'].length ; i++) {
 		    			var l = data['multilingualName']['value'][i]['lang'];
 		    			var v = data['multilingualName']['value'][i]['value'];
-		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (v != "" || v != " ") {
+		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			}
 		    		}
 		    	}
-		    	if (data['multilingualFullName'] != null && Object.keys(data['multilingualFullName']).length > 0) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Full Name</div></div>"
-		    		for (var i = 0; i < data['multilingualFullName'].value.length ; i++) {
+		    	if (data['multilingualFullName'] != null && Object.keys(data['multilingualFullName']).length > 0 && data['multilingualFullName']['value'] != null) {
+		    		html += "<div class='mainDivisors'><div class='h2div'>Full Name</div></div>"
+		    		for (var i = 0; i < data['multilingualFullName']['value'].length ; i++) {
 		    			var l = data['multilingualFullName']['value'][i]['lang'];
 		    			var v = data['multilingualFullName']['value'][i]['value'];
-		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (v != "" || v != " ") {
+		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			}
 		    		}
 		    	}
-		    	if (data['multilingualLongName'] != null && Object.keys(data['multilingualLongName']).length > 0) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Long Name</div></div>"
-		    		for (var i = 0; i < data['multilingualLongName'].value.length ; i++) {
+		    	if (data['multilingualLongName'] != null && Object.keys(data['multilingualLongName']).length > 0 && data['multilingualLongName']['value'] != null) {
+		    		html += "<div class='mainDivisors'><div class='h2div'>Long Name</div></div>"
+		    		for (var i = 0; i < data['multilingualLongName']['value'].length ; i++) {
 		    			var l = data['multilingualLongName']['value'][i]['lang'];
 		    			var v = data['multilingualLongName']['value'][i]['value'];
-		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (v != "" || v != " ") {
+		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			}
 		    		}
 		    	}
-		    	if (data['multilingualShortDescription'] != null && Object.keys(data['multilingualShortDescription']).length > 0) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Multilingual Short Description</div></div>"
-		    		for (var i = 0; i < data['multilingualShortDescription'].value.length ; i++) {
+		    	if (data['multilingualShortDescription'] != null && Object.keys(data['multilingualShortDescription']).length > 0 && data['multilingualShortDescription']['value'] != null) {
+		    		html += "<div class='mainDivisors'><div class='h2div'>Short Description</div></div>"
+		    		for (var i = 0; i < data['multilingualShortDescription']['value'].length ; i++) {
 		    			var l = data['multilingualShortDescription']['value'][i]['lang'];
 		    			var v = data['multilingualShortDescription']['value'][i]['value'];
-		    			html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (v != "" || v != " ") {
+		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			}
 		    		}
 		    	}
 		    	if (data['hierarchy'] != null && Object.keys(data['hierarchy']).length > 0) {
-
-		    		html += "<div class='mainDivisors'><div class='h2div'>Hierarchy</div></div>";
-		    		for (var i = 0; i < data['hierarchy'].value.length ; i++) {
-		    			html += "&nbsp;&nbsp;<div class='headerH'>" + data['hierarchy'].values[i]['names'][0] + "</div><hr />";
-		    			for (var j = 0; j < data['hierarchy'].values[i]['value'].length ; j++) {
-		    				html += "<div class='mainDivisors'><div class='header'>" + data['hierarchy'].values[i]['value'][j]['name'] + ":</div>";
-		    				html += "<div class='valH'>" + data['hierarchy'].values[i]['value'][j]['value'] + "</div></div>";
+		    		if (data['hierarchy']['parents'][0] != undefined || data['hierarchy']['children'][0] != undefined) {
+		    			var parentsLength = 0;
+		    			var childrenLength = 0;
+		    			var printHierarchy = false;
+		    			if (data['hierarchy']['parents'][0]['parent'] != undefined) {
+		    				parentsLength = data['hierarchy']['parents'][0]['parent'].length;
+		    				printHierarchy = true;
 		    			}
+		    			if (data['hierarchy']['childrens'][0]['child'] != undefined) {
+		    				childrenLength = data['hierarchy']['childrens'][0]['child'].length;
+		    				printHierarchy = true;
+		    			}
+			    		if (printHierarchy) {
+				    		html += "<div class='mainDivisors'><div class='h2div'>Hierarchy</div></div>";
+				    		var linksToShow = {};
+				    		if (parentsLength > 0) {
+				    			html += "<div class='h3div'>Parents";
+				    			for (var i=0; i<parentsLength; i++) {
+				    				var parent = data['hierarchy']['parents'][0]['parent'][i];
+				    				var linkref = null;
+				    				if (parent['link'][0]['value'] != undefined) {
+				    					linkref = parent['link'][0]['value'];
+				    				}
+				    				var label = "";
+				    				if (parent['value'] != undefined && parent['value'][0] != undefined) {
+				    					label = parent['value'][0]['name'];
+				    					html += "<div class=\"hblock\"><div class=\"h4div\">" + label + "</div>";
+					    				for (var j=0; j<parent['value'].length; j++) {
+					    					if (parent['value'][j]['value'] != "" || parent['value'][j]['value'] != " ") {
+						    					var uuid = selfJson.generateUUID();
+						    					html += "<div class=\"header\">" + parent['value'][j]['type'] + " " + parent['value'][j]['lang'] + ":</div>";
+						    					html += "<div class=\"valH2\" id='"+uuid+"'></div>";
+						    					linksToShow[uuid] = {name: parent['value'][j]['value'], link: linkref, uuid: uuid};
+						    				}
+					    				}
+					    				html += "</div>";
+				    				}
+				    			
+				    			}
+				    			html += "</div>";
+				    		}
+
+				    		if (childrenLength > 0) {
+				    			html += "<div class='h3div'>Childrens";	
+				    			for (var i=0; i<childrenLength; i++) {
+				    				var child = data['hierarchy']['childrens'][0]['child'][i];
+				    				var linkref = null;
+				    				if (child['link'][0]['value'] != undefined) {
+				    					linkref = child['link'][0]['value'];
+				    				}
+				    				var label = "";
+				    				if (child['value'] != undefined && child['value'][0] != undefined) {
+				    					label = child['value'][0]['name'];
+				    					html += "<div class=\"hblock\"><div class=\"h4div\">" + label + "</div>";
+					    				for (var j=0; j<child['value'].length; j++) {
+					    					if (child['value'][j]['value'] != "" || child['value'][j]['value'] != " ") {
+						    					var uuid = selfJson.generateUUID();
+						    					html += "<div class=\"header\">" + child['value'][j]['type'] + " " + child['value'][j]['lang'] + ":</div>";
+						    					html += "<div class=\"valH2\" id='"+uuid+"'></div>";
+						    					linksToShow[uuid] = {name: child['value'][j]['value'], link: linkref, uuid: uuid};
+					    					}
+					    				}
+					    				html += "</div>";
+					    			}
+				    			}
+				    			html += "</div>";
+				    		}
+				    	}
 		    		}
 		    	}
 
 		    	content.html(html);
 		    	main.append(content);
+				window['refpub_linkksh'] = {};
+		    	for (var k in linksToShow) {
+		    		var divH = $("#" + k);
+		    		window['refpub_linkksh'][k] = linksToShow[k]['link'];
+		    		divH.click(function() {
+  						var selfClick = selfJson;
+
+  						var self = this;
+  						selfClick.getSingle(window['refpub_linkksh'][self.id]);
+  					});
+  					divH.html(linksToShow[k]['name']);
+		    	}
 		    }});
 	};
 
-/*
 
-<div class="pure-u-3-4">
-    <h5 class="email-name">Yahoo! Finance</h5>
-    <h4 class="email-subject">How to protect your finances from winter storms</h4>
-    <p class="email-desc">
-        Mauris tempor mi vitae sem aliquet pharetra. Fusce in dui purus, nec malesuada mauris.
-    </p>
-</div>
-*/
-}
 
-//http://168.202.54.210:8090/solr/RefPub/select?q=text%3Aar*&wt=json
-function getSolrEntries(text) {
-	var dataList = document.getElementById('json-datalist');
-	var input = document.getElementById('ajax');
-	var inputVal = input.value;
-	var solrURL = "http://168.202.54.210:8090/solr/RefPub/select";
+	this.generateUUID = function() {
+    	var d = new Date().getTime();
+    	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        	var r = (d + Math.random()*16)%16 | 0;
+        	d = Math.floor(d/16);
+        	return (c=='x' ? r : (r&0x7|0x8)).toString(16);
+    	});
+    	return uuid;
+	};
 
-	var url = solrURL + "?q=text:" + encodeURIComponent(inputVal) + "*&wt=json";
-	//alert (solrURL + path);
 
-	$.ajax({
-		type: 'GET',
-		url: url,	
-		success : function(data) {
-			var limUp = 10;
-			if (data.response.docs < 10) {
-				limUp = data.response.docs;
-			}
-			var dataList = document.getElementById('json-datalist');
-			while (dataList.firstChild) {
-    			dataList.removeChild(dataList.firstChild);
-			}
-			//dataList.empty();
-			for (var i = 0; i < limUp; i++) {
-				//data.response.docs[i].name_e
-				var option = document.createElement('option');
-				if (data.response.docs[i].name_e != undefined && data.response.docs[i].name_e != null && data.response.docs[i].name_e != "") {
-					option.value = data.response.docs[i].name_e;
-				} else if (data.response.docs[i].full_name_e != undefined && data.response.docs[i].full_name_e != null && data.response.docs[i].full_name_e != "") {
-					option.value = data.response.docs[i].full_name_e;
-				} else if (data.response.docs[i].long_name_e != undefined && data.response.docs[i].long_name_e != null && data.response.docs[i].long_name_e != "") {
-					option.value = data.response.docs[i].long_name_e;
-				} else if (data.response.docs[i].official_name_e != undefined && data.response.docs[i].official_name_e != null && data.response.docs[i].official_name_e != "") {
-					option.value = data.response.docs[i].official_name_e;
-				} else if (data.response.docs[i].short_description_e != undefined && data.response.docs[i].short_description_e != null && data.response.docs[i].short_description_e != "") {
-					option.value = data.response.docs[i].short_description_e;
-				}
-				dataList.appendChild(option);
-			}
-				
-		},
-		dataType: 'jsonp',
-  		jsonp: 'json.wrf'
-	});
+	this.bindScrollToDiv = function(self, div) {
+		div.bind('scroll', function() {
+			window['scrollbinded'] = true;
+			if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight) {
+			    if (window['refpub_linknext'] != null) {
+			    	if (!window['refpub_retrievingdata']) {
+		        		self.getObjects(window['refpub_linknext'], false);
+		        	}
+		        }
+		    }
+		});
+	};
 
-}
 
-function solrCallback(data) {
-	alert("JSONP DONE!");
+
+
+
 }

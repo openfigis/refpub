@@ -29,7 +29,7 @@ a {
     color: #fff;
     background: #1b98f8;
     margin: 1em 0;
-    width: 140px;
+    width: 170px;
 }
 .secondary-button {
     background: #fff;
@@ -54,7 +54,7 @@ a {
     position: relative;
     background: rgb(37, 42, 58);
     text-align: center;
-
+    overflow: hidden;
 }
 /* Show the "Menu" button on phones */
 #nav .nav-menu-button {
@@ -141,6 +141,7 @@ a {
 
 .email-item:hover {
     background: #b7e5f6;
+    cursor: pointer;
 }
     .email-avatar {
         border-radius: 3px;
@@ -250,7 +251,7 @@ a {
         bottom: 0;
         left: 150px;
         overflow: auto;
-        width: 99%; /* so that it's not 100% */
+        width: 90%; /* so that it's not 100% */
     }
 
 }
@@ -295,11 +296,25 @@ a {
     font-variant: small-caps;
     font-weight: bold;
     color: #198EE7;
+    height: 30px;
 }
 
 .valH {
     width: 84%;
     float: left;
+}
+
+.valH2 {
+    width: 84%;
+    height: 30px;
+    float: left;
+    color: #198ee7;
+    cursor: pointer;
+}
+
+.valH2:hover {
+    text-decoration: underline;
+    color: red;
 }
 
 .headerH {
@@ -322,8 +337,95 @@ h3 {
     font-weight: bold;
     width: 100%;
     color: #061dcb;
+    position: relative;
+    float: left;
+}
+
+.h3div {
+    font-size: 1.15em;
+    font-weight: bold;
+    width: 100%;
+    color: #061dcb;
+    margin-left: 20px;
+    position: relative;
+    float: left;
+}
+
+.h4div {
+    font-size: 1.0em;
+    font-weight: bold;
+    width: 100%;
+    color: #061dcb;
+    margin-left: 40px;
+    margin-top: 5px;
+    position: relative;
+    float: left;
+}
+
+.hblock {
+    position: relative;
+    overflow:hidden;
+    margin-bottom: 15px;
 }
 
 .email-content {
     width: 100%;
+}
+
+.autocomplete-suggestion {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid;
+}
+
+.autocomplete-suggestion strong{
+    color: #198DE7;
+}
+
+.leftBanner {
+    margin-left: 20px;
+}
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('http://168.202.54.210/refpub/images/loading.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+.topResLeft {
+    float: left;
+}
+
+.topResRight {
+    float: right;
+}
+
+.topResContainer {
+    width: 99%;
+    height: 20px;
+    margin-top: 15px;
+}
+
+.enphasy {
+    color: #198DE7;
+    font-weight: bold;
 }

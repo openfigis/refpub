@@ -202,7 +202,7 @@
 	
 	<select id="getChildrenHierarchy" parameterType="map" resultMap="ObjectResults">
 		SELECT 
-			A.*, B.NAME_E AS MKP_GROUP_NAME
+			A.*, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
 		FROM 
 			${table} A, FIGIS.MD_REFOBJECT B 
 		WHERE 

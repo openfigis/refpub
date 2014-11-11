@@ -240,10 +240,12 @@ public class RefPubImplementation implements RefPubInterface {
 		for (int x = 0; x < parents.size(); x++) {
 			parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
 			parents.get(x).setConcept(obj.getConcept());
+			parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), parents.get(x)));
 		}
 		for (int x = 0; x < childrens.size(); x++) {
 			childrens.get(x).setCurrentURI(this.BuildURI("1", "1"));
 			childrens.get(x).setConcept(obj.getConcept());
+			childrens.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), childrens.get(x)));
 		}
 		
 		obj.setParents(parents);
