@@ -112,11 +112,10 @@ function refpub (attributes) {
 		    	if (clean) {
 		    		list.empty();
 		    	}
-		    	var counter = 0;
 		    	$.each(data['concept'], function(index, value) {
 		    		var selfEach = selfSuccess;
 		    		var link = value['link'][0]['value'];
-		    		var newObjId = 'refpub_obj_' + counter;
+		    		var newObjId = 'refpub_obj_' + selfEach.generateUUID();
 		    		window[newObjId] = link;
 		    		var nameFinal = "";
 
@@ -151,7 +150,7 @@ function refpub (attributes) {
 					}
 					var name = $("<h5></h5>").attr("class", "email-name").text(nameFinal);
 
-					var divA = $("<div></div>").attr("class", "email-item email-item-unread pure-g").attr("id", 'refpub_obj_' + counter).click(function() {
+					var divA = $("<div></div>").attr("class", "email-item email-item-unread pure-g").attr("id", newObjId).click(function() {
   						var selfClick = selfEach;
   						var self = this;
   						selfClick.getSingle(window[self.id]);
@@ -165,7 +164,6 @@ function refpub (attributes) {
 					if (nameFinal != null && nameFinal != "" && nameFinal != " ") {
 						list.append(divA);
 					}
-		    		counter++;
 		    	});
 				if (!window['scrollbinded']) {
 					self.bindScrollToDiv(self, $("#list"));
@@ -391,9 +389,4 @@ function refpub (attributes) {
 		    }
 		});
 	};
-
-
-
-
-
 }
