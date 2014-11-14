@@ -15,28 +15,15 @@
 				<property name="url" value="jdbc:oracle:thin:@hqlproracle01.hq.un.fao.org:1552:FISV"/>
 				<property name="username" value="FIGIS_RO"/>
 				<property name="password" value="cal1m3ra"/>
+				
+				<!-- <property name="url" value="jdbc:oracle:thin:@168.202.54.152:1521:XE"/>
+				<property name="username" value="refpub"/>
+				<property name="password" value="2cx0mbs"/> -->
 			</dataSource>
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="org/fao/fi/mybatis/mappers/mybatis-mapper.xml"/>
+		<!-- <mapper resource="org/fao/fi/mybatis/mappers/mybatis-mapper.xml"/> -->
+		<mapper url="file:///opt/refpub/conf/mybatis/mybatis-mapper.xml"/>
 	</mappers>
 </configuration>
-
-<!-- 
-
-<sqlMapConfig>
-	<transactionManager type="JDBC" commitRequired="false">
-		<dataSource type="SIMPLE">
-			<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver"/>
-			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@hqlproracle01.hq.un.fao.org:1552:FISV"/>
-			<property name="JDBC.Username" value="FIGIS_RO"/>
-			<property name="JDBC.Password" value="cal1m3ra"/>
-		</dataSource>
-	</transactionManager>
-	<mapper resource="org/enrico/pool/mybatis-mapper.xml"/>
-</sqlMapConfig>
-
-
-
- -->

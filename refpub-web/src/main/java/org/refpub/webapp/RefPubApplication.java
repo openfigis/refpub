@@ -8,7 +8,8 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @ApplicationPath("rest")
 public class RefPubApplication extends ResourceConfig {
-
+	//@Context ServletContext context;
+	
 	public RefPubApplication() {
 		register(new RefPubBeanRegistration());
 		register(new CorsFilter());

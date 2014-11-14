@@ -33,7 +33,7 @@ import org.fao.fi.refpub.webservice.impl.ConceptListDTO;
 import org.fao.fi.refpub.webservice.objects.Constants;
 
 /*
- * Implementation of the CDI bean that implements the RefPub Restful API functionalities
+ * Implementation of the RefPub Restful API CDI bean
  */
 
 @RequestScoped
@@ -43,6 +43,8 @@ public class RefPubImplementation implements RefPubInterface {
 	
 	UriInfo URI;
 	private static String DEFAULT_COUNT = "100";
+	private static String CONFIG_FILE;
+	private static Configuration CONFIGURATION;
 	
 	@Override
 	public void setUrl(UriInfo uri) {
@@ -52,6 +54,8 @@ public class RefPubImplementation implements RefPubInterface {
 			URI = null;
 		}
 	}
+	@Override
+	public void setPropertiesFile(String propertiesFile) { RefPubImplementation.CONFIG_FILE = propertiesFile; }
 	
 	@Override
 	public ConceptList getAllConcept(String count, String page) {
@@ -120,6 +124,7 @@ public class RefPubImplementation implements RefPubInterface {
 
 	
 	private List<RefPubConcept> getAllConcepts(String count, String page) {
+		loadConfiguration();
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
 		if (count == null) { count = DEFAULT_COUNT; }
@@ -129,7 +134,7 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		List<RefPubConcept> concepts = new ArrayList<RefPubConcept>();
 		
-		List<MDConcept> listOfConcepts = ps.getConcepts(); //Retrieves the concepts from the persistence layer
+		List<MDConcept> listOfConcepts = ps.getConcepts(RefPubImplementation.CONFIGURATION.getDb_schema()); //Retrieves the concepts from the persistence layer
 		for (MDConcept c : listOfConcepts) { //for each concept try to set-up the codelist to be pushed into RefPubObjects
 			RefPubConcept concept = new RefPubConcept();
 			concept.setName(c.getRest_concept());
@@ -137,7 +142,8 @@ public class RefPubImplementation implements RefPubInterface {
 			concept.setTable_grp_name(c.getTable_group());
 			/*concept.setMeta(c.getMeta_id());*/
 			
-			List<MDCodelist> codelists = ps.getCodelistForConcept(concept.getName());
+			List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+																  concept.getName());
 			
 			Map<String,String> codemap = new HashMap<String, String>();
 			for (MDCodelist code : codelists) {
@@ -154,16 +160,18 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	private RefPubConcept getSingleConcept(String Concept) {
+		loadConfiguration();
 		RefPubConcept concept = new RefPubConcept();
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		
-		MDConcept c = ps.getConcept(Concept);
+		MDConcept c = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), Concept);
 		concept.setName(c.getRest_concept());
 		concept.setTable_name(c.getTable_name());
 		concept.setTable_grp_name(c.getTable_group());
 		concept.setMeta(c.getMeta_id());
 		
-		List<MDCodelist> codelists = ps.getCodelistForConcept(concept.getName());
+		List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+															  concept.getName());
 		Map<String,String> codemap = new HashMap<String, String>();
 		for (MDCodelist code : codelists) {
 			codemap.put(code.getCode_column(), code.getCode_name());
@@ -175,6 +183,7 @@ public class RefPubImplementation implements RefPubInterface {
 	
 	
 	private List<RefPubObject> getAllObjectsForConcept(String concept, String count, String page) {
+		loadConfiguration();
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
 		if (count == null) { count = DEFAULT_COUNT; }
@@ -183,16 +192,18 @@ public class RefPubImplementation implements RefPubInterface {
 		RefPubConcept cp = this.getSingleConcept(concept); 
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		
-		MDConcept mdconcept = ps.getConcept(concept);
-		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
+		MDConcept mdconcept = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), concept);
+		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(), mdconcept.getTable_name());
 		
-		List<RefPubObject> objs = ps.getObjects(cp.getMeta(),
+		List<RefPubObject> objs = ps.getObjects(RefPubImplementation.CONFIGURATION.getDb_schema(),
+												cp.getMeta(),
 												mdconcept.getMeta_column(),
-												"FIGIS." + cp.getTable_name(), 
+												cp.getTable_name(), 
 												tbl.getPrimary_key(),
 												min, max);
 		if (objs == null) { return new ArrayList<RefPubObject>(); }
-		List<MDCodelist> codelists = ps.getCodelistForConcept(concept);
+		List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+															  concept);
 		
 		int counter = 0;
 		for (RefPubObject obj : objs) {
@@ -208,30 +219,41 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 		
 	private RefPubObject getSingleObject(String concept, String codelist, String code) {
+		loadConfiguration();
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
-		MDConcept mdconcept = ps.getConcept(concept);
-		MDCodelist mdcodelist =  ps.getCodeList(concept, codelist);
-		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
+		MDConcept mdconcept = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+											concept);
+		MDCodelist mdcodelist =  ps.getCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(),
+												concept, codelist);
+		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(),
+										mdconcept.getTable_name());
 		
-		RefPubObject obj = ps.getObject("FIGIS." + mdconcept.getTable_name(), mdcodelist.getCode_column(), code, tbl.getPrimary_key());
+		RefPubObject obj = ps.getObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
+										mdconcept.getTable_name(), mdcodelist.getCode_column(), 
+										code, tbl.getPrimary_key());
 		
 		if (obj == null) {
 			return new RefPubObject();
 		}
 		
-		List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), obj);
+		List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
+																RefPubImplementation.CONFIGURATION.getDb_schema(), 
+																concept), 
+															obj);
 		obj.setConcept(concept);
 		obj.setCodeList(codemap);
 		
-		List<RefPubObject> parents = ps.getParentHierarchy(  "FIGIS." + mdconcept.getTable_name(),
-															 "FIGIS." +  mdconcept.getTable_group(), 
+		List<RefPubObject> parents = ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+															 mdconcept.getTable_name(),
+															 mdconcept.getTable_group(), 
 															 mdconcept.getTable_group_member(),
 															 mdconcept.getMeta_column(),
 															 obj.getPrimary_key_id(),
 															 mdconcept.getTable_group_column(),
 															 tbl.getPrimary_key());
-		List<RefPubObject> childrens = ps.getChildrenHierarchy(  "FIGIS." + mdconcept.getTable_name(),
-																 "FIGIS." +  mdconcept.getTable_group(), 
+		List<RefPubObject> childrens = ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+																 mdconcept.getTable_name(),
+																 mdconcept.getTable_group(), 
 																 mdconcept.getTable_group_member(),
 																 mdconcept.getMeta_column(),
 																 obj.getPrimary_key_id(),
@@ -240,12 +262,16 @@ public class RefPubImplementation implements RefPubInterface {
 		for (int x = 0; x < parents.size(); x++) {
 			parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
 			parents.get(x).setConcept(obj.getConcept());
-			parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), parents.get(x)));
+			parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
+																		RefPubImplementation.CONFIGURATION.getDb_schema(),
+																		concept), parents.get(x)));
 		}
 		for (int x = 0; x < childrens.size(); x++) {
 			childrens.get(x).setCurrentURI(this.BuildURI("1", "1"));
 			childrens.get(x).setConcept(obj.getConcept());
-			childrens.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), childrens.get(x)));
+			childrens.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
+																			RefPubImplementation.CONFIGURATION.getDb_schema(),
+																			concept), childrens.get(x)));
 		}
 		
 		obj.setParents(parents);
@@ -256,30 +282,37 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	private RefPubObject getSingleObject(String concept, String code) {
+		loadConfiguration();
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
-		MDConcept mdconcept = ps.getConcept(concept);
-		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
+		MDConcept mdconcept = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+											concept);
+		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(),
+										mdconcept.getTable_name());
 		
-		RefPubObject obj = ps.getObjectById("FIGIS." + mdconcept.getTable_name(), tbl.getPrimary_key(), code);
+		RefPubObject obj = ps.getObjectById(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+											mdconcept.getTable_name(), tbl.getPrimary_key(), code);
 		
 		if (obj == null) {
 			return new RefPubObject();
 		}
 		
-		List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), obj);
+		List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
+												RefPubImplementation.CONFIGURATION.getDb_schema(), concept), obj);
 		obj.setConcept(concept);
 		obj.setCodeList(codemap);
 		
 			
-		List<RefPubObject> parents = ps.getParentHierarchy(  "FIGIS." + mdconcept.getTable_name(),
-															 "FIGIS." +  mdconcept.getTable_group(), 
+		List<RefPubObject> parents = ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+															 mdconcept.getTable_name(),
+															 mdconcept.getTable_group(), 
 															 mdconcept.getTable_group_member(),
 															 mdconcept.getMeta_column(),
 															 obj.getPrimary_key_id(),
 															 mdconcept.getTable_group_column(),
 															 tbl.getPrimary_key());
-		List<RefPubObject> childrens = ps.getChildrenHierarchy(  "FIGIS." + mdconcept.getTable_name(),
-																 "FIGIS." +  mdconcept.getTable_group(), 
+		List<RefPubObject> childrens = ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+																 mdconcept.getTable_name(),
+																 mdconcept.getTable_group(), 
 																 mdconcept.getTable_group_member(),
 																 mdconcept.getMeta_column(),
 																 obj.getPrimary_key_id(),
@@ -290,12 +323,16 @@ public class RefPubImplementation implements RefPubInterface {
 		for (int x = 0; x < parents.size(); x++) {
 			parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
 			parents.get(x).setConcept(obj.getConcept());
-			parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), parents.get(x)));
+			parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
+																	RefPubImplementation.CONFIGURATION.getDb_schema(),
+																	concept), parents.get(x)));
 		}
 		for (int x = 0; x < childrens.size(); x++) {
 			childrens.get(x).setCurrentURI(this.BuildURI("1", "1"));
 			childrens.get(x).setConcept(obj.getConcept());
-			childrens.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(concept), childrens.get(x)));
+			childrens.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
+																	RefPubImplementation.CONFIGURATION.getDb_schema(),
+																	concept), childrens.get(x)));
 
 		}
 		
@@ -307,12 +344,16 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	private RefPubObject getSingleAttributeForSingleObject(String concept, String codelist, String code, String attribute) {
+		loadConfiguration();
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
-		MDConcept mdconcept = ps.getConcept(concept);
-		MDCodelist mdcodelist =  ps.getCodeList(concept, codelist);
-		TableInfo tbl = ps.getTableInfo(mdconcept.getTable_name());
+		MDConcept mdconcept = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), concept);
+		MDCodelist mdcodelist =  ps.getCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+												concept, codelist);
+		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(),
+										mdconcept.getTable_name());
 		
-		RefPubObject obj = ps.getAttributeForSingleObject("FIGIS." + mdconcept.getTable_name(), 
+		RefPubObject obj = ps.getAttributeForSingleObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
+														  mdconcept.getTable_name(), 
 														  mdcodelist.getCode_column(), 
 														  code, 
 														  tbl.getPrimary_key(),
@@ -325,6 +366,7 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	private RefPubObject getAllCodeList(String count, String page) {
+		loadConfiguration();
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
 		if (count == null) { count = DEFAULT_COUNT; }
@@ -333,7 +375,7 @@ public class RefPubImplementation implements RefPubInterface {
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		RefPubObject returnObj = new RefPubObject();
 		
-		List<MDCodelist> codelists = ps.getCodeList_list();
+		List<MDCodelist> codelists = ps.getCodeList_list(RefPubImplementation.CONFIGURATION.getDb_schema());
 		
 		List<CodeListDAO> l = new ArrayList<CodeListDAO>();
 		
@@ -349,6 +391,7 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	private List<RefPubObject> getObjectsByCodeList(String concept, String codelist, String count, String page) {
+		loadConfiguration();
 		String min = this.calculateQueryPagination("min", count, page);
 		String max = this.calculateQueryPagination("max", count, page);
 		if (count == null) { count = DEFAULT_COUNT; }
@@ -356,13 +399,14 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 	
-		MDConcept con = ps.getConcept(concept);
-		MDCodelist cl = ps.getCodeList(concept, codelist);
+		MDConcept con = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), concept);
+		MDCodelist cl = ps.getCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(), concept, codelist);
 		if (cl == null) {
 			return new ArrayList<RefPubObject>();
 		}
-		TableInfo ti = ps.getTableInfo(cl.getTable_name());
-		List<RefPubObject> returnList = ps.getObjectsByCodeList("FIGIS." + cl.getTable_name(),
+		TableInfo ti = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(), cl.getTable_name());
+		List<RefPubObject> returnList = ps.getObjectsByCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+																cl.getTable_name(),
 																con.getMeta_column(),
 																con.getMeta_id(),
 																cl.getCode_column(), 
@@ -371,7 +415,8 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		if (returnList == null) { return new ArrayList<RefPubObject>(); }
 		
-		List<MDCodelist> codelists = ps.getCodelistForConcept(concept);
+		List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+															  concept);
 		
 		int counter = 0;
 		for (RefPubObject obj : returnList) {
@@ -388,10 +433,12 @@ public class RefPubImplementation implements RefPubInterface {
 
 
 	private RefPubObject getCodeSystemByConcept(String concept) {
+		loadConfiguration();
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
 		RefPubObject returnObj = new RefPubObject();
 		
-		List<MDCodelist> codelists = ps.getCodeList_listByConcept(concept);
+		List<MDCodelist> codelists = ps.getCodeList_listByConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+																  concept);
 		
 		List<CodeListDAO> l = new ArrayList<CodeListDAO>();
 		
@@ -409,9 +456,12 @@ public class RefPubImplementation implements RefPubInterface {
 
 	
 	private List<GenericType> attributeListByConceptCodelist(String concept, String codelist) {
+		loadConfiguration();
 		PersistenceServiceInterface ps = new PersistenceServiceImplementation(); //Set up the persistence layer
-		MDCodelist cl = ps.getCodeList(concept, codelist);
-		List<GenericType> list = ps.getTableColumns(cl.getTable_name());
+		MDCodelist cl = ps.getCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(),
+									   concept, codelist);
+		List<GenericType> list = ps.getTableColumns(RefPubImplementation.CONFIGURATION.getDb_schema(),
+													cl.getTable_name());
 		
 		List<GenericType> retList = new ArrayList<GenericType>(); 
 		for (GenericType t : list) {
@@ -492,6 +542,14 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 
 	
+
+	private void loadConfiguration() {
+		if (RefPubImplementation.CONFIG_FILE == null) {
+			RefPubImplementation.CONFIGURATION = new Configuration();
+		} else {
+			RefPubImplementation.CONFIGURATION = new Configuration(RefPubImplementation.CONFIG_FILE);
+		}
+	}
 	
 
 		

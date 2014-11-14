@@ -1,0 +1,13 @@
+Configuration file: refpub.properties
+
+The configuration file which holds all the properties needed by the application should be copied in a folder
+default folder /opt/refpub/conf
+
+Windows users can use C:\opt\refpub\conf
+
+The configuration file final path must be present in the Restful API's web.xml as:
+
+<context-param>     
+  	<param-name>refpub-confFile</param-name>     
+	<param-value>/opt/refpub/conf/refpub.properties</param-value>     
+</context-param>

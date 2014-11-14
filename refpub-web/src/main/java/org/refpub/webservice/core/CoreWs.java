@@ -2,6 +2,7 @@ package org.refpub.webservice.core;
 
 import javax.annotation.ManagedBean;
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -22,9 +23,9 @@ import org.fao.fi.refpub.webservice.impl.CodeDTO;
 public class CoreWs {
 
 	@Inject RefPubInterface bean;
-	@Context
-	private UriInfo uriInfo;
-
+	@Context private UriInfo uriInfo;
+	@Context ServletContext context;
+	
 	/*
 	 * Get Concepts JSON
 	 */
@@ -39,7 +40,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList conceptsJSON() {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
 	}
 	
@@ -47,7 +48,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList conceptsXML() {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
 	}
 
@@ -66,7 +67,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept codeJson() {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllCodeSystem(this.getPageParam("count"), this.getPageParam("page"));
 	}
 	
@@ -74,7 +75,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public Concept codeXML() {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllCodeSystem(this.getPageParam("count"), this.getPageParam("page"));
 	}
 	
@@ -93,7 +94,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList conceptListJson(@PathParam("concept") String conceptCode) {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllObjectByConcept(conceptCode, this.getPageParam("count"), this.getPageParam("page"));
 	}
 	
@@ -101,7 +102,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList conceptListXML(@PathParam("concept") String conceptCode) {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllObjectByConcept(conceptCode, this.getPageParam("count"), this.getPageParam("page"));
 	}
 
@@ -122,7 +123,7 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept codesystemsJson(@PathParam("concept") String concept) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getAllCodeSystemByConcept(concept);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -134,7 +135,7 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_XML })
 	public Concept codesystemsXML(@PathParam("concept") String concept) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getAllCodeSystemByConcept(concept);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -157,7 +158,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList codesystemJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getObjectByCodeSystem(concept, codesystem, this.getPageParam("count"), this.getPageParam("page"));
 	}
 	
@@ -165,7 +166,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList codesystemXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getObjectByCodeSystem(concept, codesystem, this.getPageParam("count"), this.getPageParam("page"));
 	}
 	
@@ -187,7 +188,7 @@ public class CoreWs {
 	public Concept codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getObject(concept, codesystem, code);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -200,7 +201,7 @@ public class CoreWs {
 	public Concept attrCodeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getObject(concept, codesystem, code);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -222,7 +223,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Attributes codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
 	}
 	
@@ -230,7 +231,7 @@ public class CoreWs {
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public Attributes codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
-		bean.setUrl(uriInfo);
+		setBean();
 		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
 	}
 	
@@ -253,7 +254,7 @@ public class CoreWs {
 	public Concept attrCodeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code, @PathParam("attribute") String attribute) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getAttributeForObject(concept, codesystem, code, attribute);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -266,7 +267,7 @@ public class CoreWs {
 	public Concept codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code, @PathParam("attribute") String attribute) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getAttributeForObject(concept, codesystem, code, attribute);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -285,7 +286,7 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Concept groupJson(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getObject(concept, groupId);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -297,7 +298,7 @@ public class CoreWs {
 	@Produces({ MediaType.APPLICATION_XML })
 	public Concept groupXML(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		try {
-			bean.setUrl(uriInfo);
+			setBean();
 			return bean.getObject(concept, groupId);
 		} catch (Exception ex) {
 			return CodeDTO.error(ex.getMessage());
@@ -313,5 +314,16 @@ public class CoreWs {
 			return null;
 		}
 		return value;
+	}
+	
+	private void setBean() {
+		bean.setUrl(uriInfo);
+		
+		String appConfigPath = context.getInitParameter("refpub-confFile");
+		if (appConfigPath == null) {
+			appConfigPath = "/opt/refpub/conf/refpub.properties";
+		}
+		
+		bean.setPropertiesFile(appConfigPath);
 	}
 }

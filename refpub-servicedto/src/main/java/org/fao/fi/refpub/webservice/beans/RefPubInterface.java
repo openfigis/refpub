@@ -14,6 +14,7 @@ import org.fao.fi.refpub.webservice.ConceptList;
 public interface RefPubInterface {
 	
 	void setUrl(UriInfo uri);
+	void setPropertiesFile(String propertiesFile);
 	
 	/*
 	 * getAllConcept()
