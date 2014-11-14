@@ -6,7 +6,7 @@
 	<parent>
 		<artifactId>refpub</artifactId>
 		<groupId>org.refpub</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.1</version>
 		<relativePath>..</relativePath>
 	</parent>
 	<artifactId>refpub-web</artifactId>
@@ -38,12 +38,12 @@
 		<dependency>
 			<groupId>org.refpub</groupId>
 			<artifactId>refpub-servicedto</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.refpub</groupId>
 			<artifactId>refpub-dao</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 				<groupId>javax.servlet</groupId>
