@@ -17,6 +17,8 @@ import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.beans.RefPubInterface;
 import org.fao.fi.refpub.webservice.impl.CodeDTO;
 
+import org.glassfish.jersey.server.JSONP;
+
 @Path("")
 @ManagedBean
 
@@ -31,24 +33,38 @@ public class CoreWs {
 	 */
 	@Path("concept")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces({"application/x-javascript", MediaType.APPLICATION_JSON})
+	//@Produces({ MediaType.APPLICATION_JSON })
 	public ConceptList concepts() {
 		return this.conceptsJSON();
 	}
 	
 	@Path("concept/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
+	@Produces({"application/x-javascript", MediaType.APPLICATION_JSON})
 	public ConceptList conceptsJSON() {
+		setBean();
+		if (this.getPageParam("jsonpCallback") != null) {
+			return this.conceptsJSONP();
+		}
+		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
+	}
+	
+	@GET
+	@Produces({"application/x-javascript"})
+	@JSONP(queryParam = "jsonpCallback")
+	public ConceptList conceptsJSONP() {
 		setBean();
 		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
 	}
+
 	
 	@Path("concept/xml")
 	@GET
 	@Produces({ MediaType.APPLICATION_XML })
 	public ConceptList conceptsXML() {
 		setBean();
+		
 		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
 	}
 

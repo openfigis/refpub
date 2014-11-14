@@ -34,7 +34,6 @@
 			<version>2.11</version>
 		</dependency>
 		
-		
 		<dependency>
 			<groupId>org.refpub</groupId>
 			<artifactId>refpub-servicedto</artifactId>

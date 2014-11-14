@@ -36,7 +36,13 @@
 			<extension base="refpub:RestTypeSingle">
 				<sequence>
 					<element name="concept" type="refpub:ConceptType"
-						minOccurs="1" maxOccurs="unbounded"></element>
+						minOccurs="1" maxOccurs="unbounded">
+						<annotation>
+                          <appinfo>
+                              <property name="concept"/>
+                          </appinfo>
+                      	</annotation>	
+					</element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -76,7 +82,8 @@
 			<extension base="refpub:RestType">
 				<sequence>
 					<element name="concept" type="refpub:CodeSystemType"
-						minOccurs="1" maxOccurs="unbounded"></element>
+						minOccurs="1" maxOccurs="unbounded">
+                     </element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -86,7 +93,13 @@
 		<complexContent>
 			<extension base="refpub:TreasureType">
 				<sequence>
-					<element name="code" type="refpub:codeType" maxOccurs="unbounded" minOccurs="1"></element>
+					<element name="code" type="refpub:codeType" maxOccurs="unbounded" minOccurs="1">
+						<annotation>
+                          <appinfo>
+                              <property name="code"/>
+                          </appinfo>
+                      	</annotation>	
+					</element>
 				</sequence>
 			</extension>
 		</complexContent>
