@@ -6,17 +6,14 @@ import javax.servlet.ServletContext;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.fao.fi.refpub.webservice.Attributes;
-import org.fao.fi.refpub.webservice.Concept;
-import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.beans.RefPubInterface;
 import org.fao.fi.refpub.webservice.impl.CodeDTO;
-
 import org.glassfish.jersey.server.JSONP;
 
 @Path("")
@@ -33,39 +30,40 @@ public class CoreWs {
 	 */
 	@Path("concept")
 	@GET
-	@Produces({"application/x-javascript", MediaType.APPLICATION_JSON})
-	//@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptList concepts() {
+	@JSONP(queryParam = "jcb")
+	public Response concepts() {
 		return this.conceptsJSON();
 	}
 	
 	@Path("concept/json")
 	@GET
-	@Produces({"application/x-javascript", MediaType.APPLICATION_JSON})
-	public ConceptList conceptsJSON() {
+	@JSONP(queryParam = "jcb")
+	public Response conceptsJSON() {
 		setBean();
-		if (this.getPageParam("jsonpCallback") != null) {
-			return this.conceptsJSONP();
+		try {
+			return Response.ok(bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		}
-		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
-	}
-	
-	@GET
-	@Produces({"application/x-javascript"})
-	@JSONP(queryParam = "jsonpCallback")
-	public ConceptList conceptsJSONP() {
-		setBean();
-		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
 	}
 
-	
 	@Path("concept/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptList conceptsXML() {
+	public Response conceptsXML() {
 		setBean();
-		
-		return bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getAllConcept(this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		}
 	}
 
 	/*
@@ -74,25 +72,40 @@ public class CoreWs {
 	 */
 	@Path("codesystem")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept code() {
+	@JSONP(queryParam = "jcb")
+	public Response code() {
 		return this.codeJson();
 	}
 	
 	@Path("codesystem/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept codeJson() {
+	@JSONP(queryParam = "jcb")
+	public Response codeJson() {
 		setBean();
-		return bean.getAllCodeSystem(this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getAllCodeSystem(this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		}
 	}
 	
 	@Path("codesystem/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public Concept codeXML() {
+	public Response codeXML() {
 		setBean();
-		return bean.getAllCodeSystem(this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getAllCodeSystem(this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		}
 	}
 	
 	/*
@@ -101,25 +114,40 @@ public class CoreWs {
 	 */
 	@Path("concept/{concept}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptList conceptList(@PathParam("concept") String conceptCode) {
+	@JSONP(queryParam = "jcb")
+	public Response conceptList(@PathParam("concept") String conceptCode) {
 		return this.conceptListJson(conceptCode);
 	}
 	
 	@Path("concept/{concept}/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptList conceptListJson(@PathParam("concept") String conceptCode) {
+	@JSONP(queryParam = "jcb")
+	public Response conceptListJson(@PathParam("concept") String conceptCode) {
 		setBean();
-		return bean.getAllObjectByConcept(conceptCode, this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getAllObjectByConcept(conceptCode, this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		}
 	}
 	
 	@Path("concept/{concept}/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptList conceptListXML(@PathParam("concept") String conceptCode) {
+	public Response conceptListXML(@PathParam("concept") String conceptCode) {
 		setBean();
-		return bean.getAllObjectByConcept(conceptCode, this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getAllObjectByConcept(conceptCode, this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		}
 	}
 
 	
@@ -129,32 +157,45 @@ public class CoreWs {
 	 */
 	@Path("concept/{concept}/codesystem")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept codesystems(@PathParam("concept") String concept) {
+	@JSONP(queryParam = "jcb")
+	public Response codesystems(@PathParam("concept") String concept) {
 		return this.codesystemsJson(concept);
 	}
 	
 	@Path("concept/{concept}/codesystem/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept codesystemsJson(@PathParam("concept") String concept) {
+	@JSONP(queryParam = "jcb")
+	public Response codesystemsJson(@PathParam("concept") String concept) {
 		try {
 			setBean();
-			return bean.getAllCodeSystemByConcept(concept);
+			return Response.ok(bean.getAllCodeSystemByConcept(concept))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		}
 	}
 	
 	@Path("concept/{concept}/codesystem/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public Concept codesystemsXML(@PathParam("concept") String concept) {
+	public Response codesystemsXML(@PathParam("concept") String concept) {
 		try {
 			setBean();
-			return bean.getAllCodeSystemByConcept(concept);
+			return Response.ok(bean.getAllCodeSystemByConcept(concept))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		}
 	}
 	
@@ -165,25 +206,40 @@ public class CoreWs {
 
 	@Path("concept/{concept}/codesystem/{codesystem}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptList codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	@JSONP(queryParam = "jcb")
+	public Response codesystem(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return this.codesystemJson(concept, codesystem);
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public ConceptList codesystemJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	@JSONP(queryParam = "jcb")
+	public Response codesystemJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		setBean();
-		return bean.getObjectByCodeSystem(concept, codesystem, this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getObjectByCodeSystem(concept, codesystem, this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		}
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public ConceptList codesystemXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	public Response codesystemXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		setBean();
-		return bean.getObjectByCodeSystem(concept, codesystem, this.getPageParam("count"), this.getPageParam("page"));
+		try {
+			return Response.ok(bean.getObjectByCodeSystem(concept, codesystem, this.getPageParam("count"), this.getPageParam("page")))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		}
 	}
 	
 	/*
@@ -192,35 +248,48 @@ public class CoreWs {
 	 */
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	@JSONP(queryParam = "jcb")
+	public Response code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		return this.codeJson(concept, codesystem, code);
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	@JSONP(queryParam = "jcb")
+	public Response codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
 			setBean();
-			return bean.getObject(concept, codesystem, code);
+			return Response.ok(bean.getObject(concept, codesystem, code))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		}
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public Concept attrCodeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	public Response attrCodeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code) {
 		try {
 			setBean();
-			return bean.getObject(concept, codesystem, code);
+			return Response.ok(bean.getObject(concept, codesystem, code))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		}
 	}
 
@@ -230,25 +299,40 @@ public class CoreWs {
 	 */
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Attributes code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	@JSONP(queryParam = "jcb")
+	public Response code(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		return this.codeJson(concept, codesystem);
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Attributes codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	@JSONP(queryParam = "jcb")
+	public Response codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		setBean();
-		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
+		try {
+			return Response.ok(bean.getAllAttributesForConceptAndCodesystem(concept, codesystem))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
+		}
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public Attributes codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	public Response codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
 		setBean();
-		return bean.getAllAttributesForConceptAndCodesystem(concept, codesystem);
+		try {
+			return Response.ok(bean.getAllAttributesForConceptAndCodesystem(concept, codesystem))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		} catch (Exception ex) {
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
+		}
 	}
 	
 	
@@ -258,66 +342,96 @@ public class CoreWs {
 	 */
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/attribute/{attribute}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept attrCode(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	@JSONP(queryParam = "jcb")
+	public Response attrCode(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code, @PathParam("attribute") String attribute) {
 		return this.attrCodeJson(concept, codesystem, code, attribute);
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/attribute/{attribute}/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept attrCodeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	@JSONP(queryParam = "jcb")
+	public Response attrCodeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code, @PathParam("attribute") String attribute) {
 		try {
 			setBean();
-			return bean.getAttributeForObject(concept, codesystem, code, attribute);
+			return Response.ok(bean.getAttributeForObject(concept, codesystem, code, attribute))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		}
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/attribute/{attribute}/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public Concept codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
+	public Response codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
 			@PathParam("code") String code, @PathParam("attribute") String attribute) {
 		try {
 			setBean();
-			return bean.getAttributeForObject(concept, codesystem, code, attribute);
+			return Response.ok(bean.getAttributeForObject(concept, codesystem, code, attribute))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		}
 	}
 	
+	/*
+	 * Grouping
+	 */
+	
 	@Path("concept/{concept}/group/{group}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept group(@PathParam("concept") String concept, @PathParam("group") String groupId) {
+	@JSONP(queryParam = "jcb")
+	public Response group(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		return this.groupJson(concept, groupId);
 	}
 	
 	@Path("concept/{concept}/group/{group}/json")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Concept groupJson(@PathParam("concept") String concept, @PathParam("group") String groupId) {
+	@JSONP(queryParam = "jcb")
+	public Response groupJson(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		try {
 			setBean();
-			return bean.getObject(concept, groupId);
+			return Response.ok(bean.getObject(concept, groupId))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
+					.build();
 		}
 	}
 	
 	@Path("concept/{concept}/group/{group}/xml")
 	@GET
-	@Produces({ MediaType.APPLICATION_XML })
-	public Concept groupXML(@PathParam("concept") String concept, @PathParam("group") String groupId) {
+	public Response groupXML(@PathParam("concept") String concept, @PathParam("group") String groupId) {
 		try {
 			setBean();
-			return bean.getObject(concept, groupId);
+			return Response.ok(bean.getObject(concept, groupId))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		} catch (Exception ex) {
-			return CodeDTO.error(ex.getMessage());
+			/*return Response.ok(CodeDTO.error(ex.getMessage()))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();*/
+			return Response.ok(bean.error(ex))
+					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
+					.build();
 		}
 	}
 	
@@ -341,5 +455,19 @@ public class CoreWs {
 		}
 		
 		bean.setPropertiesFile(appConfigPath);
+	}
+	
+	private String getMediaType(String out) {
+		if ("xml".equalsIgnoreCase(out)) {
+			return MediaType.APPLICATION_XML;
+		} else if ("json".equalsIgnoreCase(out)) {
+			if (this.getPageParam("jcb") != null) {
+				return "application/x-javascript";
+			} else {
+				return MediaType.APPLICATION_JSON;
+			}
+		} else {
+			return MediaType.APPLICATION_JSON;
+		}
 	}
 }

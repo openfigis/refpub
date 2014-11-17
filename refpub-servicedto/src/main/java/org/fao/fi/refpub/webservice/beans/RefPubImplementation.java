@@ -26,10 +26,12 @@ import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
 import org.fao.fi.refpub.webservice.Attributes;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
+import org.fao.fi.refpub.webservice.SystemError;
 import org.fao.fi.refpub.webservice.impl.AttributeListTypeDTO;
 import org.fao.fi.refpub.webservice.impl.CodeDTO;
 import org.fao.fi.refpub.webservice.impl.CodeListListDTO;
 import org.fao.fi.refpub.webservice.impl.ConceptListDTO;
+import org.fao.fi.refpub.webservice.impl.ErrorListDTO;
 import org.fao.fi.refpub.webservice.objects.Constants;
 
 /*
@@ -54,6 +56,11 @@ public class RefPubImplementation implements RefPubInterface {
 			URI = null;
 		}
 	}
+	@Override
+	public SystemError error(Exception e) {
+		return ErrorListDTO.create(e);
+	}
+	
 	@Override
 	public void setPropertiesFile(String propertiesFile) { RefPubImplementation.CONFIG_FILE = propertiesFile; }
 	
@@ -550,6 +557,7 @@ public class RefPubImplementation implements RefPubInterface {
 			RefPubImplementation.CONFIGURATION = new Configuration(RefPubImplementation.CONFIG_FILE);
 		}
 	}
+	
 	
 
 		

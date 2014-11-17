@@ -5,6 +5,7 @@ import javax.ws.rs.core.UriInfo;
 import org.fao.fi.refpub.webservice.Attributes;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
+import org.fao.fi.refpub.webservice.SystemError;
 
 /*
  * This is the interface of the RefPub REST Interface
@@ -89,4 +90,6 @@ public interface RefPubInterface {
 	Concept getAllCodeSystemByConcept(String concept);
 	
 	Attributes getAllAttributesForConceptAndCodesystem(String concept, String codesystem);
+	
+	SystemError error(Exception e);
 }

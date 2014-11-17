@@ -29,6 +29,7 @@
 	<element name="codeSystem" type="refpub:CodeSystemType"></element>
 	<element name="code" type="refpub:codeType"></element>
 	<element name="attributes" type="refpub:attributesList"></element>
+	<element name="systemError" type="refpub:ErrorList"></element>
 	
 	<!-- Types -->
 	<complexType name="ConceptListType">
@@ -46,7 +47,6 @@
 				</sequence>
 			</extension>
 		</complexContent>
-		
 	</complexType>
 	
 	<complexType name="RestType">
@@ -295,5 +295,12 @@
     		</extension>
       	</simpleContent>
     </complexType>
+    
+    <complexType name="ErrorList">
+		<sequence>
+			<element name="error" type="string" minOccurs="1" maxOccurs="unbounded" />
+			<element name="stacktrace" type="string" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
 
 </schema>
