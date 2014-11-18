@@ -6,8 +6,13 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
@@ -19,7 +24,11 @@ public class Utils {
 		for (MDCodelist cl : codelists) {
 			CodeListDAO clobj = new CodeListDAO();
 			clobj.setName(cl.getCode_name());
-			clobj.setValue(getBeanProperty(obj, cl.getCode_column()));
+			String value = getBeanProperty(obj, cl.getCode_column());
+			if (value == null) {
+				value = getBeanAttrProperty(obj, cl.getCode_column());
+			}
+			clobj.setValue(value);
 			clobj.setIsDefault(cl.getIsDefault());
 			codemap.add(clobj);
 		}
@@ -50,14 +59,31 @@ public class Utils {
 			e.printStackTrace();
 		}  
 	    return null;
-	}  
+	}
 	
-	private static String getStringFromObject(Object object) {
+	private static String getBeanAttrProperty(RefPubObject bean, String column) {
+		for (HashMap<String, String> attributes : bean.getATTRIBUTES()) {
+			for (Entry<String, String> kv : attributes.entrySet()) {
+				if (kv.getKey().toLowerCase().equals(column.toLowerCase())) {
+					return kv.getValue();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static String getStringFromObject(Object object) {
+		if (object instanceof Timestamp) {
+			return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(object);
+		}
 		if(object instanceof Integer) {
 			return Integer.toString((int) object);
 		}
 		if (object instanceof Float) {
 			return Float.toString((float) object);
+		}
+		if (object instanceof BigDecimal) {
+			return String.valueOf(((BigDecimal) object).toBigInteger().toString());
 		}
 		return (String) object;
 	}

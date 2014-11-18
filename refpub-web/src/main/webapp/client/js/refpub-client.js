@@ -1,3 +1,7 @@
+function refPubTrim(x) {
+    return x.replace(/^\s+|\s+$/gm,'');
+}
+
 function refpub (attributes) {
 	this.endpoint = attributes['endpoint'];
 	this.solrEndpoint = attributes['solr_endpoint'];
@@ -236,45 +240,71 @@ function refpub (attributes) {
 		    	html += "<div class='topResRight'>Concept Type: <span class='enphasy'>" + data['link'][0]['rel'] + "</span></div>";
 		    	html += "</div><hr/>";
 		    	if (data['multilingualName'] != null && Object.keys(data['multilingualName']).length > 0 && data['multilingualName']['value'] != null) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Name</div></div>"
+		    		var tHtml = "";
 		    		for (var i = 0; i < data['multilingualName']['value'].length ; i++) {
 		    			var l = data['multilingualName']['value'][i]['lang'];
 		    			var v = data['multilingualName']['value'][i]['value'];
-		    			if (v != "" || v != " ") {
-		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (refPubTrim(v) != "") {
+		    				tHtml += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    			}
+		    		}
+		    		if (tHtml != "") {
+		    			html += "<div class='mainDivisors'><div class='h2div'>Name</div></div>" + tHtml;
 		    		}
 		    	}
 		    	if (data['multilingualFullName'] != null && Object.keys(data['multilingualFullName']).length > 0 && data['multilingualFullName']['value'] != null) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Full Name</div></div>"
+		    		var tHtml = "";
 		    		for (var i = 0; i < data['multilingualFullName']['value'].length ; i++) {
 		    			var l = data['multilingualFullName']['value'][i]['lang'];
 		    			var v = data['multilingualFullName']['value'][i]['value'];
-		    			if (v != "" || v != " ") {
-		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (refPubTrim(v) != "") {
+		    				tHtml += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    			}
+		    		}
+		    		if (tHtml != "") {
+		    			html += "<div class='mainDivisors'><div class='h2div'>Full Name</div></div>" + tHtml;
 		    		}
 		    	}
 		    	if (data['multilingualLongName'] != null && Object.keys(data['multilingualLongName']).length > 0 && data['multilingualLongName']['value'] != null) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Long Name</div></div>"
+		    		var tHtml = "";
 		    		for (var i = 0; i < data['multilingualLongName']['value'].length ; i++) {
 		    			var l = data['multilingualLongName']['value'][i]['lang'];
 		    			var v = data['multilingualLongName']['value'][i]['value'];
-		    			if (v != "" || v != " ") {
-		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (refPubTrim(v) != "") {
+		    				tHtml += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    			}
+		    		}
+		    		if (tHtml != "") {
+		    			html += "<div class='mainDivisors'><div class='h2div'>Long Name</div></div>" + tHtml;
 		    		}
 		    	}
 		    	if (data['multilingualShortDescription'] != null && Object.keys(data['multilingualShortDescription']).length > 0 && data['multilingualShortDescription']['value'] != null) {
-		    		html += "<div class='mainDivisors'><div class='h2div'>Short Description</div></div>"
+		    		var tHtml = "";
 		    		for (var i = 0; i < data['multilingualShortDescription']['value'].length ; i++) {
 		    			var l = data['multilingualShortDescription']['value'][i]['lang'];
 		    			var v = data['multilingualShortDescription']['value'][i]['value'];
-		    			if (v != "" || v != " ") {
-		    				html += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			if (refPubTrim(v) != "") {
+		    				tHtml += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
 		    			}
 		    		}
+		    		if (tHtml != "") {
+		    			html += "<div class='mainDivisors'><div class='h2div'>Short Description</div></div>" + tHtml;
+		    		}
 		    	}
+		    	if (data['attr'] != null && data['attr']['value'] != null && data['attr']['value'].length > 0) {
+		    		var tHtml = "";
+		    		for (var i = 0; i < data['attr']['value'].length ; i++) {
+		    			var l = data['attr']['value'][i]['name'];
+		    			var v = data['attr']['value'][i]['value'];
+		    			if (refPubTrim(v) != "") {
+		    				tHtml += "<div class='mainDivisors'><div class='header'>" + l + ":</div><div class='valH'>" + v + "</div></div>";
+		    			}
+		    		}
+		    		if (tHtml != "") {
+		    			html += "<div class='mainDivisors'><div class='h2div'>Attributes</div></div>" + tHtml;
+		    		}
+		    	}
+
 		    	if (data['hierarchy'] != null && Object.keys(data['hierarchy']).length > 0) {
 		    		if (data['hierarchy']['parents'][0] != undefined || data['hierarchy']['children'][0] != undefined) {
 		    			var parentsLength = 0;
@@ -304,9 +334,11 @@ function refpub (attributes) {
 				    					label = parent['value'][0]['name'];
 				    					html += "<div class=\"hblock\"><div class=\"h4div\">" + label + "</div>";
 					    				for (var j=0; j<parent['value'].length; j++) {
-					    					if (parent['value'][j]['value'] != "" || parent['value'][j]['value'] != " ") {
+					    					if (refPubTrim(parent['value'][j]['value']) != "") {
 						    					var uuid = selfJson.generateUUID();
-						    					html += "<div class=\"header\">" + parent['value'][j]['type'] + " " + parent['value'][j]['lang'] + ":</div>";
+						    					var lang = "";
+						    					if (parent['value'][j]['lang'] != undefined) { lang = parent['value'][j]['lang']; }
+						    					html += "<div class=\"header\">" + parent['value'][j]['type'] + " " + lang + ":</div>";
 						    					html += "<div class=\"valH2\" id='"+uuid+"'></div>";
 						    					linksToShow[uuid] = {name: parent['value'][j]['value'], link: linkref, uuid: uuid};
 						    				}
@@ -331,9 +363,11 @@ function refpub (attributes) {
 				    					label = child['value'][0]['name'];
 				    					html += "<div class=\"hblock\"><div class=\"h4div\">" + label + "</div>";
 					    				for (var j=0; j<child['value'].length; j++) {
-					    					if (child['value'][j]['value'] != "" || child['value'][j]['value'] != " ") {
+					    					if (refPubTrim(child['value'][j]['value']) != "") {
 						    					var uuid = selfJson.generateUUID();
-						    					html += "<div class=\"header\">" + child['value'][j]['type'] + " " + child['value'][j]['lang'] + ":</div>";
+						    					var lang = "";
+						    					if (child['value'][j]['lang'] != undefined) { lang = child['value'][j]['lang']; }
+						    					html += "<div class=\"header\">" + child['value'][j]['type'] + " " + lang + ":</div>";
 						    					html += "<div class=\"valH2\" id='"+uuid+"'></div>";
 						    					linksToShow[uuid] = {name: child['value'][j]['value'], link: linkref, uuid: uuid};
 					    					}

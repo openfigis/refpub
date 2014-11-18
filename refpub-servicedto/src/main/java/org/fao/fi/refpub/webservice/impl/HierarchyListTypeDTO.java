@@ -21,151 +21,99 @@ public class HierarchyListTypeDTO {
 		Childrens chl = new Childrens();
 		for (RefPubObject refPubObject : childrens) {
 			Child child = new Child();
-			if (refPubObject.getName_a() != null) {
+			if (refPubObject.getNAME_A() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_a());
+				van.setValue(refPubObject.getNAME_A());
 				van.setType("name");
 				van.setLang("ar");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getName_f() != null) {
+			if (refPubObject.getNAME_F() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_f());
+				van.setValue(refPubObject.getNAME_F());
 				van.setType("name");
 				van.setLang("fr");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getName_e() != null) {
+			if (refPubObject.getNAME_E() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_e());
+				van.setValue(refPubObject.getNAME_E());
 				van.setType("name");
 				van.setLang("en");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getName_s() != null) {
+			if (refPubObject.getNAME_S() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_s());
+				van.setValue(refPubObject.getNAME_S());
 				van.setType("name");
 				van.setLang("es");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getName_r() != null) {
+			if (refPubObject.getNAME_R() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_r());
+				van.setValue(refPubObject.getNAME_R());
 				van.setType("name");
 				van.setLang("ru");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getName_c() != null) {
+			if (refPubObject.getNAME_C() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_c());
+				van.setValue(refPubObject.getNAME_C());
 				van.setType("name");
 				van.setLang("zh");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
 			
-			if (refPubObject.getFull_name_a() != null) {
+			if (refPubObject.getFULL_NAME_A() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_a());
+				van.setValue(refPubObject.getFULL_NAME_A());
 				van.setType("full_name");
 				van.setLang("ar");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_f() != null) {
+			if (refPubObject.getFULL_NAME_F() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_f());
+				van.setValue(refPubObject.getFULL_NAME_F());
 				van.setType("full_name");
 				van.setLang("fr");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_e() != null) {
+			if (refPubObject.getFULL_NAME_E() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_e());
+				van.setValue(refPubObject.getFULL_NAME_E());
 				van.setType("full_name");
 				van.setLang("en");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_s() != null) {
+			if (refPubObject.getFULL_NAME_S() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_s());
+				van.setValue(refPubObject.getFULL_NAME_S());
 				van.setType("full_name");
 				van.setLang("es");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_r() != null) {
+			if (refPubObject.getFULL_NAME_R() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_r());
+				van.setValue(refPubObject.getFULL_NAME_R());
 				van.setType("full_name");
 				van.setLang("ru");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_c() != null) {
+			if (refPubObject.getFULL_NAME_C() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_c());
+				van.setValue(refPubObject.getFULL_NAME_C());
 				van.setType("full_name");
-				van.setLang("zh");
-				van.setName(refPubObject.getGroup_name());
-				child.getValues().add(van);
-			}
-			
-			
-			
-			
-			if (refPubObject.getLong_name_a() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_a());
-				van.setType("long_name");
-				van.setLang("ar");
-				van.setName(refPubObject.getGroup_name());
-				child.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_f() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_f());
-				van.setType("long_name");
-				van.setLang("fr");
-				van.setName(refPubObject.getGroup_name());
-				child.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_e() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_e());
-				van.setType("long_name");
-				van.setLang("en");
-				van.setName(refPubObject.getGroup_name());
-				child.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_s() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_s());
-				van.setType("long_name");
-				van.setLang("es");
-				van.setName(refPubObject.getGroup_name());
-				child.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_r() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_r());
-				van.setType("long_name");
-				van.setLang("ru");
-				van.setName(refPubObject.getGroup_name());
-				child.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_c() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_c());
-				van.setType("long_name");
 				van.setLang("zh");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
@@ -174,51 +122,113 @@ public class HierarchyListTypeDTO {
 			
 			
 			
-			if (refPubObject.getOfficial_name_a() != null) {
+			if (refPubObject.getLONG_NAME_A() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_a());
+				van.setValue(refPubObject.getLONG_NAME_A());
+				van.setType("long_name");
+				van.setLang("ar");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_F() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_F());
+				van.setType("long_name");
+				van.setLang("fr");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_E() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_E());
+				van.setType("long_name");
+				van.setLang("en");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_S() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_S());
+				van.setType("long_name");
+				van.setLang("es");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_R() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_R());
+				van.setType("long_name");
+				van.setLang("ru");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_C() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_C());
+				van.setType("long_name");
+				van.setLang("zh");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			
+			
+			
+			
+			if (refPubObject.getOFFICIAL_NAME_A() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getOFFICIAL_NAME_A());
 				van.setType("official_name");
 				van.setLang("ar");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_f() != null) {
+			if (refPubObject.getOFFICIAL_NAME_F() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_f());
+				van.setValue(refPubObject.getOFFICIAL_NAME_F());
 				van.setType("official_name");
 				van.setLang("fr");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_e() != null) {
+			if (refPubObject.getOFFICIAL_NAME_E() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_e());
+				van.setValue(refPubObject.getOFFICIAL_NAME_E());
 				van.setType("official_name");
 				van.setLang("en");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_s() != null) {
+			if (refPubObject.getOFFICIAL_NAME_S() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_s());
+				van.setValue(refPubObject.getOFFICIAL_NAME_S());
 				van.setType("official_name");
 				van.setLang("es");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_r() != null) {
+			if (refPubObject.getOFFICIAL_NAME_R() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_r());
+				van.setValue(refPubObject.getOFFICIAL_NAME_R());
 				van.setType("official_name");
 				van.setLang("ru");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_c() != null) {
+			if (refPubObject.getOFFICIAL_NAME_C() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_c());
+				van.setValue(refPubObject.getOFFICIAL_NAME_C());
 				van.setType("official_name");
 				van.setLang("zh");
+				van.setName(refPubObject.getGroup_name());
+				child.getValues().add(van);
+			}
+			
+			
+			if (refPubObject.getNAME() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getNAME());
+				van.setType("scientific_name");
+				van.setLang("");
 				van.setName(refPubObject.getGroup_name());
 				child.getValues().add(van);
 			}
@@ -232,7 +242,7 @@ public class HierarchyListTypeDTO {
 					if (codelist.getIsDefault() == 1) {
 						urlChunks.add(new ResourceKeyValue("codesystem", codelist.getName()));
 						urlChunks.add(new ResourceKeyValue("code", ""));
-						urlChunks.add(new ResourceKeyValue(codelist.getValue(), refPubObject.getPrimary_key_id()));
+						urlChunks.add(new ResourceKeyValue(codelist.getValue(), refPubObject.getPKID()));
 					}
 				}
 			}
@@ -248,151 +258,99 @@ public class HierarchyListTypeDTO {
 		Parents prt = new Parents();
 		for (RefPubObject refPubObject : parents) {
 			Parent parent = new Parent();
-			if (refPubObject.getName_a() != null) {
+			if (refPubObject.getNAME_A() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_a());
+				van.setValue(refPubObject.getNAME_A());
 				van.setType("name");
 				van.setLang("ar");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getName_f() != null) {
+			if (refPubObject.getNAME_F() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_f());
+				van.setValue(refPubObject.getNAME_F());
 				van.setType("name");
 				van.setLang("fr");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getName_e() != null) {
+			if (refPubObject.getNAME_E() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_e());
+				van.setValue(refPubObject.getNAME_E());
 				van.setType("name");
 				van.setLang("en");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getName_s() != null) {
+			if (refPubObject.getNAME_S() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_s());
+				van.setValue(refPubObject.getNAME_S());
 				van.setType("name");
 				van.setLang("es");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getName_r() != null) {
+			if (refPubObject.getNAME_R() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_r());
+				van.setValue(refPubObject.getNAME_R());
 				van.setType("name");
 				van.setLang("ru");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getName_c() != null) {
+			if (refPubObject.getNAME_C() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getName_c());
+				van.setValue(refPubObject.getNAME_C());
 				van.setType("name");
 				van.setLang("zh");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
 			
-			if (refPubObject.getFull_name_a() != null) {
+			if (refPubObject.getFULL_NAME_A() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_a());
+				van.setValue(refPubObject.getFULL_NAME_A());
 				van.setType("full_name");
 				van.setLang("ar");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_f() != null) {
+			if (refPubObject.getFULL_NAME_F() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_f());
+				van.setValue(refPubObject.getFULL_NAME_F());
 				van.setType("full_name");
 				van.setLang("fr");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_e() != null) {
+			if (refPubObject.getFULL_NAME_E() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_e());
+				van.setValue(refPubObject.getFULL_NAME_E());
 				van.setType("full_name");
 				van.setLang("en");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_s() != null) {
+			if (refPubObject.getFULL_NAME_S() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_s());
+				van.setValue(refPubObject.getFULL_NAME_S());
 				van.setType("full_name");
 				van.setLang("es");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_r() != null) {
+			if (refPubObject.getFULL_NAME_R() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_r());
+				van.setValue(refPubObject.getFULL_NAME_R());
 				van.setType("full_name");
 				van.setLang("ru");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getFull_name_c() != null) {
+			if (refPubObject.getFULL_NAME_C() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getFull_name_c());
+				van.setValue(refPubObject.getFULL_NAME_C());
 				van.setType("full_name");
-				van.setLang("zh");
-				van.setName(refPubObject.getGroup_name());
-				parent.getValues().add(van);
-			}
-			
-			
-			
-			
-			if (refPubObject.getLong_name_a() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_a());
-				van.setType("long_name");
-				van.setLang("ar");
-				van.setName(refPubObject.getGroup_name());
-				parent.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_f() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_f());
-				van.setType("long_name");
-				van.setLang("fr");
-				van.setName(refPubObject.getGroup_name());
-				parent.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_e() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_e());
-				van.setType("long_name");
-				van.setLang("en");
-				van.setName(refPubObject.getGroup_name());
-				parent.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_s() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_s());
-				van.setType("long_name");
-				van.setLang("es");
-				van.setName(refPubObject.getGroup_name());
-				parent.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_r() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_r());
-				van.setType("long_name");
-				van.setLang("ru");
-				van.setName(refPubObject.getGroup_name());
-				parent.getValues().add(van);
-			}
-			if (refPubObject.getLong_name_c() != null) {
-				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getLong_name_c());
-				van.setType("long_name");
 				van.setLang("zh");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
@@ -401,49 +359,101 @@ public class HierarchyListTypeDTO {
 			
 			
 			
-			if (refPubObject.getOfficial_name_a() != null) {
+			if (refPubObject.getLONG_NAME_A() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_a());
+				van.setValue(refPubObject.getLONG_NAME_A());
+				van.setType("long_name");
+				van.setLang("ar");
+				van.setName(refPubObject.getGroup_name());
+				parent.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_F() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_F());
+				van.setType("long_name");
+				van.setLang("fr");
+				van.setName(refPubObject.getGroup_name());
+				parent.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_E() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_E());
+				van.setType("long_name");
+				van.setLang("en");
+				van.setName(refPubObject.getGroup_name());
+				parent.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_S() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_S());
+				van.setType("long_name");
+				van.setLang("es");
+				van.setName(refPubObject.getGroup_name());
+				parent.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_R() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_R());
+				van.setType("long_name");
+				van.setLang("ru");
+				van.setName(refPubObject.getGroup_name());
+				parent.getValues().add(van);
+			}
+			if (refPubObject.getLONG_NAME_C() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getLONG_NAME_C());
+				van.setType("long_name");
+				van.setLang("zh");
+				van.setName(refPubObject.getGroup_name());
+				parent.getValues().add(van);
+			}
+			
+			
+			
+			
+			if (refPubObject.getOFFICIAL_NAME_A() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getOFFICIAL_NAME_A());
 				van.setType("official_name");
 				van.setLang("ar");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_f() != null) {
+			if (refPubObject.getOFFICIAL_NAME_F() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_f());
+				van.setValue(refPubObject.getOFFICIAL_NAME_F());
 				van.setType("official_name");
 				van.setLang("fr");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_e() != null) {
+			if (refPubObject.getOFFICIAL_NAME_E() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_e());
+				van.setValue(refPubObject.getOFFICIAL_NAME_E());
 				van.setType("official_name");
 				van.setLang("en");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_s() != null) {
+			if (refPubObject.getOFFICIAL_NAME_S() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_s());
+				van.setValue(refPubObject.getOFFICIAL_NAME_S());
 				van.setType("official_name");
 				van.setLang("es");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_r() != null) {
+			if (refPubObject.getOFFICIAL_NAME_R() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_r());
+				van.setValue(refPubObject.getOFFICIAL_NAME_R());
 				van.setType("official_name");
 				van.setLang("ru");
 				van.setName(refPubObject.getGroup_name());
 				parent.getValues().add(van);
 			}
-			if (refPubObject.getOfficial_name_c() != null) {
+			if (refPubObject.getOFFICIAL_NAME_C() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getOfficial_name_c());
+				van.setValue(refPubObject.getOFFICIAL_NAME_C());
 				van.setType("official_name");
 				van.setLang("zh");
 				van.setName(refPubObject.getGroup_name());
@@ -461,14 +471,14 @@ public class HierarchyListTypeDTO {
 					if (codelist.getIsDefault() == 1) {
 						urlChunks.add(new ResourceKeyValue("codesystem", codelist.getName()));
 						urlChunks.add(new ResourceKeyValue("code", ""));
-						urlChunks.add(new ResourceKeyValue(codelist.getValue(), refPubObject.getPrimary_key_id()));
+						urlChunks.add(new ResourceKeyValue(codelist.getValue(), refPubObject.getPKID()));
 						urlFound = true;
 					}
 				}
 			}
 			
 			if (!urlFound) {
-				urlChunks.add(new ResourceKeyValue("group", Integer.toString(refPubObject.getId())));
+				urlChunks.add(new ResourceKeyValue("group", refPubObject.getPKID()));
 			}
 			
 			parent.getLinks().add(LinkRelDTO.create(refPubObject, urlChunks, refPubObject.getGroup_name()));
@@ -478,134 +488,5 @@ public class HierarchyListTypeDTO {
 		hl.getParents().add(prt);
 		
 		return hl;
-	}
-	
-	/*public static ParentList create(List<RefPubObject> parents) {
-		ParentList pl = new ParentList();
-		
-		for (RefPubObject obj : parents) {
-			TextTypeValueList txvl = new TextTypeValueList();
-			
-			txvl.getNames().add(obj.getGroup_name());
-			
-			if (obj.getScientific_name() != null && !obj.getScientific_name().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("scientific_name");
-				txvp.setValue(obj.getScientific_name());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getName_a() != null && !obj.getName_a().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("name_a");
-				txvp.setValue(obj.getName_a());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getName_e() != null && !obj.getName_e().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("name_e");
-				txvp.setValue(obj.getName_e());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getName_f() != null && !obj.getName_f().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("name_f");
-				txvp.setValue(obj.getName_f());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getName_r() != null && !obj.getName_r().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("name_r");
-				txvp.setValue(obj.getName_r());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getName_s() != null && !obj.getName_s().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("name_s");
-				txvp.setValue(obj.getName_s());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getName_c() != null && !obj.getName_c().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("name_c");
-				txvp.setValue(obj.getName_c());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getLong_name_a() != null && !obj.getLong_name_a().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_name_c");
-				txvp.setValue(obj.getLong_name_a());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getLong_name_e() != null && !obj.getLong_name_e().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_name_e");
-				txvp.setValue(obj.getLong_name_e());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getLong_name_f() != null && !obj.getLong_name_f().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_name_f");
-				txvp.setValue(obj.getLong_name_f());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getLong_name_r() != null && !obj.getLong_name_r().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_name_r");
-				txvp.setValue(obj.getLong_name_r());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getLong_name_s() != null && !obj.getLong_name_s().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_name_s");
-				txvp.setValue(obj.getLong_name_s());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getLong_name_c() != null && !obj.getLong_name_c().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_name_c");
-				txvp.setValue(obj.getLong_name_c());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getFull_name_a() != null && !obj.getFull_name_a().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_full_c");
-				txvp.setValue(obj.getFull_name_a());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getFull_name_e() != null && !obj.getFull_name_e().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_full_e");
-				txvp.setValue(obj.getFull_name_e());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getFull_name_f() != null && !obj.getFull_name_f().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_full_f");
-				txvp.setValue(obj.getFull_name_f());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getFull_name_r() != null && !obj.getFull_name_r().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_full_r");
-				txvp.setValue(obj.getFull_name_r());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getFull_name_s() != null && !obj.getFull_name_s().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_full_s");
-				txvp.setValue(obj.getFull_name_s());
-				txvl.getValues().add(txvp);
-			}
-			if (obj.getFull_name_c() != null && !obj.getFull_name_c().trim().equals("")) {
-				TextTypeValuePair txvp = new TextTypeValuePair();
-				txvp.setName("long_full_c");
-				txvp.setValue(obj.getFull_name_c());
-				txvl.getValues().add(txvp);
-			}
-			
-			//pl.getValues().add(txvl);
-		}
-		
-		return pl;
-	}*/
+	}	
 }

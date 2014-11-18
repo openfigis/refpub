@@ -22,6 +22,7 @@ public class ConceptTypeDTO {
 				
 		return c;
 	}
+	
 	public static Concept create(RefPubObject object) {
 		
 		Concept c = new Concept();
@@ -39,7 +40,7 @@ public class ConceptTypeDTO {
 			c.setCodeList(CodeListTypeDTO.createList(object, false));
 		}
 		
-		c.setAttr(AttrListDTO.create(object));
+		//c.setAttr(AttrListDTO.create(object));
 		c.setMultilingualName(MultilingualTypeDTO.create(object, "SHORT"));
 		c.setMultilingualFullName(MultilingualTypeDTO.create(object, "FULL"));
 		c.setMultilingualLongName(MultilingualTypeDTO.create(object, "LONG"));
@@ -53,6 +54,12 @@ public class ConceptTypeDTO {
 		}
 				
 		return c;
+	}
+	
+	public static Concept createWithAttributes(RefPubObject object) {
+		Concept concept = ConceptTypeDTO.create(object);
+		concept.setAttr(AttrListDTO.create(object));
+		return concept;
 	}
 	
 	public static Concept create(RefPubObject object, boolean forCodeList) {

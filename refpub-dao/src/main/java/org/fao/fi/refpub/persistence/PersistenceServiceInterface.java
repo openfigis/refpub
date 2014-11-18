@@ -1,5 +1,7 @@
 package org.fao.fi.refpub.persistence;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -14,7 +16,8 @@ public abstract interface PersistenceServiceInterface {
 	TableInfo getTableInfo(@Param("db_schema") String db_schema, @Param("table") String table);
 	
 	List<RefPubObject> getCategories(@Param("db_schema") String db_schema);
-	List<RefPubObject> getObjects(@Param("db_schema") String db_schema, 
+	
+	ArrayList<HashMap<String, Object>> getObjects(@Param("db_schema") String db_schema, 
 								  @Param("meta") String id,
 								  @Param("meta_column") String id_column,
 								  @Param("table") String table, 
@@ -28,11 +31,13 @@ public abstract interface PersistenceServiceInterface {
 	MDCodelist getCodeList(@Param("db_schema") String db_schema, @Param("concept") String concept, @Param("codelistname") String codelistname);
 	ClassInitXML getRefTable(@Param("db_schema") String db_schema, @Param("id") int id);
 	
-	RefPubObject getObject(@Param("db_schema") String db_schema, 
-						   @Param("table") String table, 
-						   @Param("column") String column, 
-						   @Param("codelist") String codelistvalue, 
-						   @Param("main_id") String pk_column);
+	ArrayList<HashMap<String, Object>> getObject(@Param("db_schema") String db_schema, 
+			   @Param("table") String table, 
+			   @Param("column") String column, 
+			   @Param("codelist") String codelistvalue, 
+			   @Param("main_id") String pk_column);
+	
+	
 	RefPubObject getObjectById(@Param("db_schema") String db_schema, 
 							   @Param("table") String table, 
 							   @Param("main_id") String pk_column, 
@@ -44,7 +49,8 @@ public abstract interface PersistenceServiceInterface {
 			   								 @Param("main_id") String pk_column,
 			   								 @Param("attribute") String attribute);
 	
-	List<RefPubObject> getObjectsByCodeList(@Param("db_schema") String db_schema, 
+	
+	ArrayList<HashMap<String, Object>> getObjectsByCodeList(@Param("db_schema") String db_schema, 
 											@Param("table") String table,
 											@Param("meta_column") String meta_column,
 											@Param("meta_id") String meta_id,
@@ -55,23 +61,23 @@ public abstract interface PersistenceServiceInterface {
 	List<MDCodelist> getCodeList_list(@Param("db_schema") String db_schema);
 	List<MDCodelist> getCodeList_listByConcept(@Param("db_schema") String db_schema, @Param("concept") String concept);
 	List<GenericType> getTableColumns(@Param("db_schema") String db_schema, @Param("table") String table);
-	
-	List<RefPubObject> getParentHierarchy(@Param("db_schema") String db_schema, 
-									@Param("table") String table,
-									@Param("group_table") String group_table,
-									@Param("group_column") String group_column,
-									@Param("meta_column") String meta_column,
-									@Param("id") String id,
-									@Param("group_column_key") String group_column_key,
-									@Param("primary_key") String primary_key);
-	
-	List<RefPubObject> getChildrenHierarchy(@Param("db_schema") String db_schema, 
-									@Param("table") String table,
-									@Param("group_table") String group_table,
-									@Param("group_column") String group_column,
-									@Param("meta_column") String meta_column,
-									@Param("id") String id,
-									@Param("group_column_key") String group_column_key,
-									@Param("primary_key") String primary_key);
+		
+	ArrayList<HashMap<String, Object>> getParentHierarchy(@Param("db_schema") String db_schema, 
+			@Param("table") String table,
+			@Param("group_table") String group_table,
+			@Param("group_column") String group_column,
+			@Param("meta_column") String meta_column,
+			@Param("id") String id,
+			@Param("group_column_key") String group_column_key,
+			@Param("primary_key") String primary_key);
+
+	ArrayList<HashMap<String, Object>> getChildrenHierarchy(@Param("db_schema") String db_schema, 
+			@Param("table") String table,
+			@Param("group_table") String group_table,
+			@Param("group_column") String group_column,
+			@Param("meta_column") String meta_column,
+			@Param("id") String id,
+			@Param("group_column_key") String group_column_key,
+			@Param("primary_key") String primary_key);
 	
 }

@@ -6,7 +6,7 @@ import org.fao.fi.refpub.webservice.Concept;
 public class CodeDTO {
 	
 	public static Concept create (RefPubObject object) {
-		return ConceptTypeDTO.create(object);
+		return ConceptTypeDTO.createWithAttributes(object);
 	}
 	
 	public static Concept error (String message) {

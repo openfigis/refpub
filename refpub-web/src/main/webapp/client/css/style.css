@@ -281,14 +281,14 @@ a {
 }
 
 .mainDivisors {
-    width: 99%;
+    width: 1000px;
     position: relative;
     height: 35px;
 }
 
 .header {
     float: left;
-    width: 150px;
+    width: 200px;
     text-align: right;
     margin-right: 7px;
     font-family: sans-serif;
@@ -306,7 +306,7 @@ a {
 
 .valH2 {
     width: 790px;
-    height: 30px;
+    height: 45px;
     float: left;
     color: #198ee7;
     cursor: pointer;
@@ -395,7 +395,7 @@ h3 {
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) 
-                url('http://168.202.54.210/refpub/images/loading.gif') 
+                url('http://localhost/refpub/images/loading.gif') 
                 50% 50% 
                 no-repeat;
 }

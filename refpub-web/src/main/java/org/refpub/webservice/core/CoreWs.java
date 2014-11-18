@@ -172,9 +172,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
@@ -190,9 +187,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
@@ -265,9 +259,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
@@ -284,9 +275,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
@@ -359,9 +347,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
@@ -378,9 +363,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
@@ -408,9 +390,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("json"))
 					.build();
@@ -426,9 +405,6 @@ public class CoreWs {
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();
 		} catch (Exception ex) {
-			/*return Response.ok(CodeDTO.error(ex.getMessage()))
-					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
-					.build();*/
 			return Response.ok(bean.error(ex))
 					.header(HttpHeaders.CONTENT_TYPE, this.getMediaType("xml"))
 					.build();

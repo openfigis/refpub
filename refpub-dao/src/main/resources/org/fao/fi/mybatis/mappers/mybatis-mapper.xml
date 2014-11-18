@@ -117,22 +117,22 @@
 		SELECT * FROM ${db_schema}.MD_CODELIST WHERE REST_CONCEPT=#{concept}
 	</select>
 	
-	<select id="getObject" parameterType="map" resultMap="ObjectResults">
+	<select id="getObject" parameterType="map" resultType="hashmap">
 		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
 	</select>
 	
-	<select id="getObjectById" parameterType="map" resultMap="ObjectResults">
+	<select id="getObjectById" parameterType="map" resultType="hashmap">
 		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${main_id}=#{id}
 	</select>
 	
-	<select id="getAttributeForSingleObject" parameterType="map" resultMap="ObjectResults">
+	<select id="getAttributeForSingleObject" parameterType="map" resultType="hashmap">
 		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.${attribute}, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
 	</select>
 	
-	<select id="getObjects" parameterType="map" resultMap="ObjectResults">
+	<select id="getObjects" parameterType="map" resultType="hashmap">
 		<![CDATA[
 		SELECT * FROM (
 			SELECT ${table}.*, ${main_id} AS PKID, 
@@ -147,7 +147,7 @@
 		]]>
 	</select>
 	
-	<select id="getObjectsByCodeList" parameterType="map" resultMap="ObjectResults">
+	<select id="getObjectsByCodeList" parameterType="map" resultType="hashmap">
 		<![CDATA[ 
 			SELECT * FROM (
 				SELECT ${table}.*, ${main_id} AS PKID, 
@@ -175,7 +175,7 @@
 		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM ${db_schema}.MD_CLASSINIT WHERE ID=#{id}
 	</select>
 	
-	<select id="getParentHierarchy" parameterType="map" resultMap="ObjectResults">
+	<select id="getParentHierarchy" parameterType="map" resultType="hashmap">
 		<!-- SELECT 
 			A.*, B.NAME_E AS GROUP_NAME
 		FROM 
@@ -200,7 +200,7 @@
 			AND B.ID = A.${meta_column}
 	</select>
 	
-	<select id="getChildrenHierarchy" parameterType="map" resultMap="ObjectResults">
+	<select id="getChildrenHierarchy" parameterType="map" resultType="hashmap">
 		SELECT 
 			A.*, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
 		FROM 

@@ -1,5 +1,7 @@
 package org.fao.fi.refpub.persistence;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -26,7 +28,17 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 	
-	public List<RefPubObject> getObjects(String db_schema, String id, String id_column, String table, String pk_column, String min, String max) {
+	/*public List<RefPubObject> getObjects(String db_schema, String id, String id_column, String table, String pk_column, String min, String max) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObjects(db_schema, id, id_column, table, pk_column, min, max);
+		} finally {
+			sqlSession.close();
+		}
+	}*/
+	
+	public ArrayList<HashMap<String, Object>> getObjects(String db_schema, String id, String id_column, String table, String pk_column, String min, String max) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
@@ -94,8 +106,19 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 
-	@Override
+	/*@Override
 	public RefPubObject getObject(String db_schema, String table, String column, String codelist, String pk_column) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObject(db_schema, table, column, codelist, pk_column);
+		} finally {
+			sqlSession.close();
+		}
+	}*/
+	
+	@Override
+	public ArrayList<HashMap<String, Object>> getObject(String db_schema, String table, String column, String codelist, String pk_column) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
@@ -130,7 +153,7 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 
-	@Override
+	/*@Override
 	public List<RefPubObject> getParentHierarchy(String db_schema, String table, String group_table,
 			String group_column, String meta_column, String id, String group_column_key, String primary_key) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
@@ -144,6 +167,31 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	
 	@Override
 	public List<RefPubObject> getChildrenHierarchy(String db_schema, String table,
+			String group_table, String group_column, String meta_column,
+			String id, String group_column_key, String primary_key) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getChildrenHierarchy(db_schema, table, group_table, group_column, meta_column, id, group_column_key, primary_key);
+		} finally {
+			sqlSession.close();
+		}
+	}*/
+	
+	@Override
+	public ArrayList<HashMap<String, Object>> getParentHierarchy(String db_schema, String table, String group_table,
+			String group_column, String meta_column, String id, String group_column_key, String primary_key) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getParentHierarchy(db_schema, table, group_table, group_column, meta_column, id, group_column_key, primary_key);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Override
+	public ArrayList<HashMap<String, Object>> getChildrenHierarchy(String db_schema, String table,
 			String group_table, String group_column, String meta_column,
 			String id, String group_column_key, String primary_key) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
@@ -181,7 +229,7 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 
 
 	@Override
-	public List<RefPubObject> getObjectsByCodeList(String db_schema, 
+	public ArrayList<HashMap<String, Object>> getObjectsByCodeList(String db_schema, 
 												String table, 
 												String meta_column, 
 												String meta_id, 

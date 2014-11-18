@@ -88,7 +88,7 @@ public class LinkRelDTO {
 					path += chunk.getKey() + "/";
 				}
 				if (chunk.getValue() != null && !chunk.getValue().trim().equals("")) {
-					path += chunk.getValue() + "/";
+					path += chunk.getValue().replaceAll(" ", "%20") + "/";
 				}
 			}
 		}

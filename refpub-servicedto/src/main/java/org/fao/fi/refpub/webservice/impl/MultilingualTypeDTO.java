@@ -19,45 +19,45 @@ public class MultilingualTypeDTO {
 	private static MultilingualType getNames(RefPubObject cat) {
 		MultilingualType n = new MultilingualType();
 		
-		if (cat.getName_a()!=null && !cat.getName_a().equalsIgnoreCase("")) {
+		if (cat.getNAME_A()!=null && !cat.getNAME_A().equalsIgnoreCase("")) {
 			TextLang ar = new TextLang();
 			ar.setLang("ar");
-			ar.setValue(cat.getName_a());
+			ar.setValue(cat.getNAME_A());
 			n.getValues().add(ar);
 		}
 		
-		if (cat.getName_e()!=null && !cat.getName_e().equalsIgnoreCase("")) {
+		if (cat.getNAME_E()!=null && !cat.getNAME_E().equalsIgnoreCase("")) {
 			TextLang en = new TextLang();
 			en.setLang("en");
-			en.setValue(cat.getName_e());
+			en.setValue(cat.getNAME_E());
 			n.getValues().add(en);
 		}
 		
-		if (cat.getName_s()!=null && !cat.getName_s().equalsIgnoreCase("")) {
+		if (cat.getNAME_S()!=null && !cat.getNAME_S().equalsIgnoreCase("")) {
 			TextLang es = new TextLang();
 			es.setLang("es");
-			es.setValue(cat.getName_s());
+			es.setValue(cat.getNAME_S());
 			n.getValues().add(es);
 		}
 		
-		if (cat.getName_f()!=null && !cat.getName_f().equalsIgnoreCase("")) {
+		if (cat.getNAME_F()!=null && !cat.getNAME_F().equalsIgnoreCase("")) {
 			TextLang fr = new TextLang();
 			fr.setLang("fr");
-			fr.setValue(cat.getName_f());
+			fr.setValue(cat.getNAME_F());
 			n.getValues().add(fr);
 		}
 		
-		if (cat.getName_r()!=null && !cat.getName_r().equalsIgnoreCase("")) {
+		if (cat.getNAME_R()!=null && !cat.getNAME_R().equalsIgnoreCase("")) {
 			TextLang ru = new TextLang();
 			ru.setLang("ru");
-			ru.setValue(cat.getName_r());
+			ru.setValue(cat.getNAME_R());
 			n.getValues().add(ru);
 		}
 		
-		if (cat.getName_c()!=null && !cat.getName_c().equalsIgnoreCase("")) {
+		if (cat.getNAME_C()!=null && !cat.getNAME_C().equalsIgnoreCase("")) {
 			TextLang zh = new TextLang();
 			zh.setLang("zh");
-			zh.setValue(cat.getName_c());
+			zh.setValue(cat.getNAME_C());
 			n.getValues().add(zh);
 		}
 		
@@ -67,45 +67,45 @@ public class MultilingualTypeDTO {
 	private static MultilingualType getFullNames(RefPubObject cat) {
 		MultilingualType n = new MultilingualType();
 		
-		if (cat.getFull_name_a()!=null && !cat.getFull_name_a().equalsIgnoreCase("")) {
+		if (cat.getFULL_NAME_A()!=null && !cat.getFULL_NAME_A().equalsIgnoreCase("")) {
 			TextLang ar = new TextLang();
 			ar.setLang("ar");
-			ar.setValue(cat.getFull_name_a());
+			ar.setValue(cat.getFULL_NAME_A());
 			n.getValues().add(ar);
 		}
 		
-		if (cat.getFull_name_e()!=null && !cat.getFull_name_e().equalsIgnoreCase("")) {
+		if (cat.getFULL_NAME_E()!=null && !cat.getFULL_NAME_E().equalsIgnoreCase("")) {
 			TextLang en = new TextLang();
 			en.setLang("en");
-			en.setValue(cat.getFull_name_e());
+			en.setValue(cat.getFULL_NAME_E());
 			n.getValues().add(en);
 		}
 		
-		if (cat.getFull_name_s()!=null && !cat.getFull_name_s().equalsIgnoreCase("")) {
+		if (cat.getFULL_NAME_S()!=null && !cat.getFULL_NAME_S().equalsIgnoreCase("")) {
 			TextLang es = new TextLang();
 			es.setLang("es");
-			es.setValue(cat.getFull_name_s());
+			es.setValue(cat.getFULL_NAME_S());
 			n.getValues().add(es);
 		}
 		
-		if (cat.getFull_name_f()!=null && !cat.getFull_name_f().equalsIgnoreCase("")) {
+		if (cat.getFULL_NAME_F()!=null && !cat.getFULL_NAME_F().equalsIgnoreCase("")) {
 			TextLang fr = new TextLang();
 			fr.setLang("fr");
-			fr.setValue(cat.getFull_name_f());
+			fr.setValue(cat.getFULL_NAME_F());
 			n.getValues().add(fr);
 		}
 		
-		if (cat.getFull_name_r()!=null && !cat.getFull_name_r().equalsIgnoreCase("")) {
+		if (cat.getFULL_NAME_R()!=null && !cat.getFULL_NAME_R().equalsIgnoreCase("")) {
 			TextLang ru = new TextLang();
 			ru.setLang("ru");
-			ru.setValue(cat.getFull_name_r());
+			ru.setValue(cat.getFULL_NAME_R());
 			n.getValues().add(ru);
 		}
 		
-		if (cat.getFull_name_c()!=null && !cat.getFull_name_c().equalsIgnoreCase("")) {
+		if (cat.getFULL_NAME_C()!=null && !cat.getFULL_NAME_C().equalsIgnoreCase("")) {
 			TextLang zh = new TextLang();
 			zh.setLang("zh");
-			zh.setValue(cat.getFull_name_c());
+			zh.setValue(cat.getFULL_NAME_C());
 			n.getValues().add(zh);
 		}
 		return n;
@@ -115,45 +115,45 @@ public class MultilingualTypeDTO {
 	private static MultilingualType getLongNames(RefPubObject cat) {
 		MultilingualType n = new MultilingualType();
 		
-		if (cat.getLong_name_a()!=null && !cat.getLong_name_a().equalsIgnoreCase("")) {
+		if (cat.getLONG_NAME_A()!=null && !cat.getLONG_NAME_A().equalsIgnoreCase("")) {
 			TextLang ar = new TextLang();
 			ar.setLang("ar");
-			ar.setValue(cat.getLong_name_a());
+			ar.setValue(cat.getLONG_NAME_A());
 			n.getValues().add(ar);
 		}
 		
-		if (cat.getLong_name_e()!=null && !cat.getLong_name_e().equalsIgnoreCase("")) {
+		if (cat.getLONG_NAME_E()!=null && !cat.getLONG_NAME_E().equalsIgnoreCase("")) {
 			TextLang en = new TextLang();
 			en.setLang("en");
-			en.setValue(cat.getLong_name_e());
+			en.setValue(cat.getLONG_NAME_E());
 			n.getValues().add(en);
 		}
 		
-		if (cat.getLong_name_s()!=null && !cat.getLong_name_s().equalsIgnoreCase("")) {
+		if (cat.getLONG_NAME_S()!=null && !cat.getLONG_NAME_S().equalsIgnoreCase("")) {
 			TextLang es = new TextLang();
 			es.setLang("es");
-			es.setValue(cat.getLong_name_s());
+			es.setValue(cat.getLONG_NAME_S());
 			n.getValues().add(es);
 		}
 		
-		if (cat.getLong_name_f()!=null && !cat.getLong_name_f().equalsIgnoreCase("")) {
+		if (cat.getLONG_NAME_F()!=null && !cat.getLONG_NAME_F().equalsIgnoreCase("")) {
 			TextLang fr = new TextLang();
 			fr.setLang("fr");
-			fr.setValue(cat.getLong_name_f());
+			fr.setValue(cat.getLONG_NAME_F());
 			n.getValues().add(fr);
 		}
 		
-		if (cat.getLong_name_r()!=null && !cat.getLong_name_r().equalsIgnoreCase("")) {
+		if (cat.getLONG_NAME_R()!=null && !cat.getLONG_NAME_R().equalsIgnoreCase("")) {
 			TextLang ru = new TextLang();
 			ru.setLang("ru");
-			ru.setValue(cat.getLong_name_r());
+			ru.setValue(cat.getLONG_NAME_R());
 			n.getValues().add(ru);
 		}
 		
-		if (cat.getLong_name_c()!=null && !cat.getLong_name_c().equalsIgnoreCase("")) {
+		if (cat.getLONG_NAME_C()!=null && !cat.getLONG_NAME_C().equalsIgnoreCase("")) {
 			TextLang zh = new TextLang();
 			zh.setLang("zh");
-			zh.setValue(cat.getLong_name_c());
+			zh.setValue(cat.getLONG_NAME_C());
 			n.getValues().add(zh);
 		}
 		return n;
@@ -162,45 +162,45 @@ public class MultilingualTypeDTO {
 	private static MultilingualType getOfficialNames(RefPubObject cat) {
 		MultilingualType n = new MultilingualType();
 		
-		if (cat.getOfficial_name_a()!=null && !cat.getOfficial_name_a().equalsIgnoreCase("")) {
+		if (cat.getOFFICIAL_NAME_A()!=null && !cat.getOFFICIAL_NAME_A().equalsIgnoreCase("")) {
 			TextLang ar = new TextLang();
 			ar.setLang("ar");
-			ar.setValue(cat.getOfficial_name_a());
+			ar.setValue(cat.getOFFICIAL_NAME_A());
 			n.getValues().add(ar);
 		}
 		
-		if (cat.getOfficial_name_e()!=null && !cat.getOfficial_name_e().equalsIgnoreCase("")) {
+		if (cat.getOFFICIAL_NAME_E()!=null && !cat.getOFFICIAL_NAME_E().equalsIgnoreCase("")) {
 			TextLang en = new TextLang();
 			en.setLang("en");
-			en.setValue(cat.getOfficial_name_e());
+			en.setValue(cat.getOFFICIAL_NAME_E());
 			n.getValues().add(en);
 		}
 		
-		if (cat.getOfficial_name_s()!=null && !cat.getOfficial_name_s().equalsIgnoreCase("")) {
+		if (cat.getOFFICIAL_NAME_S()!=null && !cat.getOFFICIAL_NAME_S().equalsIgnoreCase("")) {
 			TextLang es = new TextLang();
 			es.setLang("es");
-			es.setValue(cat.getOfficial_name_s());
+			es.setValue(cat.getOFFICIAL_NAME_S());
 			n.getValues().add(es);
 		}
 		
-		if (cat.getOfficial_name_f()!=null && !cat.getOfficial_name_f().equalsIgnoreCase("")) {
+		if (cat.getOFFICIAL_NAME_F()!=null && !cat.getOFFICIAL_NAME_F().equalsIgnoreCase("")) {
 			TextLang fr = new TextLang();
 			fr.setLang("fr");
-			fr.setValue(cat.getOfficial_name_f());
+			fr.setValue(cat.getOFFICIAL_NAME_F());
 			n.getValues().add(fr);
 		}
 		
-		if (cat.getOfficial_name_r()!=null && !cat.getOfficial_name_r().equalsIgnoreCase("")) {
+		if (cat.getOFFICIAL_NAME_R()!=null && !cat.getOFFICIAL_NAME_R().equalsIgnoreCase("")) {
 			TextLang ru = new TextLang();
 			ru.setLang("ru");
-			ru.setValue(cat.getOfficial_name_r());
+			ru.setValue(cat.getOFFICIAL_NAME_R());
 			n.getValues().add(ru);
 		}
 		
-		if (cat.getOfficial_name_c()!=null && !cat.getOfficial_name_c().equalsIgnoreCase("")) {
+		if (cat.getOFFICIAL_NAME_C()!=null && !cat.getOFFICIAL_NAME_C().equalsIgnoreCase("")) {
 			TextLang zh = new TextLang();
 			zh.setLang("zh");
-			zh.setValue(cat.getOfficial_name_c());
+			zh.setValue(cat.getOFFICIAL_NAME_C());
 			n.getValues().add(zh);
 		}
 		return n;
@@ -209,45 +209,45 @@ public class MultilingualTypeDTO {
 	private static MultilingualType getShortDesc(RefPubObject cat) {
 		MultilingualType n = new MultilingualType();
 		
-		if (cat.getShort_desc_a()!=null && !cat.getShort_desc_a().equalsIgnoreCase("")) {
+		if (cat.getSHORT_DESC_A()!=null && !cat.getSHORT_DESC_A().equalsIgnoreCase("")) {
 			TextLang ar = new TextLang();
 			ar.setLang("ar");
-			ar.setValue(cat.getShort_desc_a());
+			ar.setValue(cat.getSHORT_DESC_A());
 			n.getValues().add(ar);
 		}
 		
-		if (cat.getShort_desc_e()!=null && !cat.getShort_desc_e().equalsIgnoreCase("")) {
+		if (cat.getSHORT_DESC_E()!=null && !cat.getSHORT_DESC_E().equalsIgnoreCase("")) {
 			TextLang en = new TextLang();
 			en.setLang("en");
-			en.setValue(cat.getShort_desc_e());
+			en.setValue(cat.getSHORT_DESC_E());
 			n.getValues().add(en);
 		}
 		
-		if (cat.getShort_desc_s()!=null && !cat.getShort_desc_s().equalsIgnoreCase("")) {
+		if (cat.getSHORT_DESC_S()!=null && !cat.getSHORT_DESC_S().equalsIgnoreCase("")) {
 			TextLang es = new TextLang();
 			es.setLang("es");
-			es.setValue(cat.getShort_desc_s());
+			es.setValue(cat.getSHORT_DESC_S());
 			n.getValues().add(es);
 		}
 		
-		if (cat.getShort_desc_f()!=null && !cat.getShort_desc_f().equalsIgnoreCase("")) {
+		if (cat.getSHORT_DESC_F()!=null && !cat.getSHORT_DESC_F().equalsIgnoreCase("")) {
 			TextLang fr = new TextLang();
 			fr.setLang("fr");
-			fr.setValue(cat.getShort_desc_f());
+			fr.setValue(cat.getSHORT_DESC_F());
 			n.getValues().add(fr);
 		}
 		
-		if (cat.getShort_desc_r()!=null && !cat.getShort_desc_r().equalsIgnoreCase("")) {
+		if (cat.getSHORT_DESC_R()!=null && !cat.getSHORT_DESC_R().equalsIgnoreCase("")) {
 			TextLang ru = new TextLang();
 			ru.setLang("ru");
-			ru.setValue(cat.getShort_desc_r());
+			ru.setValue(cat.getSHORT_DESC_R());
 			n.getValues().add(ru);
 		}
 		
-		if (cat.getShort_desc_c()!=null && !cat.getShort_desc_c().equalsIgnoreCase("")) {
+		if (cat.getSHORT_DESC_C()!=null && !cat.getSHORT_DESC_C().equalsIgnoreCase("")) {
 			TextLang zh = new TextLang();
 			zh.setLang("zh");
-			zh.setValue(cat.getShort_desc_c());
+			zh.setValue(cat.getSHORT_DESC_C());
 			n.getValues().add(zh);
 		}
 		
