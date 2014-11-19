@@ -15,7 +15,7 @@ import org.fao.fi.refpub.dao.objects.db.TableInfo;
 public abstract interface PersistenceServiceInterface {
 	TableInfo getTableInfo(@Param("db_schema") String db_schema, @Param("table") String table);
 	
-	List<RefPubObject> getCategories(@Param("db_schema") String db_schema);
+	/*List<RefPubObject> getCategories(@Param("db_schema") String db_schema);*/
 	
 	ArrayList<HashMap<String, Object>> getObjects(@Param("db_schema") String db_schema, 
 								  @Param("meta") String id,
@@ -38,11 +38,11 @@ public abstract interface PersistenceServiceInterface {
 			   @Param("main_id") String pk_column);
 	
 	
-	RefPubObject getObjectById(@Param("db_schema") String db_schema, 
+	ArrayList<HashMap<String, Object>> getObjectById(@Param("db_schema") String db_schema, 
 							   @Param("table") String table, 
 							   @Param("main_id") String pk_column, 
 							   @Param("id") String id);
-	RefPubObject getAttributeForSingleObject(@Param("db_schema") String db_schema,
+	ArrayList<HashMap<String, Object>> getAttributeForSingleObject(@Param("db_schema") String db_schema,
 											 @Param("table") String table, 
 			   								 @Param("column") String column, 
 			   								 @Param("codelist") String codelistvalue, 

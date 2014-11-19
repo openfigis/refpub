@@ -17,7 +17,7 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	public PersistenceServiceImplementation() {}
 
 	
-	public List<RefPubObject> getCategories(String db_schema) {
+	/*public List<RefPubObject> getCategories(String db_schema) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
@@ -25,7 +25,7 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 		} finally {
 			sqlSession.close();
 		}
-	}
+	}*/
 
 	
 	/*public List<RefPubObject> getObjects(String db_schema, String id, String id_column, String table, String pk_column, String min, String max) {
@@ -129,7 +129,7 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 	
 	@Override
-	public RefPubObject getObjectById(String db_schema, String table, String pk_column,
+	public ArrayList<HashMap<String, Object>> getObjectById(String db_schema, String table, String pk_column,
 			String id) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
@@ -272,7 +272,7 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 
 
 	@Override
-	public RefPubObject getAttributeForSingleObject(String db_schema, String table,
+	public ArrayList<HashMap<String, Object>> getAttributeForSingleObject(String db_schema, String table,
 			String column, String codelistvalue, String pk_column,
 			String attribute) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();

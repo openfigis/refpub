@@ -19,6 +19,9 @@ public class LinkRelDTO {
 	}
 	
 	private static LinkRel build(URI uri, List<ResourceKeyValue> urlChunks, String rel) {
+		if (uri == null) {
+			uri = LinkRelDTO.buildDefaultURI();
+		}
 		LinkRel relObj = new LinkRel();
 		relObj.setRel(rel);
 		if ("self".equalsIgnoreCase(rel)) {
@@ -93,6 +96,17 @@ public class LinkRelDTO {
 			}
 		}
 		return path;
+	}
+	
+	private static URI buildDefaultURI() {
+		URI uri = new URI();
+		uri.setCount(100);
+		uri.setFullURI("http://localhost/");
+		uri.setHost("localhost");
+		uri.setPage(1);
+		uri.setPath("/");
+		uri.setPort("80");
+		return uri;
 	}
 
 }

@@ -1,11 +1,5 @@
 package org.fao.fi.refpub.webservice.beans;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,7 +21,6 @@ import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;
 import org.fao.fi.refpub.dao.objects.db.TableInfo;
-import org.fao.fi.refpub.dao.utils.StandardFigisDBColumns;
 import org.fao.fi.refpub.dao.utils.Utils;
 import org.fao.fi.refpub.persistence.PersistenceServiceImplementation;
 import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
@@ -220,7 +213,7 @@ public class RefPubImplementation implements RefPubInterface {
 		List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
 															  concept);
 				
-		List<RefPubObject> returnList = this.buildRefPubObjectList(objs);
+		List<RefPubObject> returnList = Utils.buildRefPubObjectList(objs);
 		for (RefPubObject obj : returnList) {
 			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
@@ -242,7 +235,7 @@ public class RefPubImplementation implements RefPubInterface {
 		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(),
 										mdconcept.getTable_name());
 		
-		RefPubObject refPubObject = this.buildRefPubObject(ps.getObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
+		RefPubObject refPubObject = Utils.buildRefPubObject(ps.getObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
 															mdconcept.getTable_name(), mdcodelist.getCode_column(), 
 															code, tbl.getPrimary_key()));
 				
@@ -258,7 +251,7 @@ public class RefPubImplementation implements RefPubInterface {
 		refPubObject.setConcept(concept);
 		refPubObject.setCodeList(codemap);
 				
-		List<RefPubObject> parents = this.buildRefPubObjectList(ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+		List<RefPubObject> parents = Utils.buildRefPubObjectList(ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
 				 mdconcept.getTable_name(),
 				 mdconcept.getTable_group(), 
 				 mdconcept.getTable_group_member(),
@@ -267,7 +260,7 @@ public class RefPubImplementation implements RefPubInterface {
 				 mdconcept.getTable_group_column(),
 				 tbl.getPrimary_key()));
 		
-		List<RefPubObject> childrens = this.buildRefPubObjectList(ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+		List<RefPubObject> childrens = Utils.buildRefPubObjectList(ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
 													 mdconcept.getTable_name(),
 													 mdconcept.getTable_group(), 
 													 mdconcept.getTable_group_member(),
@@ -311,8 +304,8 @@ public class RefPubImplementation implements RefPubInterface {
 		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(),
 										mdconcept.getTable_name());
 		
-		RefPubObject obj = ps.getObjectById(RefPubImplementation.CONFIGURATION.getDb_schema(), 
-											mdconcept.getTable_name(), tbl.getPrimary_key(), code);
+		RefPubObject obj = Utils.buildRefPubObject(ps.getObjectById(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+											mdconcept.getTable_name(), tbl.getPrimary_key(), code));
 		
 		if (obj == null) {
 			return new RefPubObject();
@@ -324,7 +317,7 @@ public class RefPubImplementation implements RefPubInterface {
 		obj.setCodeList(codemap);
 		
 			
-		List<RefPubObject> parents = this.buildRefPubObjectList(ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+		List<RefPubObject> parents = Utils.buildRefPubObjectList(ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
 															 mdconcept.getTable_name(),
 															 mdconcept.getTable_group(), 
 															 mdconcept.getTable_group_member(),
@@ -332,7 +325,7 @@ public class RefPubImplementation implements RefPubInterface {
 															 obj.getPKID(),
 															 mdconcept.getTable_group_column(),
 															 tbl.getPrimary_key()));
-		List<RefPubObject> childrens = this.buildRefPubObjectList(ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+		List<RefPubObject> childrens = Utils.buildRefPubObjectList(ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
 																 mdconcept.getTable_name(),
 																 mdconcept.getTable_group(), 
 																 mdconcept.getTable_group_member(),
@@ -378,12 +371,12 @@ public class RefPubImplementation implements RefPubInterface {
 		TableInfo tbl = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(),
 										mdconcept.getTable_name());
 		
-		RefPubObject obj = ps.getAttributeForSingleObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
+		RefPubObject obj = Utils.buildRefPubObject(ps.getAttributeForSingleObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
 														  mdconcept.getTable_name(), 
 														  mdcodelist.getCode_column(), 
 														  code, 
 														  tbl.getPrimary_key(),
-														  attribute);
+														  attribute));
 		
 		if (obj == null) {
 			return new RefPubObject();
@@ -431,7 +424,7 @@ public class RefPubImplementation implements RefPubInterface {
 			return new ArrayList<RefPubObject>();
 		}
 		TableInfo ti = ps.getTableInfo(RefPubImplementation.CONFIGURATION.getDb_schema(), cl.getTable_name());
-		List<RefPubObject> returnList = this.buildRefPubObjectList(ps.getObjectsByCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+		List<RefPubObject> returnList = Utils.buildRefPubObjectList(ps.getObjectsByCodeList(RefPubImplementation.CONFIGURATION.getDb_schema(), 
 																cl.getTable_name(),
 																con.getMeta_column(),
 																con.getMeta_id(),
@@ -575,60 +568,6 @@ public class RefPubImplementation implements RefPubInterface {
 		} else {
 			RefPubImplementation.CONFIGURATION = new Configuration(RefPubImplementation.CONFIG_FILE);
 		}
-	}
-	
-	private RefPubObject buildRefPubObject (HashMap<String, Object> row) {
-		RefPubObject obj = new RefPubObject();
-		List<HashMap<String, String>> additionalAttributes = new ArrayList<HashMap<String, String>>();
-		
-		for (Entry<String, Object> e : row.entrySet()) {
-			if (StandardFigisDBColumns.FIGIS_COLUMNS.contains(e.getKey())) {
-				String stringValue = Utils.getStringFromObject(row.get(e.getKey()));
-				
-				BeanInfo info;
-				try {
-					info = Introspector.getBeanInfo(obj.getClass(), Object.class);
-					PropertyDescriptor[] props = info.getPropertyDescriptors();  
-					for (PropertyDescriptor pd : props) {  
-						if (pd.getName().equalsIgnoreCase(e.getKey())) {  
-							Method setter = pd.getWriteMethod();
-					        setter.invoke(obj, stringValue);
-					    }
-					}  
-				} catch (IntrospectionException ex1) {
-					ex1.printStackTrace();
-				} catch (IllegalAccessException ex2) {
-					ex2.printStackTrace();
-				} catch (IllegalArgumentException ex3) {
-					ex3.printStackTrace();
-				} catch (InvocationTargetException ex4) {
-					ex4.printStackTrace();
-				} 
-			} else {
-				HashMap<String, String> additionalAttribute = new HashMap<String, String>();
-				additionalAttribute.put(e.getKey(), Utils.getStringFromObject(e.getValue()));
-				additionalAttributes.add(additionalAttribute);
-			}
-		}
-		obj.setATTRIBUTES(additionalAttributes);
-		
-		return obj;
-	}
-	
-	private RefPubObject buildRefPubObject (ArrayList<HashMap<String, Object>> results) {
-		return this.buildRefPubObject(results.get(0));
-	}
-	
-	private List<RefPubObject> buildRefPubObjectList (ArrayList<HashMap<String, Object>> results) {
-		List<RefPubObject> refPubObjects = new ArrayList<RefPubObject>();
-		
-		
-		for(HashMap<String,Object> row : results) {
-			RefPubObject obj = this.buildRefPubObject(row);
-			refPubObjects.add(obj);
-		}
-		
-		return refPubObjects;
 	}
 	
 	private String getValueFromAttributes(List<HashMap<String, String>> attributes, String key) {

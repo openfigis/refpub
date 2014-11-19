@@ -17,11 +17,13 @@ public class ConceptListDTO {
 		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 		urlChunks.add(new ResourceKeyValue("concept", ""));
 		l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "self"));
-		if (list.get(0).getCurrentURI().getCount() <= list.size()) { //This might be a bug! If the last page total is equal to the count it would show next page link
-			l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "next"));
-		}
-		if (list.get(0).getCurrentURI().getPage() > 1) {
-			l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "prev"));
+		if (list.get(0).getCurrentURI() != null) {
+			if (list.get(0).getCurrentURI().getCount() <= list.size()) { //This might be a bug! If the last page total is equal to the count it would show next page link
+				l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "next"));
+			}
+			if (list.get(0).getCurrentURI().getPage() > 1) {
+				l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "prev"));
+			}
 		}
 		l.setCountRecord(list.size());
 		l.setTotalRecord(list.size());
@@ -38,11 +40,13 @@ public class ConceptListDTO {
 		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 		urlChunks.add(new ResourceKeyValue("concept", ""));
 		l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "self"));
-		if (list.get(0).getCurrentURI().getCount() <= list.size()) { //This might be a bug! If the last page total is equal to the count it would show next page link
-			l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "next"));
-		}
-		if (list.get(0).getCurrentURI().getPage() > 1) {
-			l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "prev"));
+		if (list.get(0).getCurrentURI() != null) {
+			if (list.get(0).getCurrentURI().getCount() <= list.size()) { //This might be a bug! If the last page total is equal to the count it would show next page link
+				l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "next"));
+			}
+			if (list.get(0).getCurrentURI().getPage() > 1) {
+				l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "prev"));
+			}
 		}
 		l.setCountRecord(list.size());
 		l.setTotalRecord(list.get(0).getTotal());

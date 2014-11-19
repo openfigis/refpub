@@ -87,4 +87,59 @@ public class Utils {
 		}
 		return (String) object;
 	}
+	
+	/*RefPubObject Builders*/
+	public static RefPubObject buildRefPubObject (HashMap<String, Object> row) {
+		RefPubObject obj = new RefPubObject();
+		List<HashMap<String, String>> additionalAttributes = new ArrayList<HashMap<String, String>>();
+		
+		for (Entry<String, Object> e : row.entrySet()) {
+			if (StandardFigisDBColumns.FIGIS_COLUMNS.contains(e.getKey())) {
+				String stringValue = Utils.getStringFromObject(row.get(e.getKey()));
+				
+				BeanInfo info;
+				try {
+					info = Introspector.getBeanInfo(obj.getClass(), Object.class);
+					PropertyDescriptor[] props = info.getPropertyDescriptors();  
+					for (PropertyDescriptor pd : props) {  
+						if (pd.getName().equalsIgnoreCase(e.getKey())) {  
+							Method setter = pd.getWriteMethod();
+					        setter.invoke(obj, stringValue);
+					    }
+					}  
+				} catch (IntrospectionException ex1) {
+					ex1.printStackTrace();
+				} catch (IllegalAccessException ex2) {
+					ex2.printStackTrace();
+				} catch (IllegalArgumentException ex3) {
+					ex3.printStackTrace();
+				} catch (InvocationTargetException ex4) {
+					ex4.printStackTrace();
+				} 
+			} else {
+				HashMap<String, String> additionalAttribute = new HashMap<String, String>();
+				additionalAttribute.put(e.getKey(), Utils.getStringFromObject(e.getValue()));
+				additionalAttributes.add(additionalAttribute);
+			}
+		}
+		obj.setATTRIBUTES(additionalAttributes);
+		
+		return obj;
+	}
+	
+	public static RefPubObject buildRefPubObject (ArrayList<HashMap<String, Object>> results) {
+		return Utils.buildRefPubObject(results.get(0));
+	}
+	
+	public static List<RefPubObject> buildRefPubObjectList (ArrayList<HashMap<String, Object>> results) {
+		List<RefPubObject> refPubObjects = new ArrayList<RefPubObject>();
+		
+		
+		for(HashMap<String,Object> row : results) {
+			RefPubObject obj = Utils.buildRefPubObject(row);
+			refPubObjects.add(obj);
+		}
+		
+		return refPubObjects;
+	}
 }
