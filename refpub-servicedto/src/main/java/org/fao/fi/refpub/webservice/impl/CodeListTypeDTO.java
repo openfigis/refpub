@@ -10,7 +10,6 @@ import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.webservice.AtomLink;
 import org.fao.fi.refpub.webservice.CodeList;
 import org.fao.fi.refpub.webservice.CodeListListType;
-import org.fao.fi.refpub.webservice.LinkRel;
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
 public class CodeListTypeDTO {

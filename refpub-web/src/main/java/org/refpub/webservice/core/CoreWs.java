@@ -13,7 +13,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.fao.fi.refpub.webservice.beans.RefPubInterface;
-import org.fao.fi.refpub.webservice.impl.CodeDTO;
 import org.glassfish.jersey.server.JSONP;
 
 @Path("")

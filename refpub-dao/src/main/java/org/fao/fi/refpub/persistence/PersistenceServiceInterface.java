@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
-import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 import org.fao.fi.refpub.dao.objects.chunks.MDConcept;

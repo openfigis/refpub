@@ -19,7 +19,7 @@ import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
 
 public class RefPubDAOTest extends TestCase{
 	
-	private static String FIGIS_SCHEMA = "refpub";
+	private static String FIGIS_SCHEMA = "FIGIS";
 	private static String FIGIS_TEST_TABLE = "FIC_ITEM";
 	private static PersistenceServiceInterface ps;
 	

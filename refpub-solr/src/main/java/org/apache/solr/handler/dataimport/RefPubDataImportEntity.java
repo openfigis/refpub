@@ -47,7 +47,6 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
 	    		}
 			}
 		}
-		System.out.println("INIT DONE!");
 	}
 	
 	
