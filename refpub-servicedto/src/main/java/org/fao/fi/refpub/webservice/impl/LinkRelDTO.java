@@ -25,7 +25,7 @@ public class LinkRelDTO {
 		LinkRel relObj = new LinkRel();
 		relObj.setRel(rel);
 		if ("self".equalsIgnoreCase(rel)) {
-			relObj.setValue(uri.getFullURI());
+			relObj.setHref(uri.getFullURI());
 			return relObj;
 		}
 		if ("next".equalsIgnoreCase(rel)) {
@@ -33,7 +33,7 @@ public class LinkRelDTO {
 				return relObj;
 			}
 			String page = Integer.toString(uri.getPage() + 1);
-			relObj.setValue(uri.getFullURI().split("\\?")[0] + "?page=" + page + "&count=" + uri.getCount());
+			relObj.setHref(uri.getFullURI().split("\\?")[0] + "?page=" + page + "&count=" + uri.getCount());
 			return relObj;
 		}
 		if ("prev".equalsIgnoreCase(rel)) {
@@ -41,11 +41,11 @@ public class LinkRelDTO {
 				return relObj;
 			}
 			String page = Integer.toString(uri.getPage() - 1);
-			relObj.setValue(uri.getFullURI().split("\\?")[0] + "?page=" + page + "&count=" + uri.getCount());
+			relObj.setHref(uri.getFullURI().split("\\?")[0] + "?page=" + page + "&count=" + uri.getCount());
 			return relObj;
 		}
 		if (uri == null) {
-			relObj.setValue(getPathFromChunks(urlChunks));
+			relObj.setHref(getPathFromChunks(urlChunks));
 			return relObj;
 		}
 		
@@ -56,7 +56,7 @@ public class LinkRelDTO {
 		URL += getPathFromChunks(urlChunks);
 		URL += getOutputVersion(uri.getFullURI());
 		
-		relObj.setValue(URL);
+		relObj.setHref(URL);
 		return relObj;
 	}
 	

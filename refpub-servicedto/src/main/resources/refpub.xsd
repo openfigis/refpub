@@ -259,6 +259,7 @@
 		<simpleContent>
         	<extension base="string">
 				<attribute name="rel" type="string" />
+				<attribute name="href" type="string" />
 			</extension>
 		</simpleContent>
 	</complexType>

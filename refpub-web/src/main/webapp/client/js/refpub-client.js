@@ -28,7 +28,7 @@ function refpub (attributes) {
 		      	$.each(data['concept'], function(index, value) {
 		      		var selfEach = selfSucc;
 		      		var nameEntry = value['link'][0]['rel'];
-		      		window['refpub_' + nameEntry] = value['link'][0]['value'];
+		      		window['refpub_' + nameEntry] = value['link'][0]['href'];
   					var entry = $("<button></button>").attr("class", "primary-button pure-button").attr("id", nameEntry).text(nameEntry).click(function() {
   						$("#list").scrollTop(0);
   						var selfClick = selfEach;
@@ -107,7 +107,7 @@ function refpub (attributes) {
 		    		window['refpub_linknext'] = null;
 		    		for (var i = 0; i < data['link'].length; i++) {
 		    			if (data['link'][i]['rel'].toLowerCase() == "next") {
-		    				window['refpub_linknext'] = data['link'][i]['value'];
+		    				window['refpub_linknext'] = data['link'][i]['href'];
 		    			}
 		    		}
 		    	}
@@ -118,7 +118,7 @@ function refpub (attributes) {
 		    	}
 		    	$.each(data['concept'], function(index, value) {
 		    		var selfEach = selfSuccess;
-		    		var link = value['link'][0]['value'];
+		    		var link = value['link'][0]['href'];
 		    		var newObjId = 'refpub_obj_' + selfEach.generateUUID();
 		    		window[newObjId] = link;
 		    		var nameFinal = "";
@@ -326,8 +326,8 @@ function refpub (attributes) {
 				    			for (var i=0; i<parentsLength; i++) {
 				    				var parent = data['hierarchy']['parents'][0]['parent'][i];
 				    				var linkref = null;
-				    				if (parent['link'][0]['value'] != undefined) {
-				    					linkref = parent['link'][0]['value'];
+				    				if (parent['link'][0]['href'] != undefined) {
+				    					linkref = parent['link'][0]['href'];
 				    				}
 				    				var label = "";
 				    				if (parent['value'] != undefined && parent['value'][0] != undefined) {
@@ -355,8 +355,8 @@ function refpub (attributes) {
 				    			for (var i=0; i<childrenLength; i++) {
 				    				var child = data['hierarchy']['childrens'][0]['child'][i];
 				    				var linkref = null;
-				    				if (child['link'][0]['value'] != undefined) {
-				    					linkref = child['link'][0]['value'];
+				    				if (child['link'][0]['href'] != undefined) {
+				    					linkref = child['link'][0]['href'];
 				    				}
 				    				var label = "";
 				    				if (child['value'] != undefined && child['value'][0] != undefined) {
