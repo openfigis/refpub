@@ -37,7 +37,6 @@ public class CoreWs {
 	@Path("concept")
 	@GET
 	@JSONP(queryParam = "jcb")
-	@ApiOperation(value="Get all concepts")
 	public Response concepts() {
 		return this.conceptsJSON();
 	}
@@ -369,7 +368,14 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute/json")
 	@GET
 	@JSONP(queryParam = "jcb")
-	public Response codeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	@ApiOperation(value="Get all the possible attributes for a concept in JSON format")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful retrieval of the attributes", response = ConceptList.class)}
+	)
+	public Response codeJson(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
+							 @PathParam("concept") String concept, 
+							 @ApiParam(name = "codesystem", value = "Alphanumeric value of the codesystem", required = true)
+							 @PathParam("codesystem") String codesystem) {
 		setBean();
 		try {
 			return Response.ok(bean.getAllAttributesForConceptAndCodesystem(concept, codesystem))
@@ -384,7 +390,14 @@ public class CoreWs {
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/attribute/xml")
 	@GET
-	public Response codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem) {
+	@ApiOperation(value="Get all the possible attributes for a concept in XML format")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful retrieval of the attributes", response = ConceptList.class)}
+	)
+	public Response codeXML(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
+							@PathParam("concept") String concept, 
+							@ApiParam(name = "codesystem", value = "Alphanumeric value of the codesystem", required = true)
+							@PathParam("codesystem") String codesystem) {
 		setBean();
 		try {
 			return Response.ok(bean.getAllAttributesForConceptAndCodesystem(concept, codesystem))
@@ -413,8 +426,18 @@ public class CoreWs {
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/attribute/{attribute}/json")
 	@GET
 	@JSONP(queryParam = "jcb")
-	public Response attrCodeJson(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
-			@PathParam("code") String code, @PathParam("attribute") String attribute) {
+	@ApiOperation(value="Get the value of a single attribute for a single record in JSON format")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful retrieval of the attribute", response = ConceptList.class)}
+	)
+	public Response attrCodeJson(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
+								 @PathParam("concept") String concept, 
+								 @ApiParam(name = "codesystem", value = "Alphanumeric value of the codesystem", required = true)
+								 @PathParam("codesystem") String codesystem,
+								 @ApiParam(name = "code", value = "Alphanumeric value of the code", required = true)
+								 @PathParam("code") String code, 
+								 @ApiParam(name = "attribute", value = "Alphanumeric value of the attribute", required = true)
+								 @PathParam("attribute") String attribute) {
 		try {
 			setBean();
 			return Response.ok(bean.getAttributeForObject(concept, codesystem, code, attribute))
@@ -429,8 +452,18 @@ public class CoreWs {
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/attribute/{attribute}/xml")
 	@GET
-	public Response codeXML(@PathParam("concept") String concept, @PathParam("codesystem") String codesystem,
-			@PathParam("code") String code, @PathParam("attribute") String attribute) {
+	@ApiOperation(value="Get the value of a single attribute for a single record in XML format")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful retrieval of the attribute", response = ConceptList.class)}
+	)
+	public Response codeXML(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
+							@PathParam("concept") String concept, 
+							@ApiParam(name = "codesystem", value = "Alphanumeric value of the codesystem", required = true)
+							@PathParam("codesystem") String codesystem,
+							@ApiParam(name = "code", value = "Alphanumeric value of the code", required = true)
+							@PathParam("code") String code, 
+							@ApiParam(name = "attribute", value = "Alphanumeric value of the attribute", required = true)
+							@PathParam("attribute") String attribute) {
 		try {
 			setBean();
 			return Response.ok(bean.getAttributeForObject(concept, codesystem, code, attribute))
