@@ -9,7 +9,7 @@ public class RefPubApplication extends ResourceConfig {
 	
 	public RefPubApplication() {
 		register(new RefPubBeanRegistration());
-		register(new org.refpub.webapp.CorsFilter());
+		register(new CorsFilter());
 	    packages("com.wordnik.swagger.jersey.listing");
 		//register(JacksonJsonProvider.class);
 		packages("org.refpub.webservice.core");

@@ -128,7 +128,9 @@
 	</select>
 	
 	<select id="getAttributeForSingleObject" parameterType="map" resultType="hashmap">
-		SELECT ${table}.${column} as "${attribute}", ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
+		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
+		<!--SELECT ${table}.${attribute}, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist} -->
+		SELECT ${table}.${attribute} as "${attribute}", ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
 	</select>
 	
 	<select id="getObjects" parameterType="map" resultType="hashmap">
