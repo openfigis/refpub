@@ -1,11 +1,18 @@
 package org.fao.fi.refpub.dao.objects.chunks;
 
 public class MDCodelist {
+	private String id;
 	private String table_name;
 	private String code_column;
 	private String code_name;
 	private String rest_concept;
 	private int isDefault;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public int getIsDefault() {
 		return isDefault;
 	}

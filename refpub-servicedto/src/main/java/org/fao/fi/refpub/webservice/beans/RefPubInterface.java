@@ -89,6 +89,45 @@ public interface RefPubInterface {
 	 */
 	Concept getAllCodeSystemByConcept(String concept);
 	
+	/*
+	 * getGroups()
+	 * Gets all gropus for a concept
+	 * @param concept
+	 * @return ConceptList
+	 */
+	ConceptList getGroups(String concept);
+	
+	/*
+	 * getGroupMain()
+	 * Gets all gropus for a concept and filter
+	 * @param concept
+	 * @return ConceptList
+	 */
+	ConceptList getGroupMain(String concept, String filter);
+	
+	/*
+	 * getGroup()
+	 * Gets all the grouping for concept, filter and group
+	 * @param concept
+	 * @param filter
+	 * @param group
+	 * @return ConceptList
+	 */
+	ConceptList getGroup(String Concept, String filter, String group);
+	
+	/*
+	 * getSubGroups()
+	 * Iterate the hierarchy
+	 * @param concept
+	 * @param filter
+	 * @param group
+	 * @param group
+	 * @return ConceptList
+	 */
+	ConceptList getSubGroups(String Concept, String filter, String group, String subGroup);
+	
+	
+	
 	Attributes getAllAttributesForConceptAndCodesystem(String concept, String codesystem);
 	
 	SystemError error(Exception e);

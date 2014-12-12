@@ -181,7 +181,7 @@
 		</sequence>
 	</complexType>
 	
-	<complexType name="Childrens">
+	<complexType name="Children">
 		<sequence>
 			<element name="child" type="refpub:Child" maxOccurs="unbounded"
 				minOccurs="1">
@@ -197,6 +197,9 @@
 			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
+			<element name="concept" type="refpub:ConceptType" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
 		</sequence>
 	</complexType>
 	
@@ -205,7 +208,7 @@
 			<element name="parents" type="refpub:Parents" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
-			<element name="childrens" type="refpub:Childrens" maxOccurs="unbounded"
+			<element name="children" type="refpub:Children" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
 		</sequence>

@@ -51,8 +51,47 @@ public class ConceptListDTO {
 		l.setCountRecord(list.size());
 		l.setTotalRecord(list.get(0).getTotal());
 		for (RefPubObject m : list) {
-			l.getConcepts().add(ConceptTypeDTO.create(m));
+			if (!m.isHidden())
+				l.getConcepts().add(ConceptTypeDTO.create(m));
 		}
+		return l;
+	}
+	
+	public static ConceptList createNestedObj(List<RefPubObject> list) {
+		
+		ConceptList l = new ConceptList();
+		if (list.size() < 1) { return l; }
+		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
+		urlChunks.add(new ResourceKeyValue("concept", ""));
+		l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "self"));
+		if (list.get(0).getCurrentURI() != null) {
+			if (list.get(0).getCurrentURI().getCount() <= list.size()) { //This might be a bug! If the last page total is equal to the count it would show next page link
+				l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "next"));
+			}
+			if (list.get(0).getCurrentURI().getPage() > 1) {
+				l.getLinks().add(LinkRelDTO.create(list.get(0), urlChunks, "prev"));
+			}
+		}
+		l.setCountRecord(list.size());
+		l.setTotalRecord(list.get(0).getTotal());
+		for (RefPubObject m : list) {
+			if (!m.isHidden())
+				l.getConcepts().add(ConceptTypeDTO.createDeep(m));
+		}
+		return l;
+	}
+	
+	public static ConceptList createSingle(RefPubObject obj) {
+		
+		ConceptList l = new ConceptList();
+		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
+		urlChunks.add(new ResourceKeyValue("concept", ""));
+		l.getLinks().add(LinkRelDTO.create(obj, urlChunks, "self"));
+		
+		l.setCountRecord(1);
+		l.setTotalRecord(1);
+		l.getConcepts().add(ConceptTypeDTO.create(obj));
+		
 		return l;
 	}
 	

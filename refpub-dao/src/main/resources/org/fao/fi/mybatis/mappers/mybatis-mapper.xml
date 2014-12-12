@@ -19,69 +19,6 @@
 		<result property="isDefault" column="IS_RESOURCEURL"/>
 	</resultMap>
 	
-	<resultMap type="org.fao.fi.refpub.dao.objects.RefPubObject" id="ObjectResults">
-		<id property="id" column="FIC_ITEM"/>
-		<result property="primary_key_id" column="PKID"/>
-		<result property="fic_sys_item" column="FIC_SYS_ITEM"/>
-		<result property="fic_item" column="FIC_ITEM"/>
-		<result property="name_e" column="NAME_E"/>
-		<result property="long_name_e" column="LONG_NAME_E"/>
-		<result property="full_name_e" column="FULL_NAME_E"/>
-		<result property="name_f" column="NAME_F"/>
-		<result property="long_name_f" column="LONG_NAME_F"/>
-		<result property="full_name_f" column="FULL_NAME_F"/>
-		<result property="name_s" column="NAME_S"/>
-		<result property="long_name_s" column="LONG_NAME_S"/>
-		<result property="full_name_s" column="FULL_NAME_S"/>
-		<result property="unit" column="UNIT"/>
-		<result property="scientific_name" column="SCIENTIFIC_NAME"/>
-		<result property="alpha3code" column="ALPHA3CODE"/>
-		<result property="meta" column="META"/>
-		<result property="entry_status" column="ENTRY_STATUS"/>
-		<result property="faomap_layer_id" column="FAOMAP_LAYER_ID"/>
-		<result property="author" column="AUTHOR"/>
-		<result property="name_a" column="NAME_A"/>
-		<result property="name_c" column="NAME_C"/>
-		<result property="name_r" column="NAME_R"/>
-		<result property="long_name_a" column="LONG_NAME_A"/>
-		<result property="long_name_c" column="LONG_NAME_C"/>
-		<result property="long_name_r" column="LONG_NAME_R"/>
-		<result property="full_name_a" column="FULL_NAME_A"/>
-		<result property="full_name_c" column="FULL_NAME_C"/>
-		<result property="full_name_r" column="FULL_NAME_R"/>
-		<result property="official_name_e" column="OFFICIAL_NAME_E"/>
-		<result property="official_name_f" column="OFFICIAL_NAME_F"/>
-		<result property="official_name_r" column="OFFICIAL_NAME_R"/>
-		<result property="official_name_s" column="OFFICIAL_NAME_S"/>
-		<result property="official_name_a" column="OFFICIAL_NAME_A"/>
-		<result property="official_name_c" column="OFFICIAL_NAME_C"/>
-		<result property="short_desc_e" column="SHORT_DESC_E"/>
-		<result property="short_desc_f" column="SHORT_DESC_F"/>
-		<result property="short_desc_r" column="SHORT_DESC_R"/>
-		<result property="short_desc_s" column="SHORT_DESC_S"/>
-		<result property="short_desc_a" column="SHORT_DESC_A"/>
-		<result property="short_desc_c" column="SHORT_DESC_C"/>
-		<result property="area" column="AREA"/>
-		<result property="un_code" column="UN_CODE"/>
-		<result property="undp_code" column="UNDP_CODE"/>
-		<result property="iso_2_code" column="ISO_2_CODE"/>
-		<result property="iso_3_code" column="ISO_3_CODE"/>
-		<result property="min_long" column="MIN_LONG"/>
-		<result property="max_long" column="MAX_LONG"/>
-		<result property="min_lat" column="MIN_LAT"/>
-		<result property="max_lat" column="MAX_LAT"/>
-		<result property="area_size" column="AREA_SIZE"/>
-		<result property="group_name" column="MKP_GROUP_NAME"/>
-		<result property="isscfg_code" column="ISSCFG_CODE"/>
-		<result property="std_abbrev" column="STD_ABBREV"/>
-		<result property="cd_gear_type" column="CD_GEAR_TYPE"/>
-		<result property="grp_ind" column="GRP_IND"/>
-		<result property="grp_lev" column="GRP_LEV"/>
-		<result property="entry_date" column="ENTRY_DATE"/>
-		<result property="total" column="COUNTALL"/>	
-		<result property="id" column="TBL_PK"/>	
-	</resultMap>
-	
 	<resultMap type="org.fao.fi.refpub.dao.objects.ClassInitXML" id="ClassInitResults">
 		<result property="ref_table" column="REF_TABLE"/>
 	</resultMap>
@@ -108,7 +45,23 @@
 	<select id="getCodeList" parameterType="map" resultMap="CodelistResult">
 		SELECT * FROM ${db_schema}.MD_CODELIST WHERE REST_CONCEPT=#{concept} AND CODE_NAME=#{codelistname}
 	</select>
-	
+
+	<select id="getGroupsValues" parameterType="map" resultType="hashmap">
+		SELECT MD_HIERARCHY.CD_HIERARCHY AS PKID, MD_HIERARCHY.ROOT_FILTER AS FILTER, MD_HIERARCHY.* FROM ${db_schema}.MD_HIERARCHY WHERE CD_HIERARCHY IN 
+		<foreach item="list" index="index" collection="list"
+        	open="(" separator="," close=")">
+          #{list}
+    	</foreach>
+	</select>
+
+	<select id="getHierarchy" parameterType="map" resultType="hashmap">
+		SELECT MD_HIERARCHY.CD_HIERARCHY AS PKID, MD_HIERARCHY.ROOT_FILTER AS FILTER, MD_HIERARCHY.* FROM ${db_schema}.MD_HIERARCHY WHERE CD_HIERARCHY=#{filter}
+	</select>
+
+	<select id="getGroupAttr" parameterType="map" resultType="hashmap">
+		SELECT MD_HIERARCHY_ATTR.CD_HIERARCHY AS PKID, MD_HIERARCHY_ATTR.CD_METAOBJ AS FILTER, MD_HIERARCHY_ATTR.* FROM ${db_schema}.MD_HIERARCHY_ATTR WHERE CD_METAREL=#{filter}
+	</select>
+
 	<select id="getCodeList_list" resultMap="CodelistResult">
 		SELECT * FROM ${db_schema}.MD_CODELIST
 	</select>
@@ -118,18 +71,18 @@
 	</select>
 	
 	<select id="getObject" parameterType="map" resultType="hashmap">
-		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
 	</select>
 	
 	<select id="getObjectById" parameterType="map" resultType="hashmap">
-		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${main_id}=#{id}
+	</select>
+
+	<select id="getObjectByMeta" parameterType="map" resultType="hashmap">
+		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${meta_column}=#{meta}
 	</select>
 	
 	<select id="getAttributeForSingleObject" parameterType="map" resultType="hashmap">
-		<!-- SELECT * FROM refpub.MD_CODELIST WHERE REST_CONCEPT=#{concept} -->
-		<!--SELECT ${table}.${attribute}, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist} -->
 		SELECT ${table}.${attribute} as "${attribute}", ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
 	</select>
 	
@@ -177,16 +130,8 @@
 	</select>
 	
 	<select id="getParentHierarchy" parameterType="map" resultType="hashmap">
-		<!-- SELECT 
-			A.*, B.NAME_E AS GROUP_NAME
-		FROM 
-			${table} A, refpub.MD_REFOBJECT B
-		WHERE 
-			${primary_key} IN 
-				(SELECT ${group_column_key} FROM ${group_table} WHERE ${group_column} = #{id}) 
-			AND A.${meta_column} = B.ID -->
 		SELECT 
-			A.*, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
+			A.*, A.${primary_key} AS PKID, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
 		FROM 
 			${db_schema}.${table} A, ${db_schema}.MD_REFOBJECT B 
 		WHERE 
@@ -200,10 +145,40 @@
 			AND ${primary_key} != #{id}
 			AND B.ID = A.${meta_column}
 	</select>
+
+	<select id="getRootParentHierarchy" parameterType="map" resultType="hashmap">
+		SELECT
+			A.*, A.${primary_key} AS PKID, A.${primary_key} AS TBL_PK, A.NAME_E AS MKP_GROUP_NAME 
+		FROM 
+			${db_schema}.${table} A 
+		WHERE 
+			${primary_key} IN (
+				SELECT 
+					${group_column_key}
+				FROM 
+					${db_schema}.${group_table}
+				WHERE 
+					${group_column} = #{id} )
+			AND ${primary_key} != #{id}
+	</select>
+
+	<select id="getHierarchyForGroup" parameterType="map" resultType="hashmap">
+		SELECT A.*, A.${primary_key} AS PKID FROM 
+			${db_schema}.${table} A
+		WHERE ${meta_column} IN (
+			SELECT ${metacolumn_ret} FROM 
+				${db_schema}.MD_HIERARCHY_ATTR 
+			WHERE CD_METAREL IN (
+				SELECT root_filter FROM 
+					${db_schema}.MD_HIERARCHY 
+				WHERE 
+					CD_HIERARCHY = #{hid}) 
+			and CD_HIERARCHY = #{hid})
+	</select>
 	
 	<select id="getChildrenHierarchy" parameterType="map" resultType="hashmap">
 		SELECT 
-			A.*, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
+			A.*, A.${primary_key} AS PKID, A.${primary_key} AS TBL_PK, B.NAME_E AS MKP_GROUP_NAME
 		FROM 
 			${db_schema}.${table} A, ${db_schema}.MD_REFOBJECT B 
 		WHERE 
@@ -241,5 +216,195 @@
 		WHERE 
 			table_name=#{table} 
 		ORDER BY COLUMN_NAME ASC
+	</select>
+	<select id="isObjectBelongingToGroup" parameterType="map" resultType="int">
+		SELECT COUNT(*) AS C FROM ${db_schema}.${table} WHERE ${grp_column}=#{group} AND ${memb_column}=#{item_id}
+	</select>
+
+
+
+
+
+	<!-- GROUPING STUFF -->
+	<select id="getRootHierarchy" parameterType="map" resultType="hashmap">
+		SELECT 
+			A.*, A.${primary_key} AS PKID, A.${meta_column} AS META
+		FROM
+			${db_schema}.${table} A
+		<if test="meta != null">WHERE A.${meta_column} = #{meta}</if> 
+		
+	</select>
+
+	<select id="getFlatHierarchy" parameterType="map" resultType="hashmap">
+		SELECT 
+			A.*, A.${item_primaryKey} AS PKID, A.${item_metaColumn} AS META
+		FROM
+			${db_schema}.${itemTable} A
+		WHERE
+			A.${item_primaryKey} IN (
+				SELECT ${group_memberColumn} FROM ${db_schema}.${groupTable}
+				WHERE ${group_groupColumn} = #{filter}
+			)
+	</select>
+
+	<select id="getRootHierarchyCommodities" parameterType="map" resultType="hashmap">
+		SELECT 
+			A.*, A.${hierarchyItem_primaryKey} AS PKID,
+			A.${hierarchyItem_metaColumn} AS META
+		FROM 
+			${db_schema}.${hierarchyItemTable} A
+		WHERE 
+			A.CD_META = #{filter} AND
+			${hierarchyItem_primaryKey} NOT IN 
+				( SELECT ${group_memberColumn} FROM ${db_schema}.${groupTable} )
+	</select>
+
+	<select id="getSubGroupHierarchy" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID, A.*,
+			A.${item_metaColumn} AS META,
+			B.${hierarchyItem_metaColumn} AS PARENT_META, 
+			B.${hierarchyItem_primaryKey} AS PARENT_ID
+		FROM
+			${db_schema}.${itemTable} A, 
+			${db_schema}.${hierarchyItemTable} B, 
+			${db_schema}.${hierarchyGroupTable} C
+		WHERE
+			A.${item_primaryKey}=C.${hierarchyGroup_memberColumn} AND 
+			B.${hierarchyItem_metaColumn} IN 
+			<foreach item="list1" index="index" collection="list"
+				open="(" separator="," close=")">
+		  		#{list1}
+			</foreach> AND
+			A.${item_metaColumn} IN 
+			<foreach item="list2" index="index" collection="list"
+				open="(" separator="," close=")">
+		  		#{list2}
+			</foreach> AND
+			B.${hierarchyItem_primaryKey}=C.${hierarchyGroup_groupColumn} AND
+			B.${item_primaryKey} != A.${item_primaryKey}
+	</select>
+
+	<select id="getSubGroupHierarchyCommodities" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID,
+			A.${item_metaColumn} AS META, 
+			A.*, 
+			B.${item_metaColumn} as PARENT_META, 
+			B.${item_primaryKey} as PARENT_ID
+		FROM 
+			${db_schema}.${itemTable} A, 
+			${db_schema}.${itemTable} B, 
+			${db_schema}.${hierarchyGroupTable} C
+		WHERE
+			A.${item_primaryKey}=C.${group_memberColumn} AND
+			B.${item_metaColumn}=#{filter} AND 
+			B.${item_primaryKey}=C.${group_groupColumn} AND
+			C.${group_groupColumn} IN 
+				(SELECT 
+					${item_primaryKey}
+				 FROM 
+				 	${db_schema}.${itemTable}
+				 WHERE 
+				 	${item_primaryKey} NOT IN 
+				 		(SELECT 
+				 			${group_memberColumn} 
+				 		 FROM 
+				 		 	${db_schema}.${hierarchyGroupTable}))
+	</select>
+
+	<select id="getSubGroupHierarchyAlternative" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID, 
+			A.*, 
+			SYS_CONNECT_BY_PATH(${item_primaryKey}, '/') AS PTH, 
+			LEVEL
+		FROM 
+			${db_schema}.${itemTable} A, 
+			${db_schema}.${groupTable} B
+		WHERE
+		 	A.${item_primaryKey}=B.${group_groupColumn}
+			START WITH A.${item_primaryKey} IN (
+				SELECT 
+					${item_primaryKey}
+				FROM 
+					${db_schema}.${itemTable}
+				WHERE 
+					${item_metaColumn} = #{filter} AND 
+					${item_primaryKey} NOT IN ( 
+						SELECT ${group_memberColumn} FROM ${db_schema}.${groupTable} ) 
+			)
+			CONNECT BY PRIOR B.${group_memberColumn}=A.${item_primaryKey}
+	</select>
+
+
+
+	<select id="getChildsHierarchyAlternative" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID, 
+			A.*,
+			C.${item_primaryKey} AS PARENT_ID
+		FROM 
+			${db_schema}.${itemTable} A,
+			${db_schema}.${groupTable} B,
+			${db_schema}.${itemTable} C 
+		WHERE 
+			A.${item_primaryKey} IN (
+				SELECT ${group_memberColumn} FROM ${db_schema}.${groupTable} WHERE ${group_groupColumn} IN 
+				<foreach item="list" index="index" collection="list"
+					open="(" separator="," close=")">
+			  		#{list}
+				</foreach> 
+			) AND 
+			A.${item_metaColumn} = #{filter} AND
+			A.${item_primaryKey} = B.${group_memberColumn} AND
+			B.${group_groupColumn} = C.${item_primaryKey}
+	</select>
+
+	<select id="getFilteredObjectsHierarchy" parameterType="map" resultType="hashmap">
+		SELECT 
+			A.${item_primaryKey} AS PKID,
+			A.*,  
+			A.${item_metaColumn} AS META, 
+			C.${hierarchyItem_metaColumn} AS PARENT_META, 
+			B.${hierarchyGroup_groupColumn} AS PARENT_ID
+		FROM 
+			${db_schema}.${itemTable} A 
+			LEFT JOIN ${db_schema}.${hierarchyGroupTable} B
+				ON A.${item_primaryKey}=B.${hierarchyGroup_memberColumn}
+			LEFT JOIN ${db_schema}.${hierarchyItemTable} C 
+				ON C.${hierarchyItem_primaryKey}=B.${hierarchyGroup_groupColumn}
+			LEFT JOIN ${db_schema}.${itemGroupTable} D 
+				ON A.${item_primaryKey}=D.${itemGroup_memberColumn}
+		WHERE 
+			D.${itemGroup_groupColumn}=#{filter} AND
+			B.${hierarchyGroup_metaColumn}=C.${hierarchyItem_metaColumn} AND 
+			B.${hierarchyGroup_metaColumn} IN
+			<foreach item="meta" index="index" collection="meta"
+				open="(" separator="," close=")">
+		  		#{meta}
+			</foreach>
+	</select>
+
+	<select id="getFilteredObjectsHierarchyCommodities" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID,
+			A.${item_metaColumn} AS META, 
+			A.*, 
+			B.${item_metaColumn} as PARENT_META, 
+			B.${item_primaryKey} as PARENT_ID
+		FROM 
+			${db_schema}.${itemTable} A, 
+			${db_schema}.${itemTable} B, 
+			${db_schema}.${groupTable} C
+		WHERE
+			A.${item_primaryKey}=C.${group_memberColumn} AND
+			B.${item_metaColumn}=#{filter} AND 
+			B.${item_primaryKey}=C.${group_groupColumn} AND
+			C.${group_groupColumn} IN 
+			<foreach item="list" index="index" collection="list"
+				open="(" separator="," close=")">
+		  		#{list}
+			</foreach>
 	</select>
 </mapper>

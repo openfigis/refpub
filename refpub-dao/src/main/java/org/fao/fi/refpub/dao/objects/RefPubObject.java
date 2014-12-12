@@ -46,6 +46,7 @@ public class RefPubObject {
     private String SHORT_DESC_C;
     
     private List<HashMap<String, String>> ATTRIBUTES;
+    private String FILTER;
     
     private List<RefPubObject> parents;
 	private List<RefPubObject> childrens;
@@ -53,7 +54,9 @@ public class RefPubObject {
 	private URI currentURI;
 	private int total;
 	private String concept;
+	private boolean is_group;
 	private String group_name;
+	private boolean hidden;
 	
 	public String getPKID() {
 		return PKID;
@@ -259,6 +262,12 @@ public class RefPubObject {
 	public void setATTRIBUTES(List<HashMap<String, String>> aTTRIBUTES) {
 		ATTRIBUTES = aTTRIBUTES;
 	}
+	public String getFILTER() {
+		return FILTER;
+	}
+	public void setFILTER(String fILTER) {
+		FILTER = fILTER;
+	}
 	public List<RefPubObject> getParents() {
 		return parents;
 	}
@@ -295,11 +304,23 @@ public class RefPubObject {
 	public void setConcept(String concept) {
 		this.concept = concept;
 	}
+	public boolean isIs_group() {
+		return is_group;
+	}
+	public void setIs_group(boolean is_group) {
+		this.is_group = is_group;
+	}
 	public String getGroup_name() {
 		return group_name;
 	}
 	public void setGroup_name(String group_name) {
 		this.group_name = group_name;
+	}
+	public boolean isHidden() {
+		return hidden;
+	}
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
 	}
 
 }

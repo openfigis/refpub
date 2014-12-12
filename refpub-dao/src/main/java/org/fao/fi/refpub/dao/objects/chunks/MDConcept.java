@@ -1,13 +1,21 @@
 package org.fao.fi.refpub.dao.objects.chunks;
 
 public class MDConcept {
+	private String id;
 	private String table_name;
 	private String table_group;
+	private String table_group_alternate;
 	private String rest_concept;
 	private String meta_id;
 	private String meta_column;
 	private String table_group_column;
 	private String table_group_member;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getTable_name() {
 		return table_name;
 	}
@@ -19,6 +27,12 @@ public class MDConcept {
 	}
 	public void setTable_group(String table_group) {
 		this.table_group = table_group;
+	}
+	public String getTable_group_alternate() {
+		return table_group_alternate;
+	}
+	public void setTable_group_alternate(String table_group_alternate) {
+		this.table_group_alternate = table_group_alternate;
 	}
 	public String getRest_concept() {
 		return rest_concept;

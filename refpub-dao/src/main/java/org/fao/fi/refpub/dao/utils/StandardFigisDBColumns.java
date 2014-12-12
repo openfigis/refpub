@@ -11,6 +11,7 @@ public class StandardFigisDBColumns {
 		{
 	    	add("PKID");
 	        add("META");
+	        add("FILTER");
 	        
 	        add("NAME_E");
 	        add("NAME_F");
