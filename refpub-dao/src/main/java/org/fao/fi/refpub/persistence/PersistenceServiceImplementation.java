@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
 import org.fao.fi.refpub.dao.objects.chunks.GenericType;
@@ -19,11 +20,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	
 	public PersistenceServiceImplementation() {}
 	
-	public ArrayList<HashMap<String, Object>> getObjects(String db_schema, String id, String id_column, String table, String pk_column, String min, String max) {
+	public ArrayList<HashMap<String, Object>> getObjects(String db_schema, List<String> meta, String id_column, String table, String pk_column, String min, String max) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getObjects(db_schema, id, id_column, table, pk_column, min, max);
+			return mapper.getObjects(db_schema, meta, id_column, table, pk_column, min, max);
 		} finally {
 			sqlSession.close();
 		}
@@ -434,11 +435,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	}
 
 	@Override
-	public MDGroupingDepth getGroupDepth(String db_schema, String hierarchy) {
+	public MDGroupingDepth getGroupDepth(String db_schema, int groupId, String hierarchy) {
 		SqlSession sqlSession = MyBatisSqlSessionFactoryLocalMysql.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getGroupDepth(db_schema, hierarchy);
+			return mapper.getGroupDepth(db_schema, groupId, hierarchy);
 		} finally {
 			sqlSession.close();
 		}
@@ -612,6 +613,57 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			return mapper.getFlatHierarchy(db_schema, itemTable, groupTable, 
 					item_primaryKey, item_metaColumn, group_memberColumn, group_groupColumn,
 					filter);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public ArrayList<HashMap<String, Object>> getMetaGrouping(String db_schema,
+			String itemTable, String item_primaryKey, String item_metaColumn,
+			List<String> metaList) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getMetaGrouping(db_schema, itemTable, 
+					item_primaryKey, item_metaColumn, metaList);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public ArrayList<HashMap<String, Object>> getEntireHierarchy(String db_schema,
+			String hierarchy) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getEntireHierarchy(db_schema, hierarchy);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public ArrayList<HashMap<String, Object>> getAplhabeticalByFilter(
+			String db_schema, String itemTable, String groupTable, 
+			String item_primaryKey, String item_metaColumn, String group_memberColumn,
+			String group_groupColumn, String filter) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getAplhabeticalByFilter(db_schema, itemTable, groupTable, item_primaryKey, item_metaColumn, group_memberColumn, group_groupColumn, filter);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public int countGroupsForConcept(String db_schema, String concept) {
+		SqlSession sqlSession = MyBatisSqlSessionFactoryLocalMysql.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.countGroupsForConcept(db_schema, concept);
 		} finally {
 			sqlSession.close();
 		}

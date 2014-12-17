@@ -21,7 +21,7 @@ public abstract interface PersistenceServiceInterface {
 	
 	ArrayList<HashMap<String, Object>> getObjects(
 			@Param("db_schema") String db_schema, 
-			@Param("meta") String id,
+			@Param("meta") List<String> meta,
 			@Param("meta_column") String id_column,
 			@Param("table") String table, 
 			@Param("main_id") String pk_column,
@@ -145,6 +145,11 @@ public abstract interface PersistenceServiceInterface {
 			@Param("db_schema") String db_schema,
 			@Param("filter") String filter);
 	
+	int countGroupsForConcept(
+			@Param("db_schema") String db_schema,
+			@Param("concept") String concept
+			);
+	
 	ArrayList<HashMap<String, Object>> getGroupAttr(
 			@Param("db_schema") String db_schema, 
 			@Param("filter") String filter);
@@ -188,6 +193,7 @@ public abstract interface PersistenceServiceInterface {
 	
 	MDGroupingDepth getGroupDepth(
 			@Param("db_schema") String db_schema, 
+			@Param("groupId") int groupId, 
 			@Param("hierarchy") String hierarchy);
 	
 	ArrayList<HashMap<String, Object>> getRootHierarchy(
@@ -308,4 +314,25 @@ public abstract interface PersistenceServiceInterface {
 			@Param("group_memberColumn") String group_memberColumn,
 			@Param("group_groupColumn") String group_groupColumn,
 			@Param("filter") String filter);
+	
+	ArrayList<HashMap<String, Object>> getMetaGrouping(
+			@Param("db_schema") String db_schema,  
+			@Param("itemTable") String itemTable,
+			@Param("item_primaryKey") String item_primaryKey,
+			@Param("item_metaColumn") String item_metaColumn,  
+			@Param("metaList") List<String> metaList);
+	
+	ArrayList<HashMap<String, Object>> getEntireHierarchy(
+			@Param("db_schema") String db_schema,  
+			@Param("hierarchy") String hierarchy);
+	
+	ArrayList<HashMap<String, Object>> getAplhabeticalByFilter(
+			@Param("db_schema") String db_schema,
+			@Param("itemTable") String itemTable,
+			@Param("groupTable") String groupTable,
+			@Param("item_primaryKey") String item_primaryKey,
+			@Param("item_metaColumn") String item_metaColumn,
+			@Param("group_memberColumn") String group_memberColumn,
+			@Param("group_groupColumn") String group_groupColumn,
+			@Param("filter") String filter);			
 }

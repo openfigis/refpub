@@ -23,6 +23,9 @@ import org.fao.fi.refpub.dao.objects.URI;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 
 public class Utils {
+	
+	public static String ALPHABETICAL_ID = "999999";
+	
 	public static List<CodeListDAO> retrieveCodeListForObject(List<MDCodelist> codelists, RefPubObject obj) {
 		List<CodeListDAO> codemap = new ArrayList<CodeListDAO>();
 		for (MDCodelist cl : codelists) {
@@ -130,6 +133,9 @@ public class Utils {
 	}
 	
 	public static RefPubObject buildRefPubObject (ArrayList<HashMap<String, Object>> results) {
+		if (results.size() < 1) {
+			return null;
+		}
 		return Utils.buildRefPubObject(results.get(0));
 	}
 	
@@ -512,7 +518,7 @@ public class Utils {
 		return tree;
 	}
 	
-	private static boolean hasChildObject(RefPubObject obj) {
+	public static boolean hasChildObject(RefPubObject obj) {
 		if (obj.getChildrens() != null && obj.getChildrens().size() > 0) {
 			for (RefPubObject x : obj.getChildrens()) {
 				if (!x.isIs_group()) {

@@ -147,7 +147,7 @@ public class RefPubImplementation implements RefPubInterface {
 		
 	@Override
 	public ConceptList getGroupMain(String concept, String filter) {
-		return ConceptListDTO.createObj(this.getGroupsByFilter(concept, filter));
+		return ConceptListDTO.createNestedObj(this.getGroupsByFilter(concept, filter));
 	}
 	@Override
 	public ConceptList getGroup(String Concept, String filter, String group) {
@@ -175,6 +175,11 @@ public class RefPubImplementation implements RefPubInterface {
 			
 			List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
 																  concept.getName());
+			
+			int countOfGroups = ps.countGroupsForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), c.getId());
+			if (countOfGroups > 0) {
+				concept.setHasGroup(true);
+			}
 			
 			Map<String,String> codemap = new HashMap<String, String>();
 			for (MDCodelist code : codelists) {
@@ -223,8 +228,14 @@ public class RefPubImplementation implements RefPubInterface {
 		TableReference tbl = ps.getTableReferenceByName(RefPubImplementation.CONFIGURATION.getDb_schema(), 
 															  mdconcept.getTable_name());
 		
+		List<String> meta = new ArrayList<String>();
+		String[] split = cp.getMeta().split(",");
+		for (int i = 0; i < split.length; i++) {
+			meta.add(split[i]);
+		}
+		
 		ArrayList<HashMap<String, Object>> objs = ps.getObjects(RefPubImplementation.CONFIGURATION.getDb_schema(),
-												cp.getMeta(),
+												meta,
 												mdconcept.getMeta_column(),
 												cp.getTable_name(), 
 												tbl.getPrimaryKey(),
@@ -234,11 +245,13 @@ public class RefPubImplementation implements RefPubInterface {
 															  concept);
 				
 		List<RefPubObject> returnList = Utils.buildRefPubObjectList(objs);
+		String countall = Utils.getAttributeFromList(returnList.get(0).getATTRIBUTES(), "COUNTALL");
 		for (RefPubObject obj : returnList) {
 			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
 			obj.setConcept(concept);
 			obj.setCodeList(codemap);
 			obj.setCurrentURI(this.BuildURI(count, page));
+			obj.setTotal(Integer.parseInt(countall));
 		}
 		
 		return returnList;
@@ -445,6 +458,10 @@ public class RefPubImplementation implements RefPubInterface {
 													filter);
 		}
 		
+		if (mdGrouping.getIsFilterGroup() == 0) {
+			return this.getAllHierarchy(concept, filter);
+		}
+		
 		List<Integer> hl = new ArrayList<Integer>();
 		if (mdGrouping.getHierarchy() != null) {
 			for (String h : Arrays.asList(mdGrouping.getHierarchy().split(","))) {
@@ -459,6 +476,17 @@ public class RefPubImplementation implements RefPubInterface {
 		List<RefPubObject> topHierarchy = Utils.buildRefPubObjectList(ps.getGroupsValues(RefPubImplementation.CONFIGURATION.getDb_schema(), 
 												hl));
 		
+		RefPubObject alphabetical = new RefPubObject();
+		alphabetical.setNAME("Alphabetical");
+		alphabetical.setNAME_E("Alphabetical");
+		alphabetical.setNAME_F("Alphabétique");
+		alphabetical.setNAME_S("Alfabético");
+		alphabetical.setNAME_C("按字母顺序排列");
+		alphabetical.setNAME_R("алфавитный");
+		alphabetical.setNAME_A("أبجدي");
+		alphabetical.setPKID(Utils.ALPHABETICAL_ID);
+		
+		topHierarchy.add(alphabetical);
 		int counter = 0;
 		for (RefPubObject obj : topHierarchy) {
 			obj.setCurrentURI(this.BuildURI(null, null));
@@ -473,6 +501,10 @@ public class RefPubImplementation implements RefPubInterface {
 
 	private List<RefPubObject> getSubGroup(String concept, String filter, String group) {
 		
+		if (Utils.ALPHABETICAL_ID.equalsIgnoreCase(group)) {
+			return this.getAlphabeticalGroup(concept, filter, group);
+		}
+		
 		if ("commodities".equals(concept.toLowerCase())) {
 			return this.getSubGroupAlternative(concept, filter, group);
 		}
@@ -485,7 +517,7 @@ public class RefPubImplementation implements RefPubInterface {
 		MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(dbSchema, concept);
 		
 		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
-		MDGroupingDepth mdGroupingDepth = ps.getGroupDepth(dbSchema, group);
+		MDGroupingDepth mdGroupingDepth = ps.getGroupDepth(dbSchema, mdGrouping.getId(), group);
 				
 		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
 		TableReference groupTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getGroup_table());
@@ -583,7 +615,7 @@ public class RefPubImplementation implements RefPubInterface {
 		RefPubObject mainHierarchy = Utils.buildRefPubObject(ps.getHierarchy(dbSchema, group));
 		
 		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
-		MDGroupingDepth mdGroupingDepth = ps.getGroupDepth(dbSchema, group);
+		MDGroupingDepth mdGroupingDepth = ps.getGroupDepth(dbSchema, mdGrouping.getId(), group);
 				
 		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
 		TableReference groupTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getGroup_table());
@@ -636,6 +668,44 @@ public class RefPubImplementation implements RefPubInterface {
 		return Utils.setUpURIOnTree(Utils.setUpCodeListOnTree(fullList, mdCodelist, concept), this.BuildURI(null, null));
 	}
 	
+	private List<RefPubObject> getAlphabeticalGroup(String concept, String filter, String group) {
+		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
+		
+		MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(dbSchema, concept);
+		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
+				
+		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
+		TableReference groupTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getGroup_table());
+		
+		List<RefPubObject> list = new ArrayList<RefPubObject>();
+		if (mdGrouping.getFilter_meta() != null) {
+			list = Utils.buildRefPubObjectList(ps.getAplhabeticalByFilter(
+					dbSchema, 
+					itemTable.getName(), 
+					groupTable.getName(), 
+					itemTable.getPrimaryKey(), 
+					itemTable.getMetaColumn(), 
+					groupTable.getMemberColumn(), 
+					groupTable.getGroupColumn(), 
+					mdGrouping.getFilter_meta()));
+		}
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setCurrentURI(this.BuildURI(null, null));
+			list.get(i).setConcept(concept);
+			
+			List<CodeListDAO> cll = new ArrayList<CodeListDAO>();
+			CodeListDAO cl = new CodeListDAO();
+			cl.setIsDefault(1);
+			cl.setName(mdCodelist.getCode_name());
+			cl.setValue(list.get(i).getPKID());
+			cll.add(cl);
+			
+			list.get(i).setCodeList(cll);
+		}
+		
+		return list;
+	}
+	
 	private List<RefPubObject> getFlatGroupHierarchy(String concept, String filter, String group) {
 		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
 		
@@ -645,9 +715,21 @@ public class RefPubImplementation implements RefPubInterface {
 		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
 		TableReference groupTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getGroup_table());
 		
-		return Utils.setUpCodeListOnTree(
-				Utils.setUpURIOnTree(
-				 Utils.buildRefPubObjectList(
+		List<RefPubObject> retStrut = new ArrayList<RefPubObject>();
+		
+		retStrut = Utils.buildRefPubObjectList(
+					ps.getFlatHierarchy(
+						dbSchema, 
+						itemTable.getName(), 
+						groupTable.getName(), 
+						itemTable.getPrimaryKey(), 
+						itemTable.getMetaColumn(), 
+						groupTable.getMemberColumn(), 
+						groupTable.getGroupColumn(), 
+						mdGrouping.getFilter()));
+		
+		if (retStrut.size() < 1) {
+			retStrut = Utils.buildRefPubObjectList(
 						ps.getFlatHierarchy(
 							dbSchema, 
 							itemTable.getName(), 
@@ -656,7 +738,49 @@ public class RefPubImplementation implements RefPubInterface {
 							itemTable.getMetaColumn(), 
 							groupTable.getMemberColumn(), 
 							groupTable.getGroupColumn(), 
-							mdGrouping.getFilter())), this.BuildURI(null, null)), mdCodelist, concept);
+							mdGrouping.getFilter_meta()));
+		}
+		
+		return Utils.setUpCodeListOnTree(
+				Utils.setUpURIOnTree(retStrut, this.BuildURI(null, null)), mdCodelist, concept);
+	}
+	
+	private List<RefPubObject> getAllHierarchy(String concept, String filter) {
+		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
+		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
+		
+		List<RefPubObject> treeRes = Utils.buildRefPubObjectHierarchyList(ps.getEntireHierarchy(dbSchema, mdGrouping.getFilter()));
+		
+		//return this.setUpInfoOnTree(treeRes, concept, ps.getDefaultCodelistFromConcept(dbSchema, concept));
+		return this.attachObjectsToLeafs(treeRes, concept, filter);
+	}
+	
+	private List<RefPubObject> getFilterMetaGrouping(String concept, String filter, String filterMeta) {
+		List<String> fm = new ArrayList<String>();
+		fm.add(filterMeta);
+		return this.getFilterMetaGrouping(concept, filter, fm);
+	}
+	
+	private List<RefPubObject> getFilterMetaGrouping(String concept, String filter, List<String> filterMeta) {
+		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
+		
+		MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(dbSchema, concept);
+		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
+		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
+		
+		List<RefPubObject> retList = Utils.buildRefPubObjectList(ps.getMetaGrouping(dbSchema, 
+																					itemTable.getName(), 
+																					itemTable.getPrimaryKey(), 
+																					itemTable.getMetaColumn(), 
+																					filterMeta));
+		
+		for (int counter=0; counter < retList.size(); counter++) {
+			retList.get(counter).setCodeList(this.buildCodeListFromMD(mdCodelist, retList.get(counter)));
+			retList.get(counter).setCurrentURI(this.BuildURI(null, null));
+			retList.get(counter).setConcept(concept);
+		}
+		
+		return retList;
 	}
 	
 	private List<RefPubObject> getFilteredSubGroup(String Concept, String filter, String group, String subGroup) {
@@ -723,15 +847,6 @@ public class RefPubImplementation implements RefPubInterface {
 			}
 		}
 		
-		/*if (parents.size() > 0) {
-			int counter = 0;
-			for (RefPubObject p : parents) {
-				p.setParents(this.getParents(p, mdconcept, tbl));
-				parents.set(counter, p);
-				counter++;
-			}
-		}*/
-		
 		return parents;
 	}
 	
@@ -788,6 +903,28 @@ public class RefPubImplementation implements RefPubInterface {
 		return retList;
 	}
 	
+	private List<RefPubObject> attachObjectsToLeafs(List<RefPubObject> tree, String concept, String filter) {
+		for (int i = 0; i < tree.size(); i++) {
+			if (Utils.hasChildObject(tree.get(i))) {
+				tree.get(i).setChildrens(this.attachObjectsToLeafs(tree.get(i).getChildrens(), concept, filter));
+			} else {
+				MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), concept);
+				MDGrouping mdGrouping = ps.getGroupByDescription(RefPubImplementation.CONFIGURATION.getDb_schema(), filter);
+						
+				TableReference itemTable = ps.getTableReferenceByName(RefPubImplementation.CONFIGURATION.getDb_schema(), mdGrouping.getItem_table());
+				
+				List<RefPubObject> newLeafs = Utils.buildRefPubObjectList(ps.getObjectByMeta(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+																							itemTable.getName(), 
+																							itemTable.getPrimaryKey(), 
+																							itemTable.getMetaColumn(), 
+																							tree.get(i).getPKID()));
+				newLeafs = this.setUpInfoOnTree(newLeafs, concept, mdCodelist);
+				tree.get(i).setChildrens(newLeafs);
+			}
+		}
+		return tree;
+	}
+	
 	private URI BuildURI(String count, String page) {
 		URI uri = new URI();
 		
@@ -809,6 +946,16 @@ public class RefPubImplementation implements RefPubInterface {
 			}
 		}
 		return uri;
+	}
+	
+	private List<CodeListDAO> buildCodeListFromMD(MDCodelist mdCodelist, RefPubObject o) {
+		CodeListDAO cl = new CodeListDAO();
+		cl.setIsDefault(mdCodelist.getIsDefault());
+		cl.setName(mdCodelist.getCode_name());
+		cl.setValue(o.getPKID());
+		List<CodeListDAO> cll = new ArrayList<CodeListDAO>();
+		cll.add(cl);
+		return cll;
 	}
 	
 	/*
@@ -855,6 +1002,24 @@ public class RefPubImplementation implements RefPubInterface {
 		return value;
 	}
 
+	
+	private List<RefPubObject> setUpInfoOnTree(List<RefPubObject> tree, String concept, MDCodelist codelist) {
+		for (int i = 0; i < tree.size(); i++) {
+			tree.get(i).setCurrentURI(this.BuildURI(null, null));
+			tree.get(i).setConcept(concept);
+			List<CodeListDAO> cll = new ArrayList<CodeListDAO>();
+			CodeListDAO cl = new CodeListDAO();
+			cl.setIsDefault(1);
+			cl.setName(codelist.getCode_name());
+			cl.setValue(tree.get(i).getPKID());
+			cll.add(cl);
+			tree.get(i).setCodeList(cll);
+			if (Utils.hasChildObject(tree.get(i))) {
+				tree.get(i).setChildrens(this.setUpInfoOnTree(tree.get(i).getChildrens(), concept, codelist));
+			}
+		}
+		return tree;
+	}
 	
 
 	private void loadConfiguration() {

@@ -18,6 +18,7 @@ public class MDGrouping {
 	private String group_table;
 	private String hierarchy_item_table;
 	private String hierarchy_group_table;
+	private int isFilterGroup;
 	
 	public int getId() {
 		return id;
@@ -120,6 +121,12 @@ public class MDGrouping {
 	}
 	public void setHierarchy_group_table(String hierarchy_group_table) {
 		this.hierarchy_group_table = hierarchy_group_table;
+	}
+	public int getIsFilterGroup() {
+		return isFilterGroup;
+	}
+	public void setIsFilterGroup(int isFilterGroup) {
+		this.isFilterGroup = isFilterGroup;
 	}
 
 }

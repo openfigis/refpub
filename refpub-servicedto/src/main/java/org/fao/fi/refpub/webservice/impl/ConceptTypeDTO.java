@@ -21,6 +21,14 @@ public class ConceptTypeDTO {
 		List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 		urlChunks.add(new ResourceKeyValue("concept", concept.getName()));
 		c.getLinks().add(LinkRelDTO.create(concept, urlChunks, concept.getName()));
+		
+		if (concept.isHasGroup()) {
+			List<ResourceKeyValue> urlChunksGroups = new ArrayList<ResourceKeyValue>();
+			urlChunksGroups.add(new ResourceKeyValue("concept", concept.getName()));
+			urlChunksGroups.add(new ResourceKeyValue("group", ""));
+			c.getLinks().add(LinkRelDTO.create(concept, urlChunksGroups, concept.getName() + "_Groups"));
+		}
+		
 		c.setCodeList(CodeListTypeDTO.create(concept));
 				
 		return c;
@@ -137,6 +145,9 @@ public class ConceptTypeDTO {
 	
 	public static Concept createWithAttributes(RefPubObject object) {
 		Concept concept = ConceptTypeDTO.create(object);
+		if (object.getPKID() == null) { 
+			return concept; 
+		}
 		concept.setAttr(AttrListDTO.create(object));
 		return concept;
 	}

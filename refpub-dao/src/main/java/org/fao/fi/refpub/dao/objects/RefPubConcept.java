@@ -15,6 +15,7 @@ public class RefPubConcept {
 	private String table_grp_name;
 	private Map<String, String> codelists;
 	private URI currentURI;
+	private boolean hasGroup;
 	public String getMeta() {
 		return meta;
 	}
@@ -86,5 +87,11 @@ public class RefPubConcept {
 	}
 	public void setCurrentURI(URI currentURI) {
 		this.currentURI = currentURI;
+	}
+	public boolean isHasGroup() {
+		return hasGroup;
+	}
+	public void setHasGroup(boolean hasGroup) {
+		this.hasGroup = hasGroup;
 	}
 }
