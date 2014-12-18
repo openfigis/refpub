@@ -13,10 +13,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.eclipse.persistence.jaxb.MarshallerProperties;
+import org.fao.fi.refpub.webservice.AttributeList;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
 import org.refpub.cache.CacheImplementation;
 import org.refpub.cache.CacheInterface;
+
 
 
 public class Execute {
@@ -115,6 +117,12 @@ public class Execute {
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
 	        m.setProperty(MarshallerProperties.MEDIA_TYPE, mediatype);
 	        m.marshal((ConceptList) obj, w);
+		} else if (obj instanceof AttributeList){
+			JAXBContext jc = org.eclipse.persistence.jaxb.JAXBContextFactory.createContext(new Class[] {AttributeList.class}, null);
+			Marshaller m = jc.createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
+	        m.setProperty(MarshallerProperties.MEDIA_TYPE, mediatype);
+	        m.marshal((AttributeList) obj, w);
 		}
 		return w.toString();
 	}
@@ -130,6 +138,10 @@ public class Execute {
 			Marshaller m = JAXBContext.newInstance(ConceptList.class).createMarshaller();
 			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
 			m.marshal((ConceptList) obj, w);
+		} else if (obj instanceof AttributeList){
+			Marshaller m = JAXBContext.newInstance(AttributeList.class).createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);
+	        m.marshal((AttributeList) obj, w);
 		}
 		return w.toString();
 	}

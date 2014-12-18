@@ -27,7 +27,7 @@ import org.fao.fi.refpub.dao.objects.chunks.TableReference;
 import org.fao.fi.refpub.dao.utils.Utils;
 import org.fao.fi.refpub.persistence.PersistenceServiceImplementation;
 import org.fao.fi.refpub.persistence.PersistenceServiceInterface;
-import org.fao.fi.refpub.webservice.Attributes;
+import org.fao.fi.refpub.webservice.AttributeList;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.SystemError;
@@ -135,10 +135,15 @@ public class RefPubImplementation implements RefPubInterface {
 	
 	
 	@Override
-	public Attributes getAllAttributesForConceptAndCodesystem(
+	public AttributeList getAllAttributesForConceptAndCodesystem(
 			String concept, String codesystem) {
 		return AttributeListTypeDTO.create(this.attributeListByConceptCodelist(concept, codesystem));
 	}
+	
+	@Override
+	public AttributeList getAllAttributesForConcept(String concept) {
+		return AttributeListTypeDTO.create(this.attributeListByConcept(concept));
+	}	
 	
 	@Override
 	public ConceptList getGroups(String concept) {
@@ -508,9 +513,6 @@ public class RefPubImplementation implements RefPubInterface {
 		if ("commodities".equals(concept.toLowerCase())) {
 			return this.getSubGroupAlternative(concept, filter, group);
 		}
-		/*if ("fishing statistical area".equals(concept.toLowerCase())) {
-			return this.getSubGroupAlternative(concept, filter, group);
-		}*/
 		
 		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
 		
@@ -806,29 +808,9 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	private List<RefPubObject> getParents (RefPubObject refPubObject, MDConcept mdconcept, TableReference tbl) {
-		List<RefPubObject> parents = Utils.buildRefPubObjectList(ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
-				 mdconcept.getTable_name(),
-				 mdconcept.getTable_group(), 
-				 mdconcept.getTable_group_member(),
-				 mdconcept.getMeta_column(),
-				 refPubObject.getPKID(),
-				 mdconcept.getTable_group_column(),
-				 tbl.getPrimaryKey()));
-		
-		
-		
-		if (parents.size() > 0) {
-			for (int x = 0; x < parents.size(); x++) {
-				parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
-				parents.get(x).setConcept(refPubObject.getConcept());
-				parents.get(x).setGroup_name(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "MKP_GROUP_NAME"));
-				parents.get(x).setNAME(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "SCIENTIFIC_NAME"));
-				parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
-																			RefPubImplementation.CONFIGURATION.getDb_schema(),
-																			refPubObject.getConcept()), parents.get(x)));
-			}
-		} else {
-			parents = Utils.buildRefPubObjectList(ps.getRootParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+		if (mdconcept.getTable_group() != null) {
+			List<MDCodelist> codelist = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), mdconcept.getRest_concept());
+			List<RefPubObject> parents = Utils.buildRefPubObjectList(ps.getParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
 					 mdconcept.getTable_name(),
 					 mdconcept.getTable_group(), 
 					 mdconcept.getTable_group_member(),
@@ -836,54 +818,84 @@ public class RefPubImplementation implements RefPubInterface {
 					 refPubObject.getPKID(),
 					 mdconcept.getTable_group_column(),
 					 tbl.getPrimaryKey()));
-			for (int x = 0; x < parents.size(); x++) {
-				parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
-				parents.get(x).setConcept(refPubObject.getConcept());
-				parents.get(x).setGroup_name(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "MKP_GROUP_NAME"));
-				parents.get(x).setNAME(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "SCIENTIFIC_NAME"));
-				parents.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
-																			RefPubImplementation.CONFIGURATION.getDb_schema(),
-																			refPubObject.getConcept()), parents.get(x)));
+			
+			
+			
+			if (parents.size() > 0) {
+				for (int x = 0; x < parents.size(); x++) {
+					parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
+					parents.get(x).setConcept(refPubObject.getConcept());
+					parents.get(x).setGroup_name(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "MKP_GROUP_NAME"));
+					parents.get(x).setNAME(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "SCIENTIFIC_NAME"));
+					parents.get(x).setCodeList(Utils.retrieveCodeListForObject(codelist, parents.get(x)));
+				}
+			} else {
+				parents = Utils.buildRefPubObjectList(ps.getRootParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+						 mdconcept.getTable_name(),
+						 mdconcept.getTable_group(), 
+						 mdconcept.getTable_group_member(),
+						 mdconcept.getMeta_column(),
+						 refPubObject.getPKID(),
+						 mdconcept.getTable_group_column(),
+						 tbl.getPrimaryKey()));
+				for (int x = 0; x < parents.size(); x++) {
+					parents.get(x).setCurrentURI(this.BuildURI("1", "1"));
+					parents.get(x).setConcept(refPubObject.getConcept());
+					parents.get(x).setGroup_name(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "MKP_GROUP_NAME"));
+					parents.get(x).setNAME(this.getValueFromAttributes(parents.get(x).getATTRIBUTES(), "SCIENTIFIC_NAME"));
+					parents.get(x).setCodeList(Utils.retrieveCodeListForObject(codelist, parents.get(x)));
+				}
 			}
+			
+			return parents;
+		} else {
+			return null;
 		}
-		
-		return parents;
 	}
 	
 	private List<RefPubObject> getChildren (RefPubObject refPubObject, MDConcept mdconcept, TableReference tbl) {
-		List<RefPubObject> children = Utils.buildRefPubObjectList(ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
-				 mdconcept.getTable_name(),
-				 mdconcept.getTable_group(), 
-				 mdconcept.getTable_group_member(),
-				 mdconcept.getMeta_column(),
-				 refPubObject.getPKID(),
-				 mdconcept.getTable_group_column(),
-				 tbl.getPrimaryKey()));
-		
-		for (int x = 0; x < children.size(); x++) {
-			children.get(x).setCurrentURI(this.BuildURI("1", "1"));
-			children.get(x).setConcept(refPubObject.getConcept());
-			children.get(x).setGroup_name(this.getValueFromAttributes(children.get(x).getATTRIBUTES(), "MKP_GROUP_NAME"));
-			children.get(x).setNAME(this.getValueFromAttributes(children.get(x).getATTRIBUTES(), "SCIENTIFIC_NAME"));
-			children.get(x).setCodeList(Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
-																			RefPubImplementation.CONFIGURATION.getDb_schema(),
-																			refPubObject.getConcept()), children.get(x)));
-		}
-		
-		if (children.size() > 0) {
-			int counter = 0;
-			for (RefPubObject c : children) {
-				List<RefPubObject> itr = this.getChildren(c, mdconcept, tbl);
-				if (itr.size() > 0) {
-					c.setChildrens(this.getChildren(c, mdconcept, tbl));
-					c.setIs_group(true);
-					children.set(counter, c);
-				}
-				counter++;
+		if (mdconcept.getTable_group() != null) {
+			List<MDCodelist> codelist = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), mdconcept.getRest_concept());
+			
+			List<RefPubObject> children = Utils.buildRefPubObjectList(ps.getChildrenHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
+					 mdconcept.getTable_name(),
+					 mdconcept.getTable_group(), 
+					 mdconcept.getTable_group_member(),
+					 mdconcept.getMeta_column(),
+					 refPubObject.getPKID(),
+					 mdconcept.getTable_group_column(),
+					 tbl.getPrimaryKey()));
+			
+			for (int x = 0; x < children.size(); x++) {
+				children.get(x).setCurrentURI(this.BuildURI("1", "1"));
+				children.get(x).setConcept(refPubObject.getConcept());
+				children.get(x).setGroup_name(this.getValueFromAttributes(children.get(x).getATTRIBUTES(), "MKP_GROUP_NAME"));
+				children.get(x).setNAME(this.getValueFromAttributes(children.get(x).getATTRIBUTES(), "SCIENTIFIC_NAME"));
+				children.get(x).setCodeList(Utils.retrieveCodeListForObject(codelist, children.get(x)));
+				
 			}
+			
+			/*
+			 * This self-iteration might be a bug... 
+			 */
+			
+			/*if (children.size() > 0) {
+				int counter = 0;
+				for (RefPubObject c : children) {
+					List<RefPubObject> itr = this.getChildren(c, mdconcept, tbl);
+					if (itr.size() > 0) {
+						c.setChildrens(this.getChildren(c, mdconcept, tbl));
+						c.setIs_group(true);
+						children.set(counter, c);
+					}
+					counter++;
+				}
+			}*/
+			
+			return children;
+		} else {
+			return null;
 		}
-		
-		return children;
 	}
 
 	private List<GenericType> attributeListByConceptCodelist(String concept, String codelist) {
@@ -903,6 +915,22 @@ public class RefPubImplementation implements RefPubInterface {
 		return retList;
 	}
 	
+	private List<GenericType> attributeListByConcept(String concept) {
+		MDConcept cmt = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+									   concept);
+		List<GenericType> list = ps.getTableColumns(RefPubImplementation.CONFIGURATION.getDb_schema(),
+				cmt.getTable_name());
+
+		List<GenericType> retList = new ArrayList<GenericType>(); 
+		for (GenericType t : list) {
+			if (Arrays.asList(Constants.valid_attributes).contains(t.getValue().toLowerCase())) {
+				t.setValue(t.getValue().toLowerCase());
+				retList.add(t);
+			}
+		}
+		return retList;
+	}
+	
 	private List<RefPubObject> attachObjectsToLeafs(List<RefPubObject> tree, String concept, String filter) {
 		for (int i = 0; i < tree.size(); i++) {
 			if (Utils.hasChildObject(tree.get(i))) {
@@ -913,12 +941,37 @@ public class RefPubImplementation implements RefPubInterface {
 						
 				TableReference itemTable = ps.getTableReferenceByName(RefPubImplementation.CONFIGURATION.getDb_schema(), mdGrouping.getItem_table());
 				
-				List<RefPubObject> newLeafs = Utils.buildRefPubObjectList(ps.getObjectByMeta(RefPubImplementation.CONFIGURATION.getDb_schema(), 
-																							itemTable.getName(), 
-																							itemTable.getPrimaryKey(), 
-																							itemTable.getMetaColumn(), 
-																							tree.get(i).getPKID()));
-				newLeafs = this.setUpInfoOnTree(newLeafs, concept, mdCodelist);
+				int countSubObjects = ps.getObjectByMetaCount(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+															  itemTable.getName(), 
+															  itemTable.getPrimaryKey(), 
+															  itemTable.getMetaColumn(), 
+															  tree.get(i).getPKID());
+				List<RefPubObject> newLeafs = new ArrayList<RefPubObject>();
+				if (countSubObjects < 100) {
+					newLeafs = Utils.buildRefPubObjectList(ps.getObjectByMeta(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+																				itemTable.getName(), 
+																				itemTable.getPrimaryKey(), 
+																				itemTable.getMetaColumn(), 
+																				tree.get(i).getPKID()));
+					newLeafs = this.setUpInfoOnTree(newLeafs, concept, mdCodelist);
+				} else {
+					List<String> offsets = this.buildOffsets(countSubObjects);
+					for (String offset : offsets) {
+						String start = offset.split(",")[0];
+						String numRows = "100";
+						List<RefPubObject> newLeafsTemp = Utils.buildRefPubObjectList(ps.getObjectByMetaPaginate(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+																				itemTable.getName(), 
+																				itemTable.getPrimaryKey(), 
+																				itemTable.getMetaColumn(), 
+																				tree.get(i).getPKID(),
+																				start, numRows));
+						newLeafsTemp = this.setUpInfoOnTree(newLeafsTemp, concept, mdCodelist);
+						for (RefPubObject leaf : newLeafsTemp) {
+							newLeafs.add(leaf);
+						}
+					}
+				}
+				
 				tree.get(i).setChildrens(newLeafs);
 			}
 		}
@@ -1001,6 +1054,24 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		return value;
 	}
+	
+	private List<String> buildOffsets(int count) {
+		int divider = 100;
+		int num = count;
+		int div = num/divider;
+		int fract = num - (div*divider);
+		List<String> offsets = new ArrayList<String>();
+		
+		int off=0;
+		for (int i = 0; i<div; i++) {
+			offsets.add(Integer.toString(off+1) + "," + Integer.toString(off+divider));
+			off = off + divider;
+		}
+		if (fract != 0) {
+			offsets.add(Integer.toString(off+1) + "," + Integer.toString(off+fract));
+		}
+		return offsets;
+	}
 
 	
 	private List<RefPubObject> setUpInfoOnTree(List<RefPubObject> tree, String concept, MDCodelist codelist) {
@@ -1039,6 +1110,6 @@ public class RefPubImplementation implements RefPubInterface {
 			}
 		}
 		return null;
-	}	
+	}
 }
 

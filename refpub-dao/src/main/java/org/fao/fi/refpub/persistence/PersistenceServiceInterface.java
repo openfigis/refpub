@@ -72,6 +72,22 @@ public abstract interface PersistenceServiceInterface {
 			@Param("meta_column") String meta_column, 
 			@Param("meta") String meta);
 	
+	ArrayList<HashMap<String, Object>> getObjectByMetaPaginate(
+			@Param("db_schema") String db_schema, 
+			@Param("table") String table, 
+			@Param("main_id") String pk_column,  
+			@Param("meta_column") String meta_column, 
+			@Param("meta") String meta,
+			@Param("start") String start,
+			@Param("numRows") String numRows);
+	
+	int getObjectByMetaCount(
+			@Param("db_schema") String db_schema, 
+			@Param("table") String table, 
+			@Param("main_id") String pk_column,  
+			@Param("meta_column") String meta_column, 
+			@Param("meta") String meta);
+	
 	
 	ArrayList<HashMap<String, Object>> getAttributeForSingleObject(
 			@Param("db_schema") String db_schema,

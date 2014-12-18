@@ -45,6 +45,8 @@ public class RefPubObject {
     private String SHORT_DESC_A;
     private String SHORT_DESC_C;
     
+    private String SCIENTIFIC_NAME;
+    
     private List<HashMap<String, String>> ATTRIBUTES;
     private String FILTER;
     
@@ -255,6 +257,12 @@ public class RefPubObject {
 	}
 	public void setSHORT_DESC_C(String sHORT_DESC_C) {
 		SHORT_DESC_C = sHORT_DESC_C;
+	}
+	public String getSCIENTIFIC_NAME() {
+		return SCIENTIFIC_NAME;
+	}
+	public void setSCIENTIFIC_NAME(String sCIENTIFIC_NAME) {
+		SCIENTIFIC_NAME = sCIENTIFIC_NAME;
 	}
 	public List<HashMap<String, String>> getATTRIBUTES() {
 		return ATTRIBUTES;

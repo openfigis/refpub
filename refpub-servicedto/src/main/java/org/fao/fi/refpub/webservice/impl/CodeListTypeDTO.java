@@ -39,10 +39,10 @@ public class CodeListTypeDTO {
 			cl.getLinks().add(LinkRelDTO.create(concept, urlChunks, "cl_" + entry.getValue().toLowerCase()));
 			cl.setName(entry.getValue());
 			
-			urlChunks.add(new ResourceKeyValue("attribute", ""));
+			/*urlChunks.add(new ResourceKeyValue("attribute", ""));
 			AtomLink attributesLink = new AtomLink();
 			attributesLink.getLinks().add(LinkRelDTO.create(concept, urlChunks, "attr_" + entry.getValue().toLowerCase()));
-			cl.setAttributes(attributesLink);
+			cl.setAttributes(attributesLink);*/
 			n.getCodes().add(cl);
 		}
 		return n;
@@ -54,11 +54,14 @@ public class CodeListTypeDTO {
 			CodeList cldto = new CodeList();
 
 			cldto.setName(cl.getName());
-
+			if (cl.getValue() != null && !cl.getValue().trim().equalsIgnoreCase("")) {
+				cldto.setConcept(cl.getValue());
+			}
+			
 			List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 			if (forCodeList) { //We are listening JUST the codelist. so the referrer URL must be different from an object detail listening
 				urlChunks.add(new ResourceKeyValue("concept", cl.getValue()));
-				urlChunks.add(new ResourceKeyValue("codesystem", cl.getName()));
+				cldto.getLinks().add(LinkRelDTO.create(obj, urlChunks, "Concept"));
 			} else { //object details listening. URL generator to list the object link by its codelists
 				if (obj.getConcept() != null && cldto.getName() != null && cl.getValue() != null) {
 					urlChunks.add(new ResourceKeyValue("concept", obj.getConcept()));

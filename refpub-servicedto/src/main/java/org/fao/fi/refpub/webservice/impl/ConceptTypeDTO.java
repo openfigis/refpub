@@ -6,9 +6,11 @@ import java.util.List;
 import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubConcept;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
+import org.fao.fi.refpub.webservice.AttributesType;
 import org.fao.fi.refpub.webservice.Child;
 import org.fao.fi.refpub.webservice.Children;
 import org.fao.fi.refpub.webservice.Concept;
+import org.fao.fi.refpub.webservice.GroupsType;
 import org.fao.fi.refpub.webservice.HierarchyList;
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
@@ -26,10 +28,18 @@ public class ConceptTypeDTO {
 			List<ResourceKeyValue> urlChunksGroups = new ArrayList<ResourceKeyValue>();
 			urlChunksGroups.add(new ResourceKeyValue("concept", concept.getName()));
 			urlChunksGroups.add(new ResourceKeyValue("group", ""));
-			c.getLinks().add(LinkRelDTO.create(concept, urlChunksGroups, concept.getName() + "_Groups"));
+			GroupsType grp = new GroupsType();
+			grp.getLinks().add(LinkRelDTO.create(concept, urlChunksGroups, "groups"));
+			c.setGroups(grp);
 		}
+		AttributesType attype = new AttributesType();
+		List<ResourceKeyValue> urlChunksAttributes = new ArrayList<ResourceKeyValue>();
+		urlChunksAttributes.add(new ResourceKeyValue("concept", concept.getName()));
+		urlChunksAttributes.add(new ResourceKeyValue("attribute", ""));
+		attype.getLinks().add(LinkRelDTO.create(concept, urlChunksAttributes, "attributes"));
 		
 		c.setCodeList(CodeListTypeDTO.create(concept));
+		c.setAttributes(attype);
 				
 		return c;
 	}
@@ -108,6 +118,10 @@ public class ConceptTypeDTO {
 			object.getSHORT_DESC_C() != null ) {
 			
 			c.setMultilingualShortDescription(MultilingualTypeDTO.create(object, "SHORT_DESC"));
+		}
+		
+		if (object.getSCIENTIFIC_NAME() != null && !object.getSCIENTIFIC_NAME().trim().equalsIgnoreCase("")) {
+			c.setScientificName(object.getSCIENTIFIC_NAME());
 		}
 		
 		try {

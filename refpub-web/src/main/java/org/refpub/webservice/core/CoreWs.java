@@ -91,6 +91,26 @@ public class CoreWs {
 		}
 	}
 	
+	@Path("concept/{concept}/attribute/{type: .*}")
+	@GET
+	@ApiOperation(value="Get all records for concept in JSON/XML format")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 200, message = "Successful retrieval of records for a concepts", response = ConceptList.class)}
+	)
+	public Response attributeList(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
+								@PathParam("concept") String conceptCode, 
+								@ApiParam(name = "type", value = "Output type {json/xml}", required = true)
+							    @PathParam("type") String type) {
+		
+		if ("json".equalsIgnoreCase(type)) {
+			return this.attributeListRun(conceptCode, this.getMediaType("json"));
+		} else if ("xml".equalsIgnoreCase(type)) {
+			return this.attributeListRun(conceptCode, this.getMediaType("xml"));
+		} else {
+			return this.attributeListRun(conceptCode, null);
+		}
+	}
+	
 	@Path("concept/{concept}/codesystem/{type: .*}")
 	@GET
 	@ApiOperation(value="Get the list of codesystems for a certain concept in JSON/XML format")
@@ -159,7 +179,11 @@ public class CoreWs {
 		}
 	}
 	
-	@Path("concept/{concept}/codesystem/{codesystem}/attribute/{type: .*}")
+	/*
+	 * Removed for an error in the wiki
+	 */
+	
+	/*@Path("concept/{concept}/codesystem/{codesystem}/attribute/{type: .*}")
 	@GET
 	@ApiOperation(value="Get all the possible attributes for a concept in JSON/XML format")
 	@ApiResponses(value = {
@@ -179,7 +203,7 @@ public class CoreWs {
 		} else {
 			return this.codeAttrRun(concept, codesystem, null);
 		}
-	}
+	}*/
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/attribute/{attribute}/{type: .*}")
 	@GET
@@ -225,7 +249,7 @@ public class CoreWs {
 		}
 	}
 	
-	@Path("concept/{concept}/group/{filter}/{type: .*}")
+	@Path("concept/{concept}/group/{group}/{type: .*}")
 	@GET
 	@ApiOperation(value="Get a single group by concept in JSON/XML format with all parents and childrens")
 	@ApiResponses(value = {
@@ -233,21 +257,21 @@ public class CoreWs {
 	)
 	public Response groupMain(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
 							 @PathParam("concept") String concept, 
-							 @ApiParam(name = "filter", value = "Alphanumeric value of the group", required = true)
-							 @PathParam("filter") String filter, 
+							 @ApiParam(name = "group", value = "Alphanumeric value of the group", required = true)
+							 @PathParam("group") String group, 
 							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							 @PathParam("type") String type) {
 		
 		if ("json".equalsIgnoreCase(type)) {
-			return this.groupMainRun(concept, filter, this.getMediaType("json"));
+			return this.groupMainRun(concept, group, this.getMediaType("json"));
 		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.groupMainRun(concept, filter, this.getMediaType("xml"));
+			return this.groupMainRun(concept, group, this.getMediaType("xml"));
 		} else {
-			return this.groupMainRun(concept, filter, null);
+			return this.groupMainRun(concept, group, null);
 		}
 	}
 	
-	@Path("concept/{concept}/group/{filter}/{group}/{type: .*}")
+	@Path("concept/{concept}/group/{group}/{subgroup}/{type: .*}")
 	@GET
 	@ApiOperation(value="Get a single group by concept in JSON/XML format with all parents and childrens")
 	@ApiResponses(value = {
@@ -255,24 +279,24 @@ public class CoreWs {
 	)
 	public Response getGroupXML(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
 							 @PathParam("concept") String concept, 
-							 @ApiParam(name = "filter", value = "Alphanumeric value of the group", required = true)
-							 @PathParam("filter") String filter, 
 							 @ApiParam(name = "group", value = "Alphanumeric value of the group", required = true)
 							 @PathParam("group") String group, 
+							 @ApiParam(name = "subgroup", value = "Alphanumeric value of the group", required = true)
+							 @PathParam("subgroup") String subgroup, 
 							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							 @PathParam("type") String type) {
 		
 		if ("json".equalsIgnoreCase(type)) {
-			return this.getGroupRun(concept, filter, group, this.getMediaType("json"));
+			return this.getGroupRun(concept, group, subgroup, this.getMediaType("json"));
 		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.getGroupRun(concept, filter, group, this.getMediaType("xml"));
+			return this.getGroupRun(concept, group, subgroup, this.getMediaType("xml"));
 		} else {
-			return this.getGroupRun(concept, filter, group, null);
+			return this.getGroupRun(concept, group, subgroup, null);
 		}
 	}
 	
 
-	@Path("concept/{concept}/group/{filter}/{group}/{subgroup}/{type: .*}")
+	/*@Path("concept/{concept}/group/{group}/{subgroup}/{subgroup_id}/{type: .*}")
 	@GET
 	@ApiOperation(value="Get a single group by concept in JSON/XML format with all parents and childrens")
 	@ApiResponses(value = {
@@ -280,25 +304,23 @@ public class CoreWs {
 	)
 	public Response subSubgroup(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
 							 @PathParam("concept") String concept, 
-							 @ApiParam(name = "filter", value = "Alphanumeric value of the group", required = true)
-							 @PathParam("filter") String filter, 
 							 @ApiParam(name = "group", value = "Alphanumeric value of the group", required = true)
-							 @PathParam("group") String group,
-							 @ApiParam(name = "subgroup", value = "Alphanumeric value of the group", required = true)
+							 @PathParam("group") String group, 
+							 @ApiParam(name = "subgroup", value = "Alphanumeric value of the subgroup", required = true)
 							 @PathParam("subgroup") String subgroup,
-							 @ApiParam(name = "subgroupid", value = "Alphanumeric value of the group", required = true)
-							 @PathParam("deepen") String deepen, 
+							 @ApiParam(name = "subgroup_id", value = "Alphanumeric value of the group id", required = true)
+							 @PathParam("subgroup_id") String subgroup_id,
 							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							 @PathParam("type") String type) {
 		
 		if ("json".equalsIgnoreCase(type)) {
-			return this.subSubgroupRun(concept, filter, group, subgroup, this.getMediaType("json"));
+			return this.subSubgroupRun(concept, group, subgroup, subgroup_id, this.getMediaType("json"));
 		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.subSubgroupRun(concept, filter, group, subgroup, this.getMediaType("xml"));
+			return this.subSubgroupRun(concept, group, subgroup, subgroup_id, this.getMediaType("xml"));
 		} else {
-			return this.subSubgroupRun(concept, filter, group, subgroup, null);
+			return this.subSubgroupRun(concept, group, subgroup, subgroup_id, null);
 		}
-	}
+	}*/
 	
 	
 	
@@ -363,6 +385,21 @@ public class CoreWs {
 			}
 		}.execute();
 	}
+	
+	private Response attributeListRun(String conceptCode, String mediatype) {
+		setBean();
+		String count = this.getPageParam("count");
+		String page = this.getPageParam("page");
+		return new Execute(uriInfo, mediatype){
+			public Object run() {
+				return bean.getAllAttributesForConcept(conceptCode);
+			}
+			public Object error(Exception err) {
+				return bean.error(err);
+			}
+		}.execute();
+	}
+	
 	private Response conceptListRun(String conceptCode, String mediatype) {
 		setBean();
 		String count = this.getPageParam("count");

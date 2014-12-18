@@ -81,7 +81,7 @@ public class RefPubServiceDTOTest extends TestCase{
     }
     
     public void testGetAllAttributesForConceptAndCodesystem () {
-    	Attributes attr = rp.getAllAttributesForConceptAndCodesystem(CONCEPT_NAME, CONCEPT_ID_COL);
+    	AttributeList attr = rp.getAllAttributesForConceptAndCodesystem(CONCEPT_NAME, CONCEPT_ID_COL);
     	assertNotNull(attr);
     }
     

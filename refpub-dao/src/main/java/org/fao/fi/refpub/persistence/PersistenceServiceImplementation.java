@@ -133,6 +133,31 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+	
+	@Override
+	public int getObjectByMetaCount(String db_schema, String table,
+			String pk_column, String meta_column, String meta) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObjectByMetaCount(db_schema, table, pk_column, meta_column, meta);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Override
+	public ArrayList<HashMap<String, Object>> getObjectByMetaPaginate(
+			String db_schema, String table, String pk_column,
+			String meta_column, String meta, String start, String numRows) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObjectByMetaPaginate(db_schema, table, pk_column, meta_column, meta, start, numRows);
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 
 	@Override

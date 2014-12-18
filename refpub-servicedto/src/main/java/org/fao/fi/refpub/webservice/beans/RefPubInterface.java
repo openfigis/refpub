@@ -2,7 +2,7 @@ package org.fao.fi.refpub.webservice.beans;
 
 import javax.ws.rs.core.UriInfo;
 
-import org.fao.fi.refpub.webservice.Attributes;
+import org.fao.fi.refpub.webservice.AttributeList;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.SystemError;
@@ -126,9 +126,9 @@ public interface RefPubInterface {
 	 */
 	ConceptList getSubGroups(String Concept, String filter, String group, String subGroup);
 	
+	AttributeList getAllAttributesForConcept(String concept);
 	
-	
-	Attributes getAllAttributesForConceptAndCodesystem(String concept, String codesystem);
+	AttributeList getAllAttributesForConceptAndCodesystem(String concept, String codesystem);
 	
 	SystemError error(Exception e);
 }

@@ -47,6 +47,8 @@ public class StandardFigisDBColumns {
 	        add("SHORT_DESC_R");
 	        add("SHORT_DESC_A");
 	        add("SHORT_DESC_C");
+	        
+	        add("SCIENTIFIC_NAME");
 	    }
 	}; 
 

@@ -28,7 +28,7 @@
 	<element name="codeSystemList" type="refpub:CodeSystemListType"></element>
 	<element name="codeSystem" type="refpub:CodeSystemType"></element>
 	<element name="code" type="refpub:codeType"></element>
-	<element name="attributes" type="refpub:attributesList"></element>
+	<element name="attributeList" type="refpub:attributesList"></element>
 	<element name="systemError" type="refpub:ErrorList"></element>
 	
 	<!-- Types -->
@@ -53,7 +53,7 @@
 		<complexContent>
 			<extension base="refpub:atomLink">
 				<sequence>
-					<element name="attributes" type="refpub:atomLink"></element>
+					<element name="attribute" type="refpub:atomLink"></element>
 				</sequence>
 			</extension>
 		</complexContent>
@@ -158,6 +158,7 @@
 		<complexContent>
 			<extension base="refpub:RestType">
 				<attribute name="name"></attribute>
+				<attribute name="concept"></attribute>
 			</extension>
 		</complexContent>
 	</complexType>
@@ -213,6 +214,20 @@
 			</element>
 		</sequence>
 	</complexType>
+	
+	<complexType name="groupsType">
+		<sequence>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded" minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="attributesType">
+		<sequence>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded" minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
 
 	<complexType name="TreasureType">
 		<complexContent>
@@ -234,8 +249,17 @@
 					<element name="multilingualShortDescription"
 						type="refpub:MultilingualType">
 					</element>
+					<element name="scientific_name"
+						type="string">
+					</element>
 					<element name="codeList"
 						type="refpub:CodeListListType">
+					</element>
+					<element name="groups"
+						type="refpub:groupsType">
+					</element>
+					<element name="attributes"
+						type="refpub:attributesType">
 					</element>
 					<element name="attr" 
 						type="refpub:attrList">

@@ -226,9 +226,9 @@ public class HierarchyListTypeDTO {
 			}
 			
 			
-			if (refPubObject.getNAME() != null) {
+			if (refPubObject.getSCIENTIFIC_NAME() != null) {
 				ValueAttrName van = new ValueAttrName();
-				van.setValue(refPubObject.getNAME());
+				van.setValue(refPubObject.getSCIENTIFIC_NAME());
 				van.setType("scientific_name");
 				van.setLang("");
 				van.setName(groupName);
@@ -249,6 +249,7 @@ public class HierarchyListTypeDTO {
 				}
 			}
 			child.getLinks().add(LinkRelDTO.create(refPubObject, urlChunks, groupName));
+			
 			chl.getchildren().add(child);
 			
 		}
@@ -461,6 +462,15 @@ public class HierarchyListTypeDTO {
 				van.setValue(refPubObject.getOFFICIAL_NAME_C());
 				van.setType("official_name");
 				van.setLang("zh");
+				van.setName(groupName);
+				parent.getValues().add(van);
+			}
+			
+			if (refPubObject.getSCIENTIFIC_NAME() != null) {
+				ValueAttrName van = new ValueAttrName();
+				van.setValue(refPubObject.getSCIENTIFIC_NAME());
+				van.setType("scientific_name");
+				van.setLang("");
 				van.setName(groupName);
 				parent.getValues().add(van);
 			}
