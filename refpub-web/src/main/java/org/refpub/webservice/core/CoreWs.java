@@ -338,7 +338,7 @@ public class CoreWs {
 		
 		String appConfigPath = context.getInitParameter("refpub-confFile");
 		if (appConfigPath == null) {
-			appConfigPath = "/opt/refpub/conf/refpub.properties";
+			appConfigPath = "/work/FIGIS/refpub-data/conf/refpub.properties";
 		}
 		
 		bean.setPropertiesFile(appConfigPath);

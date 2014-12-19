@@ -31,7 +31,7 @@ public class RefPubServiceDTOTest extends TestCase{
     public static Test suite()
     {
     	rp = new RefPubImplementation();
-    	rp.setPropertiesFile("/opt/refpub/conf/refpub.properties");
+    	rp.setPropertiesFile("/eork/FIGIS/refpub-data/conf/refpub.properties");
         return new TestSuite( RefPubServiceDTOTest.class );
     }
     

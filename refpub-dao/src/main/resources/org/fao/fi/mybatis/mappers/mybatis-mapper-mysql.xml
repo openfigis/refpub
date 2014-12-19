@@ -41,6 +41,7 @@
 		<result property="hierarchy_item_table" column="HIERARCHY_ITEM_TABLE"/>
 		<result property="hierarchy_group_table" column="HIERARCHY_GROUP_TABLE"/>
 		<result property="isFilterGroup" column="IS_FILTER_GROUP"/>
+		<result property="scanning_method" column="SCANNING_METHOD"/>
 	</resultMap>
 	
 	<resultMap type="org.fao.fi.refpub.dao.objects.chunks.TableReference" id="TableRefResult">
