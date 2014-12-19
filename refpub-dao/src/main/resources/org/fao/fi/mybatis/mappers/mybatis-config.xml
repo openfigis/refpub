@@ -24,6 +24,6 @@
 	</environments>
 	<mappers>
 		<!-- <mapper resource="org/fao/fi/mybatis/mappers/mybatis-mapper.xml"/> -->
-		<mapper url="file:///work/FIGIS/refpub-data/conf/mybatis/mybatis-mapper.xml"/>
+		<mapper url="file:///work/FIGIS/refpub_data/conf/mybatis/mybatis-mapper.xml"/>
 	</mappers>
 </configuration>
