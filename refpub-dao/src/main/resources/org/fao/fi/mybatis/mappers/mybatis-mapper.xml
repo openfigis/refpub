@@ -81,24 +81,36 @@
 	<select id="getObjectByMeta" parameterType="map" resultType="hashmap">
 		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${meta_column}=#{meta}
 	</select>
+
+	<select id="getObjectByMetaCount" parameterType="map" resultType="int">
+		SELECT COUNT(*) AS C FROM ${db_schema}.${table} WHERE ${meta_column}=#{meta}
+	</select>
+
+	<select id="getObjectByMetaPaginate" parameterType="map" resultType="hashmap">
+		SELECT ${table}.*, ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${meta_column}=#{meta} OFFSET #{start} ROWS FETCH NEXT #{numRows} ROWS ONLY
+	</select>
 	
 	<select id="getAttributeForSingleObject" parameterType="map" resultType="hashmap">
 		SELECT ${table}.${attribute} as "${attribute}", ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
 	</select>
 	
 	<select id="getObjects" parameterType="map" resultType="hashmap">
-		<![CDATA[
 		SELECT * FROM (
 			SELECT ${table}.*, ${main_id} AS PKID, 
 				(SELECT 
 					COUNT(*)
 				 FROM 
 				 	${db_schema}.${table} 
-				 WHERE ${meta_column}=#{meta})  COUNTALL, 
+				 WHERE ${meta_column} IN 
+				 <foreach item="meta1" index="index" collection="meta" open="(" separator="," close=")">
+		  			#{meta1}
+				 </foreach>)  COUNTALL, 
 				ROW_NUMBER() OVER (ORDER BY ${meta_column}) RNK 
-			FROM ${db_schema}.${table} WHERE ${meta_column}=#{meta}) 
+			FROM ${db_schema}.${table} WHERE ${meta_column} IN 
+				 <foreach item="meta2" index="index" collection="meta" open="(" separator="," close=")">
+		  			#{meta2}
+				 </foreach>) 
 		WHERE RNK BETWEEN #{min} AND #{max}
-		]]>
 	</select>
 	
 	<select id="getObjectsByCodeList" parameterType="map" resultType="hashmap">
@@ -406,5 +418,88 @@
 				open="(" separator="," close=")">
 		  		#{list}
 			</foreach>
+	</select>
+
+	<select id="getMetaGrouping" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID,
+			A.${item_metaColumn} AS META, 
+			A.*
+		FROM 
+			${db_schema}.${itemTable} A
+		WHERE
+			A.${item_primaryKey} IN 
+			<foreach item="metaList" index="index" collection="metaList"
+				open="(" separator="," close=")">
+		  		#{metaList}
+			</foreach>
+	</select>
+
+	<select id="getEntireHierarchy" parameterType="map" resultType="hashmap">
+		<![CDATA[ 
+		SELECT 
+			A.ID AS PKID,
+			A.*, 
+			SYS_CONNECT_BY_PATH(A.ID, '/') AS PTH, 
+			LEVEL
+		FROM ${db_schema}."MD_REFOBJECT" A
+			WHERE A.ISMAJOR <= 1	
+		   	START WITH A.ID = #{hierarchy}
+		   	CONNECT BY PRIOR A.ID = A.PARENT
+		]]>
+	</select>
+
+	<select id="getAplhabeticalByFilter" parameterType="map" resultType="hashmap">
+		SELECT 
+			A.${item_primaryKey} AS PKID,
+			A.${item_metaColumn} as META,
+			A.*
+		FROM ${db_schema}.${itemTable} A
+			WHERE A.${item_primaryKey} IN (
+				SELECT 
+					${group_memberColumn}
+				FROM
+					${db_schema}.${groupTable}
+				WHERE
+					${group_groupColumn} = #{filter}
+			)
+			ORDER BY NAME_E, LONG_NAME_E
+	</select>
+
+	<select id="getFlatHierarchyType" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID, 
+			A.*, 
+			SYS_CONNECT_BY_PATH(A.${item_primaryKey}, '/') AS PTH, 
+			LEVEL
+		FROM 
+			${db_schema}.${itemTable} A, 
+			${db_schema}.${groupTable} B
+		WHERE 
+			A.${item_primaryKey} = B.${group_memberColumn} AND 
+			(B.CD_META=#{meta_filter} OR A.${item_primaryKey}=#{hierarchy})
+			START WITH A.${item_primaryKey}=#{hierarchy}
+			CONNECT BY PRIOR A.${item_primaryKey}=B.${group_groupColumn}
+	</select>
+
+	<select id="getFlatHierarchyTypeExtended" parameterType="map" resultType="hashmap">
+		SELECT 
+			DISTINCT(A.${item_primaryKey}) AS PKID, 
+			A.*, 
+			SYS_CONNECT_BY_PATH(A.${item_primaryKey}, '/') AS PTH, 
+			LEVEL
+		FROM 
+			${db_schema}.${itemTable} A, 
+			${db_schema}.${groupTable} B
+		WHERE 
+			A.${item_primaryKey} = B.${group_memberColumn} AND 
+			(B.CD_META IN 
+			<foreach item="metaList" index="index" collection="metaList"
+				open="(" separator="," close=")">
+		  		#{metaList}
+			</foreach>
+			 OR A.${item_primaryKey}=#{hierarchy})
+			START WITH A.${item_primaryKey}=#{hierarchy}
+			CONNECT BY PRIOR A.${item_primaryKey}=B.${group_groupColumn}
 	</select>
 </mapper>
