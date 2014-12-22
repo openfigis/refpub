@@ -212,6 +212,10 @@ public abstract interface PersistenceServiceInterface {
 			@Param("groupId") int groupId, 
 			@Param("hierarchy") String hierarchy);
 	
+	List<MDGroupingDepth> getGroupDepthById(
+			@Param("db_schema") String db_schema, 
+			@Param("groupId") int groupId);
+	
 	ArrayList<HashMap<String, Object>> getRootHierarchy(
 			@Param("db_schema") String db_schema,
 			@Param("table") String table,  
@@ -350,5 +354,25 @@ public abstract interface PersistenceServiceInterface {
 			@Param("item_metaColumn") String item_metaColumn,
 			@Param("group_memberColumn") String group_memberColumn,
 			@Param("group_groupColumn") String group_groupColumn,
-			@Param("filter") String filter);			
+			@Param("filter") String filter);
+	
+	ArrayList<HashMap<String, Object>> getFlatHierarchyType(
+			@Param("db_schema") String db_schema,
+			@Param("itemTable") String itemTable,
+			@Param("groupTable") String groupTable,
+			@Param("item_primaryKey") String item_primaryKey,
+			@Param("group_memberColumn") String group_memberColumn,
+			@Param("group_groupColumn") String group_groupColumn,
+			@Param("meta_filter") String meta_filter,
+			@Param("hierarchy") String hierarchy);
+	
+	ArrayList<HashMap<String, Object>> getFlatHierarchyTypeExtended(
+			@Param("db_schema") String db_schema,
+			@Param("itemTable") String itemTable,
+			@Param("groupTable") String groupTable,
+			@Param("item_primaryKey") String item_primaryKey,
+			@Param("group_memberColumn") String group_memberColumn,
+			@Param("group_groupColumn") String group_groupColumn,
+			@Param("metaList") List<String> metaList,
+			@Param("hierarchy") String hierarchy);
 }

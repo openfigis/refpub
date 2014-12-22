@@ -506,19 +506,27 @@ public class RefPubImplementation implements RefPubInterface {
 
 	private List<RefPubObject> getSubGroup(String concept, String filter, String group) {
 		
-		if (Utils.ALPHABETICAL_ID.equalsIgnoreCase(group)) {
+		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
+		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
+		
+		if (Utils.ALPHABETICAL_ID.equalsIgnoreCase(group) && 
+			!mdGrouping.getScanning_method().equalsIgnoreCase("FLAT")) {
 			return this.getAlphabeticalGroup(concept, filter, group);
 		}
 		
-		if ("commodities".equals(concept.toLowerCase())) {
+		/*if ("commodities".equals(concept.toLowerCase())) {
 			return this.getSubGroupAlternative(concept, filter, group);
+		}*/
+		MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(dbSchema, concept);
+
+		
+		
+		if (mdGrouping.getScanning_method().equalsIgnoreCase("SYSTEM_HIERARCHICAL")) {
+			return this.getSubGroupSystemHierarchical(concept, filter, group);
+		} else if (mdGrouping.getScanning_method().equalsIgnoreCase("FLAT")) {
+			return this.getSubGroupFlatNoMeta(concept, filter, group);
 		}
 		
-		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
-		
-		MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(dbSchema, concept);
-		
-		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
 		MDGroupingDepth mdGroupingDepth = ps.getGroupDepth(dbSchema, mdGrouping.getId(), group);
 				
 		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
@@ -609,7 +617,7 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 	
-	private List<RefPubObject> getSubGroupAlternative(String concept, String filter, String group) {
+	private List<RefPubObject> getSubGroupSystemHierarchical(String concept, String filter, String group) {
 		
 		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
 		
@@ -617,7 +625,6 @@ public class RefPubImplementation implements RefPubInterface {
 		RefPubObject mainHierarchy = Utils.buildRefPubObject(ps.getHierarchy(dbSchema, group));
 		
 		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
-		MDGroupingDepth mdGroupingDepth = ps.getGroupDepth(dbSchema, mdGrouping.getId(), group);
 				
 		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
 		TableReference groupTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getGroup_table());
@@ -668,6 +675,57 @@ public class RefPubImplementation implements RefPubInterface {
 			}
 		}
 		return Utils.setUpURIOnTree(Utils.setUpCodeListOnTree(fullList, mdCodelist, concept), this.BuildURI(null, null));
+	}
+	
+	private List<RefPubObject> getSubGroupFlatNoMeta (String concept, String filter, String group) {
+		String dbSchema = RefPubImplementation.CONFIGURATION.getDb_schema();
+		
+		MDCodelist mdCodelist = ps.getDefaultCodelistFromConcept(dbSchema, concept);
+		MDGrouping mdGrouping = ps.getGroupByDescription(dbSchema, filter);
+		
+		TableReference itemTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getItem_table());
+		TableReference groupTable = ps.getTableReferenceByName(dbSchema, mdGrouping.getGroup_table());
+		
+		if (!Utils.ALPHABETICAL_ID.equalsIgnoreCase(group)) {
+			MDGroupingDepth depth = ps.getGroupDepth(dbSchema, mdGrouping.getId(), group);
+			
+			List<String> totDepth = new ArrayList<String>();
+			for (String d : depth.getDepth().split(",")) {
+				totDepth.add(d);
+			}
+			
+			List<RefPubObject> hierarchy = Utils.buildRefPubObjectHierarchyList(ps.getFlatHierarchyType(
+														dbSchema, 
+														itemTable.getName(), 
+														groupTable.getName(), 
+														itemTable.getPrimaryKey(), 
+														groupTable.getMemberColumn(), 
+														groupTable.getGroupColumn(), 
+														group, 
+														totDepth.get(0)));
+			return Utils.setUpURIOnTree(Utils.setUpCodeListOnTree(hierarchy, mdCodelist, concept), this.BuildURI(null, null));
+		} else {
+			
+			List<MDGroupingDepth> depth = ps.getGroupDepthById(dbSchema, mdGrouping.getId());
+			List<String> totDepth = new ArrayList<String>();
+			for (String d : depth.get(0).getDepth().split(",")) {
+				totDepth.add(d);
+			}
+			List<String> metaList = new ArrayList<String>();
+			for (MDGroupingDepth d : depth) {
+				metaList.add(d.getHierarchy());
+			}
+			List<RefPubObject> hierarchy = Utils.buildRefPubObjectHierarchyList(ps.getFlatHierarchyTypeExtended(
+					dbSchema, 
+					itemTable.getName(), 
+					groupTable.getName(), 
+					itemTable.getPrimaryKey(), 
+					groupTable.getMemberColumn(), 
+					groupTable.getGroupColumn(), 
+					metaList, 
+					totDepth.get(0)));
+			return Utils.buildAlphabeticalOnTree(Utils.setUpURIOnTree(Utils.setUpCodeListOnTree(hierarchy, mdCodelist, concept), this.BuildURI(null, null)), "name_e", true);
+		}
 	}
 	
 	private List<RefPubObject> getAlphabeticalGroup(String concept, String filter, String group) {

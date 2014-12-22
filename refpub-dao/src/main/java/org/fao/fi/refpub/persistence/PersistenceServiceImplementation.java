@@ -469,6 +469,17 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+	
+	@Override
+	public List<MDGroupingDepth> getGroupDepthById(String db_schema, int groupId) {
+		SqlSession sqlSession = MyBatisSqlSessionFactoryLocalMysql.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getGroupDepthById(db_schema, groupId);
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 	@Override
 	public ArrayList<HashMap<String, Object>> getRootHierarchy(
@@ -689,6 +700,34 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
 			return mapper.countGroupsForConcept(db_schema, concept);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public ArrayList<HashMap<String, Object>> getFlatHierarchyType(
+			String db_schema, String itemTable, String groupTable,
+			String item_primaryKey, String group_memberColumn,
+			String group_groupColumn, String meta_filter, String hierarchy) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getFlatHierarchyType(db_schema, itemTable, groupTable, item_primaryKey, group_memberColumn, group_groupColumn, meta_filter, hierarchy);
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	@Override
+	public ArrayList<HashMap<String, Object>> getFlatHierarchyTypeExtended(
+			String db_schema, String itemTable, String groupTable,
+			String item_primaryKey, String group_memberColumn,
+			String group_groupColumn, List<String> metaList, String hierarchy) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getFlatHierarchyTypeExtended(db_schema, itemTable, groupTable, item_primaryKey, group_memberColumn, group_groupColumn, metaList, hierarchy);
 		} finally {
 			sqlSession.close();
 		}

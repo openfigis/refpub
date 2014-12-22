@@ -19,6 +19,7 @@ public class MDGrouping {
 	private String hierarchy_item_table;
 	private String hierarchy_group_table;
 	private int isFilterGroup;
+	private String scanning_method;
 	
 	public int getId() {
 		return id;
@@ -127,6 +128,12 @@ public class MDGrouping {
 	}
 	public void setIsFilterGroup(int isFilterGroup) {
 		this.isFilterGroup = isFilterGroup;
+	}
+	public String getScanning_method() {
+		return scanning_method;
+	}
+	public void setScanning_method(String scanning_method) {
+		this.scanning_method = scanning_method;
 	}
 
 }

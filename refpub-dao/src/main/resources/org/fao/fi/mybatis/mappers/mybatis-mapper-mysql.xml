@@ -119,6 +119,10 @@
 		SELECT * FROM ${db_schema}.MD_REFPUB_HIERARCHY_DEPTH WHERE GROUP_ID=#{groupId} AND CD_HIERARCHY=#{hierarchy}
 	</select>
 	
+	<select id="getGroupDepthById" resultMap="GroupDepthResult">
+		SELECT * FROM ${db_schema}.MD_REFPUB_HIERARCHY_DEPTH WHERE GROUP_ID=#{groupId}
+	</select>
+	
 	<select id="getCodeList_listByConcept" parameterType="string" resultMap="CodelistResult">
 		SELECT * FROM ${db_schema}.MD_CODELIST WHERE REST_CONCEPT=#{concept}
 	</select>

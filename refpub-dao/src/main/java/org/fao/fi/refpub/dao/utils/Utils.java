@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
@@ -448,6 +452,119 @@ public class Utils {
 		
 		return null;
 	}
+	
+	public static List<RefPubObject> buildAlphabeticalOnTree(List<RefPubObject> tree) {
+		List<RefPubObject> leafs = new ArrayList<RefPubObject>();
+		leafs = Utils.findAllLeafs(tree, leafs);
+		return Utils.sortFlatList(leafs, "id");
+	}
+	
+	public static List<RefPubObject> buildAlphabeticalOnTree(List<RefPubObject> tree, String sortBy) {
+		List<RefPubObject> leafs = new ArrayList<RefPubObject>();
+		leafs = Utils.findAllLeafs(tree, leafs);
+		return Utils.sortFlatList(leafs, sortBy);
+	}
+	
+	public static List<RefPubObject> buildAlphabeticalOnTree(List<RefPubObject> tree, String sortBy, boolean removeDuplicates) {
+		List<RefPubObject> leafs = new ArrayList<RefPubObject>();
+		leafs = Utils.findAllLeafs(tree, leafs);
+		if (removeDuplicates) {
+			leafs = Utils.removeDuplicatesFromFlatList(leafs);
+		}
+		return Utils.sortFlatList(leafs, sortBy);
+	}
+	
+	public static List<RefPubObject> sortFlatList(List<RefPubObject> list, String sortBy) {
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		int counter = 0;
+		for (RefPubObject l : list) {
+			if (sortBy.equalsIgnoreCase("pkid") || sortBy.equalsIgnoreCase("id")) {
+				map.put(counter, l.getPKID());
+			} else if (sortBy.equalsIgnoreCase("name_e")) {
+				map.put(counter, l.getNAME_E());
+			} else if (sortBy.equalsIgnoreCase("name_f")) {
+				map.put(counter, l.getNAME_F());
+			} else if (sortBy.equalsIgnoreCase("name_s")) {
+				map.put(counter, l.getNAME_S());
+			} else if (sortBy.equalsIgnoreCase("name_r")) {
+				map.put(counter, l.getNAME_R());
+			} else if (sortBy.equalsIgnoreCase("name_A")) {
+				map.put(counter, l.getNAME_A());
+			} else if (sortBy.equalsIgnoreCase("name_c")) {
+				map.put(counter, l.getNAME_C());
+			} else if (sortBy.equalsIgnoreCase("long_name_e")) {
+				map.put(counter, l.getLONG_NAME_E());
+			} else if (sortBy.equalsIgnoreCase("long_name_f")) {
+				map.put(counter, l.getLONG_NAME_F());
+			} else if (sortBy.equalsIgnoreCase("long_name_s")) {
+				map.put(counter, l.getLONG_NAME_S());
+			} else if (sortBy.equalsIgnoreCase("long_name_r")) {
+				map.put(counter, l.getLONG_NAME_R());
+			} else if (sortBy.equalsIgnoreCase("long_name_A")) {
+				map.put(counter, l.getLONG_NAME_A());
+			} else if (sortBy.equalsIgnoreCase("long_name_c")) {
+				map.put(counter, l.getLONG_NAME_C());
+			}			
+			counter++;
+		}
+		Map<Integer, String> sortedList = Utils.sortByValue(map);
+		List<RefPubObject> returnList = new ArrayList<RefPubObject>();
+		for (Integer key : sortedList.keySet()) {
+	        returnList.add(list.get(key));
+	    }
+		return returnList;
+	}
+	
+	private static List<RefPubObject> removeDuplicatesFromFlatList(List<RefPubObject> tree) {
+		List<Integer> dupsIdx = new ArrayList<Integer>();
+		for (int i = 0; i < tree.size(); i++) {
+			for (int j = i+1; j < tree.size(); j++) {
+				if (tree.get(i).getPKID().equalsIgnoreCase(tree.get(j).getPKID())) {
+					dupsIdx.add(j);
+				}
+			}
+		}
+		Collections.sort(dupsIdx, new Comparator<Integer>() {
+			   public int compare(Integer a, Integer b) {
+			      return b.compareTo(a);
+			   }
+			});
+		List<RefPubObject> returnObject = new ArrayList<RefPubObject>();
+		
+		int counter=0;
+		for (RefPubObject obj : tree) {
+			boolean toRem = false;
+			for (Integer idx : dupsIdx) {
+				if (idx == counter) {
+					toRem = true;
+				}
+			}
+			if (!toRem) {
+				returnObject.add(obj);
+			}
+			counter++;
+		}
+		
+		return returnObject;
+		
+	}
+	
+	private static Map<Integer, String> sortByValue(Map map) {
+	     List list = new LinkedList(map.entrySet());
+	     Collections.sort(list, new Comparator() {
+	          public int compare(Object o1, Object o2) {
+	               return ((Comparable) ((Map.Entry) (o1)).getValue())
+	              .compareTo(((Map.Entry) (o2)).getValue());
+	          }
+	     });
+
+	    Map result = new LinkedHashMap();
+	    for (Iterator it = list.iterator(); it.hasNext();) {
+	        Map.Entry entry = (Map.Entry)it.next();
+	        result.put(entry.getKey(), entry.getValue());
+	    }
+	    return result;
+	} 
 	
 	private static List<RefPubObject> cleanUpDeadChilds(List<RefPubObject> orig, String meta) {
 		List<Integer> indexToRemove = new ArrayList<Integer>();
