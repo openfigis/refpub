@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.fao.fi.refpub.dao.objects.ClassInitXML;
 import org.fao.fi.refpub.dao.objects.chunks.GenericType;
@@ -25,6 +24,18 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
 			return mapper.getObjects(db_schema, meta, id_column, table, pk_column, min, max);
+		} finally {
+			sqlSession.close();
+		}
+	}
+	
+	@Override
+	public ArrayList<HashMap<String, Object>> getObjectsFlat(String db_schema,
+			String table, String primaryKey, String nameColumn, String min, String max) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getObjectsFlat(db_schema, table, primaryKey, nameColumn, min, max);
 		} finally {
 			sqlSession.close();
 		}
@@ -213,11 +224,11 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 	public ArrayList<HashMap<String, Object>> getRootParentHierarchy(
 			String db_schema, String table, String group_table,
 			String group_column, String meta_column, String id,
-			String group_column_key, String primary_key) {
+			String group_column_key, String columnName, String primary_key) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getRootParentHierarchy(db_schema, table, group_table, group_column, meta_column, id, group_column_key, primary_key);
+			return mapper.getRootParentHierarchy(db_schema, table, group_table, group_column, meta_column, id, group_column_key, columnName, primary_key);
 		} finally {
 			sqlSession.close();
 		}

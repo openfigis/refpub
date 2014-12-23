@@ -28,6 +28,14 @@ public abstract interface PersistenceServiceInterface {
 			@Param("min") String min, 
 			@Param("max") String max);
 	
+	ArrayList<HashMap<String, Object>> getObjectsFlat(
+			@Param("db_schema") String db_schema, 
+			@Param("table") String table, 
+			@Param("primaryKey") String primaryKey,
+			@Param("nameColumn") String nameColumn,
+			@Param("min") String min, 
+			@Param("max") String max);
+	
 	List<MDConcept> getConcepts(
 			@Param("db_schema") String db_schema);
 	
@@ -137,6 +145,7 @@ public abstract interface PersistenceServiceInterface {
 			@Param("meta_column") String meta_column,
 			@Param("id") String id,
 			@Param("group_column_key") String group_column_key,
+			@Param("columnName") String columnName,
 			@Param("primary_key") String primary_key);
 	
 	ArrayList<HashMap<String, Object>> getChildrenHierarchy(

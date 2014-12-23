@@ -72,6 +72,9 @@ public class ConceptTypeDTO {
 		}
 		
 		
+		if (object.getNAME() != null) {
+			c.setName(object.getNAME());
+		}
 		
 		if (object.getNAME_E() != null ||
 			object.getNAME_F() != null ||
@@ -122,6 +125,10 @@ public class ConceptTypeDTO {
 		
 		if (object.getSCIENTIFIC_NAME() != null && !object.getSCIENTIFIC_NAME().trim().equalsIgnoreCase("")) {
 			c.setScientificName(object.getSCIENTIFIC_NAME());
+		}
+		
+		if (object.getVESSELNAME() != null && !object.getVESSELNAME().trim().equalsIgnoreCase("")) {
+			c.setVesselName(object.getVESSELNAME());
 		}
 		
 		try {

@@ -13,6 +13,7 @@ public class StandardFigisDBColumns {
 	        add("META");
 	        add("FILTER");
 	        
+	        add("NAME");
 	        add("NAME_E");
 	        add("NAME_F");
 	        add("NAME_S");
@@ -49,6 +50,8 @@ public class StandardFigisDBColumns {
 	        add("SHORT_DESC_C");
 	        
 	        add("SCIENTIFIC_NAME");
+	        
+	        add("VESSELNAME");
 	    }
 	}; 
 

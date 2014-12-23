@@ -249,7 +249,13 @@
 					<element name="multilingualShortDescription"
 						type="refpub:MultilingualType">
 					</element>
+					<element name="name"
+						type="string">
+					</element>
 					<element name="scientific_name"
+						type="string">
+					</element>
+					<element name="vessel_name"
 						type="string">
 					</element>
 					<element name="codeList"

@@ -92,7 +92,18 @@ public class RefPubImplementation implements RefPubInterface {
 
 	@Override
 	public ConceptList getAllObjectByConcept(String concept, String count, String page) {
-		return ConceptListDTO.createObj(this.getAllObjectsForConcept(concept, count, page));
+		List<RefPubObject> res = this.getAllObjectsForConcept(concept, count, page);
+		boolean isNested = false;
+		for (RefPubObject o : res) {
+			if (o.getChildrens() != null || o.getParents() != null) {
+				isNested = true;
+				break;
+			}
+		}
+		if (!isNested)
+			return ConceptListDTO.createObj(res);
+		else
+			return ConceptListDTO.createNestedObj(res);
 	}
 
 
@@ -220,6 +231,42 @@ public class RefPubImplementation implements RefPubInterface {
 		return concept;
 	}
 	
+	private List<RefPubObject> getAllObjectsForConceptFlat(String concept, String count, String page) {
+		String min = this.calculateQueryPagination("min", count, page);
+		String max = this.calculateQueryPagination("max", count, page);
+		if (count == null) { count = DEFAULT_COUNT; }
+		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
+		
+		RefPubConcept cp = this.getSingleConcept(concept);
+		
+		MDConcept mdconcept = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), concept);
+		TableReference tbl = ps.getTableReferenceByName(RefPubImplementation.CONFIGURATION.getDb_schema(), 
+															  mdconcept.getTable_name());
+		
+		String nameColumn = Utils.guessNameColumn(ps.getTableColumns(RefPubImplementation.CONFIGURATION.getDb_schema(), mdconcept.getTable_name()));
+		
+		List<RefPubObject> returnList = Utils.buildRefPubObjectList(ps.getObjectsFlat(
+						RefPubImplementation.CONFIGURATION.getDb_schema(), 
+						tbl.getName(), 
+						tbl.getPrimaryKey(),
+						nameColumn,
+						min, 
+						max));
+		
+		
+		List<MDCodelist> codelists = ps.getCodelistForConcept(RefPubImplementation.CONFIGURATION.getDb_schema(),
+				  concept);
+		String countall = Utils.getAttributeFromList(returnList.get(0).getATTRIBUTES(), "COUNTALL");
+		for (RefPubObject obj : returnList) {
+			List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(codelists, obj);
+			obj.setConcept(concept);
+			obj.setCodeList(codemap);
+			obj.setCurrentURI(this.BuildURI(count, page));
+			obj.setTotal(Integer.parseInt(countall));
+		}
+		
+		return returnList;
+	}
 	
 	private List<RefPubObject> getAllObjectsForConcept(String concept, String count, String page) {
 		String min = this.calculateQueryPagination("min", count, page);
@@ -227,16 +274,23 @@ public class RefPubImplementation implements RefPubInterface {
 		if (count == null) { count = DEFAULT_COUNT; }
 		if (page == null) { page = Integer.toString(Integer.parseInt(min+1)); }
 		
-		RefPubConcept cp = this.getSingleConcept(concept); 
+		RefPubConcept cp = this.getSingleConcept(concept);
+		if (cp.getTable_grp_name() == null || cp.getTable_grp_name().equalsIgnoreCase("")) {
+			return this.getAllObjectsForConceptFlat(concept, count, page);
+		}
 		
 		MDConcept mdconcept = ps.getConcept(RefPubImplementation.CONFIGURATION.getDb_schema(), concept);
 		TableReference tbl = ps.getTableReferenceByName(RefPubImplementation.CONFIGURATION.getDb_schema(), 
 															  mdconcept.getTable_name());
 		
 		List<String> meta = new ArrayList<String>();
-		String[] split = cp.getMeta().split(",");
-		for (int i = 0; i < split.length; i++) {
-			meta.add(split[i]);
+		if (cp.getMeta() != null) {
+			String[] split = cp.getMeta().split(",");
+			for (int i = 0; i < split.length; i++) {
+				meta.add(split[i]);
+			}
+		} else {
+			meta.add("");
 		}
 		
 		ArrayList<HashMap<String, Object>> objs = ps.getObjects(RefPubImplementation.CONFIGURATION.getDb_schema(),
@@ -888,6 +942,7 @@ public class RefPubImplementation implements RefPubInterface {
 					parents.get(x).setCodeList(Utils.retrieveCodeListForObject(codelist, parents.get(x)));
 				}
 			} else {
+				String columnName = Utils.guessNameColumn(ps.getTableColumns(RefPubImplementation.CONFIGURATION.getDb_schema(), mdconcept.getTable_name()));
 				parents = Utils.buildRefPubObjectList(ps.getRootParentHierarchy(  RefPubImplementation.CONFIGURATION.getDb_schema(),
 						 mdconcept.getTable_name(),
 						 mdconcept.getTable_group(), 
@@ -895,6 +950,7 @@ public class RefPubImplementation implements RefPubInterface {
 						 mdconcept.getMeta_column(),
 						 refPubObject.getPKID(),
 						 mdconcept.getTable_group_column(),
+						 columnName,
 						 tbl.getPrimaryKey()));
 				for (int x = 0; x < parents.size(); x++) {
 					parents.get(x).setCurrentURI(this.BuildURI("1", "1"));

@@ -112,6 +112,16 @@
 				 </foreach>) 
 		WHERE RNK BETWEEN #{min} AND #{max}
 	</select>
+
+	<select id="getObjectsFlat" parameterType="map" resultType="hashmap">
+		SELECT * FROM (
+				SELECT A.*, A.${primaryKey} AS PKID, A.${nameColumn} AS NAME,
+				ROW_NUMBER() OVER (ORDER BY ${primaryKey}) RNK,
+				(SELECT COUNT(*) FROM ${db_schema}.${table}) COUNTALL
+				FROM ${db_schema}.${table} A
+			) 
+		WHERE RNK BETWEEN #{min} AND #{max}
+	</select>
 	
 	<select id="getObjectsByCodeList" parameterType="map" resultType="hashmap">
 		<![CDATA[ 
@@ -160,7 +170,7 @@
 
 	<select id="getRootParentHierarchy" parameterType="map" resultType="hashmap">
 		SELECT
-			A.*, A.${primary_key} AS PKID, A.${primary_key} AS TBL_PK, A.NAME_E AS MKP_GROUP_NAME 
+			A.*, A.${primary_key} AS PKID, A.${primary_key} AS TBL_PK, A.${columnName} AS MKP_GROUP_NAME 
 		FROM 
 			${db_schema}.${table} A 
 		WHERE 
@@ -232,9 +242,6 @@
 	<select id="isObjectBelongingToGroup" parameterType="map" resultType="int">
 		SELECT COUNT(*) AS C FROM ${db_schema}.${table} WHERE ${grp_column}=#{group} AND ${memb_column}=#{item_id}
 	</select>
-
-
-
 
 
 	<!-- GROUPING STUFF -->

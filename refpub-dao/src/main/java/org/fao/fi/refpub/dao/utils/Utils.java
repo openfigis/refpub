@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fao.fi.refpub.dao.objects.CodeListDAO;
 import org.fao.fi.refpub.dao.objects.RefPubObject;
 import org.fao.fi.refpub.dao.objects.URI;
+import org.fao.fi.refpub.dao.objects.chunks.GenericType;
 import org.fao.fi.refpub.dao.objects.chunks.MDCodelist;
 
 public class Utils {
@@ -668,6 +669,35 @@ public class Utils {
 	
 	public static void debug_PrintTree(List<RefPubObject> tree) {
 		Utils.debug_PrintTree(tree, 1);
+	}
+	
+	public static String guessNameColumn(List<GenericType> list) {
+			boolean found = false;
+			
+			int counter = 1;
+			outerloop:
+			while (!found) {
+				String name2check = "";
+				if (counter == 1) {
+					name2check = "NAME_E";
+				} else if (counter == 2) {
+					name2check = "LONG_NAME_E";
+				} else if (counter == 3) {
+					name2check = "FULL_NAME_E";
+				} else if (counter == 4) {
+					name2check = "SHORTNAME";
+				} else {
+					found = true;
+					break outerloop;
+				}
+				for (GenericType gt : list) {
+					if (name2check.equalsIgnoreCase(gt.getValue())) {
+						return name2check;
+					}
+				}
+				counter++;
+			}
+			return null;
 	}
 	
 	private static void debug_PrintTree(List<RefPubObject> tree, int depth) {
