@@ -295,35 +295,6 @@ public class CoreWs {
 		}
 	}
 	
-
-	/*@Path("concept/{concept}/group/{group}/{subgroup}/{subgroup_id}/{type: .*}")
-	@GET
-	@ApiOperation(value="Get a single group by concept in JSON/XML format with all parents and childrens")
-	@ApiResponses(value = {
-	@ApiResponse(code = 200, message = "Successful retrieval of the record for a concepts, codesystem and code", response = ConceptList.class)}
-	)
-	public Response subSubgroup(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
-							 @PathParam("concept") String concept, 
-							 @ApiParam(name = "group", value = "Alphanumeric value of the group", required = true)
-							 @PathParam("group") String group, 
-							 @ApiParam(name = "subgroup", value = "Alphanumeric value of the subgroup", required = true)
-							 @PathParam("subgroup") String subgroup,
-							 @ApiParam(name = "subgroup_id", value = "Alphanumeric value of the group id", required = true)
-							 @PathParam("subgroup_id") String subgroup_id,
-							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
-							 @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.subSubgroupRun(concept, group, subgroup, subgroup_id, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.subSubgroupRun(concept, group, subgroup, subgroup_id, this.getMediaType("xml"));
-		} else {
-			return this.subSubgroupRun(concept, group, subgroup, subgroup_id, null);
-		}
-	}*/
-	
-	
-	
 	/* Private Methods*/
 	private String getPageParam(String param) {
 		String value = uriInfo.getQueryParameters().getFirst(param);
@@ -363,7 +334,7 @@ public class CoreWs {
 		setBean();
 		String count = this.getPageParam("count");
 		String page = this.getPageParam("page");
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAllConcept(count, page);
 			}
@@ -376,7 +347,7 @@ public class CoreWs {
 		setBean();
 		String count = this.getPageParam("count");
 		String page = this.getPageParam("page");
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAllCodeSystem(count, page);
 			}
@@ -390,7 +361,7 @@ public class CoreWs {
 		setBean();
 		String count = this.getPageParam("count");
 		String page = this.getPageParam("page");
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAllAttributesForConcept(conceptCode);
 			}
@@ -404,7 +375,7 @@ public class CoreWs {
 		setBean();
 		String count = this.getPageParam("count");
 		String page = this.getPageParam("page");
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAllObjectByConcept(conceptCode, count, page);
 			}
@@ -415,7 +386,7 @@ public class CoreWs {
 	}
 	private Response codesystemsRun(String conceptCode, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAllCodeSystemByConcept(conceptCode);
 			}
@@ -428,7 +399,7 @@ public class CoreWs {
 		setBean();
 		String count = this.getPageParam("count");
 		String page = this.getPageParam("page");
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getObjectByCodeSystem(conceptCode, codesystem, count, page);
 			}
@@ -439,7 +410,7 @@ public class CoreWs {
 	}
 	private Response codeRun(String conceptCode, String codesystem, String code, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getObject(conceptCode, codesystem, code);
 			}
@@ -450,7 +421,7 @@ public class CoreWs {
 	}
 	private Response codeAttrRun(String conceptCode, String codesystem, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAllAttributesForConceptAndCodesystem(conceptCode, codesystem);
 			}
@@ -461,7 +432,7 @@ public class CoreWs {
 	}
 	private Response attrCodeRun(String conceptCode, String codesystem, String code, String attribute, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getAttributeForObject(conceptCode, codesystem, code, attribute);
 			}
@@ -472,7 +443,7 @@ public class CoreWs {
 	}
 	private Response getGroupRun(String conceptCode, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getGroups(conceptCode);
 			}
@@ -483,7 +454,7 @@ public class CoreWs {
 	}
 	private Response groupMainRun(String conceptCode, String filter, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getGroupMain(conceptCode, filter);
 			}
@@ -494,7 +465,7 @@ public class CoreWs {
 	}
 	private Response getGroupRun(String conceptCode, String filter, String group, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getGroup(conceptCode, filter, group);
 			}
@@ -505,7 +476,7 @@ public class CoreWs {
 	}	
 	private Response subSubgroupRun(String conceptCode, String filter, String group, String subgroup, String mediatype) {
 		setBean();
-		return new Execute(uriInfo, mediatype){
+		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
 				return bean.getSubGroups(conceptCode, filter, group, subgroup);
 			}

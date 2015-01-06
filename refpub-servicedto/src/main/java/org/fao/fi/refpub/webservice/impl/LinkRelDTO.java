@@ -49,8 +49,15 @@ public class LinkRelDTO {
 			return relObj;
 		}
 		
+		String port;
+		if (uri.getPort() == null) {
+			port = "";
+		} else {
+			port = ":" + uri.getPort();
+		}
+		
 		String URL = getLinkMethod(uri.getFullURI()) +
-				uri.getHost() + ":" + uri.getPort() +
+				uri.getHost() + port +
 					 uri.getPath();
 		
 		URL += getPathFromChunks(urlChunks);
@@ -105,7 +112,7 @@ public class LinkRelDTO {
 		uri.setHost("localhost");
 		uri.setPage(1);
 		uri.setPath("/");
-		uri.setPort("80");
+		uri.setPort(null);
 		return uri;
 	}
 

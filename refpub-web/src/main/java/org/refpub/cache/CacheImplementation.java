@@ -1,18 +1,64 @@
 package org.refpub.cache;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 
 public class CacheImplementation implements CacheInterface{
 	private DB db;
-	private HTreeMap<String, String> map;
+	private HTreeMap<String, List<String>> map;
+	private String defaultPath = "/tmp";
+	private String path;
 	
+	final static Logger logger = Logger.getLogger(CacheImplementation.class);
+	
+	private int DEFAULT_EXPIRY_SECONDS = 120;
+	private int EXPIRY_SECONDS;
+	
+	public CacheImplementation(String pathToSaveCache, String expiry) {
+		if (expiry == null) {
+			EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
+		} else {
+			try {
+				EXPIRY_SECONDS = Integer.parseInt(expiry);
+			} catch (Exception ex) {
+				logger.debug("Error Setting up Expiry seconds. Configuration entry seems not an Integer value");
+				EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
+			}
+		}
+		if (path == null) {
+			path = defaultPath;
+		} else {
+			path = pathToSaveCache;
+		}
+		init();
+	}
+	public CacheImplementation(String pathToSaveCache) {
+		EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
+		if (path == null) {
+			path = defaultPath;
+		} else {
+			path = pathToSaveCache;
+		}
+		init();
+	}
 	public CacheImplementation() {
-		db = DBMaker.newFileDB(new File("/tmp/refpubCache"))
+		EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
+		path = defaultPath;
+		init();
+	}
+	public void init() {
+		logger.debug("Init the cache mechanism. Expiry period set to " + Integer.toString(EXPIRY_SECONDS) + " seconds");
+		if (!path.endsWith("/")) {
+			path += "/";
+		}
+		db = DBMaker.newFileDB(new File(path + "refpubCache"))
 	               .closeOnJvmShutdown()
 	               .encryptionEnable("password")
 	               .make();
@@ -20,7 +66,6 @@ public class CacheImplementation implements CacheInterface{
 		if (!db.exists("refPubCollection")) {
 		    map = db.createHashMap("refPubCollection")
 	                .expireMaxSize(1000000)
-	                .expireAfterWrite(30, TimeUnit.SECONDS)
 	                .make();
 		} else {
 			map = db.getHashMap("refPubCollection");
@@ -30,7 +75,17 @@ public class CacheImplementation implements CacheInterface{
 	@Override
 	public boolean isCached(String val) {
 		if (map.containsKey(val)) {
-			return true;
+			List<String> ccached = map.get(val);
+			long tsehc = Long.parseLong(ccached.get(1));
+			long currentTs = Long.parseLong(this.getCurrentTimestamp());
+			if ( (currentTs - tsehc) < this.EXPIRY_SECONDS) {
+				logger.debug("The cache for val: " + val + " is still valid");
+				return true;
+			} else {
+				logger.debug("The cache for val: " + val + " is expired");
+				this.purgeElementFromCache(val);
+				return false;
+			}
 		}
 		return false;
 	}
@@ -38,13 +93,24 @@ public class CacheImplementation implements CacheInterface{
 	@Override
 	public String getCachedValue(String val) {
 		if (this.isCached(val))
-			return map.get(val);
+			try {
+				logger.info("Returning cached resource");
+				if (db.isClosed()) { init(); }
+				return map.get(val).get(0);
+			} catch (Exception ex) {
+				logger.info("Error returning cached resource. Returning null");
+				return null;
+			}
 		return null;
 	}
 
 	@Override
 	public void writeCache(String val, String store) {
-		map.put(val, store);
+		List<String> ehc = new ArrayList<String>();
+		ehc.add(store);
+		ehc.add(this.getCurrentTimestamp());
+		if (db.isClosed()) { init(); }
+		map.put(val, ehc);
 		this.commit();
 	}
 
@@ -56,7 +122,8 @@ public class CacheImplementation implements CacheInterface{
 
 	@Override
 	public void purgeElementFromCache(String val) {
-		if (this.isCached(val)) {
+		if (map.containsKey(val)) {
+			if (db.isClosed()) { init(); }
 			map.remove(val);
 			this.commit();
 		}
@@ -70,6 +137,11 @@ public class CacheImplementation implements CacheInterface{
 	
 	private void close() {
 		db.close();
+	}
+	
+	private String getCurrentTimestamp() {
+		long unixTimestamp = Instant.now().getEpochSecond();
+		return Long.toString(unixTimestamp);
 	}
 
 }

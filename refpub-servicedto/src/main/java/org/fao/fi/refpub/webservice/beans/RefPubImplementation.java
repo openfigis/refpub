@@ -57,8 +57,8 @@ public class RefPubImplementation implements RefPubInterface {
 	private static PersistenceServiceInterface ps = null;
 	
 	public RefPubImplementation() {
-		ps = new PersistenceServiceImplementation();
 		loadConfiguration();
+		ps = new PersistenceServiceImplementation(CONFIGURATION.getMybatis_configuration_file());
 	}
 	
 	@Override
@@ -1101,7 +1101,12 @@ public class RefPubImplementation implements RefPubInterface {
 		uri.setFullURI(URI.getRequestUri().toString());
 		uri.setHost(URI.getRequestUri().getHost());
 		uri.setPath(URI.getBaseUri().getPath());
-		uri.setPort(Integer.toString(URI.getRequestUri().getPort()));
+		if (URI.getRequestUri().getPort() == -1) {
+			uri.setPort(null);
+		}
+		else {
+			uri.setPort(Integer.toString(URI.getRequestUri().getPort()));
+		}
 		if (count != null && page != null) {
 			if ("all".equalsIgnoreCase(count)) {
 				uri.setAll(true);

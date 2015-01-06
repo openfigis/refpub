@@ -14,6 +14,8 @@ import javax.inject.Named;
 @Named("refpub-config")
 public class Configuration {
 	private String db_schema = "FIGIS";
+	private String cache_expiry;
+	private String mybatis_configuration_file;
 	
 	private Properties properties;
 	public Configuration() {}
@@ -31,6 +33,12 @@ public class Configuration {
 				String key = (String) enuKeys.nextElement();
 				if (key.toLowerCase().equals("db-schema")) { 
 					this.setDb_schema(properties.getProperty(key));
+				}
+				if (key.toLowerCase().equals("cache-expiry-seconds")) { 
+					this.setCache_expiry(properties.getProperty(key));
+				}
+				if (key.toLowerCase().equals("mybatis-config-file")) { 
+					this.setMybatis_configuration_file(properties.getProperty(key));
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -52,5 +60,21 @@ public class Configuration {
 
 	private void setProperties(Properties properties) {
 		this.properties = properties;
+	}
+
+	public String getCache_expiry() {
+		return cache_expiry;
+	}
+
+	private void setCache_expiry(String cache_expiry) {
+		this.cache_expiry = cache_expiry;
+	}
+
+	public String getMybatis_configuration_file() {
+		return mybatis_configuration_file;
+	}
+
+	private void setMybatis_configuration_file(String mybatis_configuration_file) {
+		this.mybatis_configuration_file = mybatis_configuration_file;
 	}
 }

@@ -1,8 +1,11 @@
 package org.refpub.webservice.core;
 
+import java.io.File;
 import java.io.StringWriter;
 import java.util.Iterator;
 
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
@@ -16,6 +19,7 @@ import org.eclipse.persistence.jaxb.MarshallerProperties;
 import org.fao.fi.refpub.webservice.AttributeList;
 import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
+import org.fao.fi.refpub.webservice.beans.Configuration;
 import org.refpub.cache.CacheImplementation;
 import org.refpub.cache.CacheInterface;
 
@@ -23,16 +27,28 @@ import org.refpub.cache.CacheInterface;
 
 public class Execute {
 	
+	private Configuration configuration;
+	
 	private UriInfo uri;
+	private ServletContext context;
 	private String mediatype = MediaType.APPLICATION_JSON;
 	private String ERROR = "Error Executing Request.";
 	
 	public Execute() {};
 	public Execute(UriInfo uri) {
 		this.uri = uri;
+		this.context = null;
 	};
 	public Execute(UriInfo uri, String mediatype) {
 		this.uri = uri;
+		this.context = null;
+		if (mediatype != null) {
+			this.mediatype = mediatype;
+		}
+	};
+	public Execute(UriInfo uri, String mediatype, ServletContext context) {
+		this.uri = uri;
+		this.context = context;
 		if (mediatype != null) {
 			this.mediatype = mediatype;
 		}
@@ -47,12 +63,19 @@ public class Execute {
 	}
 	
 	public Response execute() {
-		CacheInterface cache = new CacheImplementation();
+		String cachePath;
+		if (this.context != null) {
+			File fpath = (File) this.context.getAttribute("javax.servlet.context.tempdir");
+			cachePath= fpath.getAbsolutePath();
+		} else {
+			cachePath = null;
+		}
+		configuration = new Configuration(this.getConfigurationFile());
+		CacheInterface cache = new CacheImplementation(cachePath, configuration.getCache_expiry());
 		String key = this.buildFullUri();
 		if (uri != null) {	
 			String cachedResponse = cache.getCachedValue(key);
 			if (cachedResponse != null) {
-				System.out.println("Reading From Cache....");
 				return Response.ok(cachedResponse)
 						.header(HttpHeaders.CONTENT_TYPE, mediatype)
 						.build();
@@ -144,6 +167,14 @@ public class Execute {
 	        m.marshal((AttributeList) obj, w);
 		}
 		return w.toString();
+	}
+	
+	private String getConfigurationFile() {
+		String appConfigPath = context.getInitParameter("refpub-confFile");
+		if (appConfigPath == null) {
+			appConfigPath = "/work/FIGIS/refpub_data/conf/refpub.properties";
+		}
+		return appConfigPath;
 	}
 
 }
