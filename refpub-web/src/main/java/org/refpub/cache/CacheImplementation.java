@@ -111,8 +111,13 @@ public class CacheImplementation implements CacheInterface{
 		ehc.add(store);
 		ehc.add(this.getCurrentTimestamp());
 		if (db.isClosed()) { init(); }
-		map.put(val, ehc);
-		this.commit();
+		try {
+			map.put(val, ehc);
+			this.commit();
+		} catch (Exception ex) {
+			logger.debug(ex.getMessage());
+			logger.error("Error writing cache. It might be worth flushing the cache on " + path);
+		}
 	}
 
 	@Override
