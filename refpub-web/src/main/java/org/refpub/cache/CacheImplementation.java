@@ -32,7 +32,7 @@ public class CacheImplementation implements CacheInterface{
 				EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
 			}
 		}
-		if (path == null) {
+		if (pathToSaveCache == null || pathToSaveCache.equalsIgnoreCase("")) {
 			path = defaultPath;
 		} else {
 			path = pathToSaveCache;
@@ -41,7 +41,7 @@ public class CacheImplementation implements CacheInterface{
 	}
 	public CacheImplementation(String pathToSaveCache) {
 		EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
-		if (path == null) {
+		if (pathToSaveCache == null || pathToSaveCache.equalsIgnoreCase("")) {
 			path = defaultPath;
 		} else {
 			path = pathToSaveCache;
@@ -55,6 +55,7 @@ public class CacheImplementation implements CacheInterface{
 	}
 	public void init() {
 		logger.debug("Init the cache mechanism. Expiry period set to " + Integer.toString(EXPIRY_SECONDS) + " seconds");
+		logger.debug("... Path where the cache is stored is: " + path);
 		if (!path.endsWith("/")) {
 			path += "/";
 		}

@@ -38,7 +38,7 @@ public class RefPubDAOTest extends TestCase{
      */
     public static Test suite()
     {
-    	ps = new PersistenceServiceImplementation();
+    	ps = new PersistenceServiceImplementation("/work/FIGIS/refpub_data/conf/mybatis/mybatis-config.xml");
         return new TestSuite( RefPubDAOTest.class );
     }
 

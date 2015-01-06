@@ -60,6 +60,11 @@ public class RefPubImplementation implements RefPubInterface {
 		loadConfiguration();
 		ps = new PersistenceServiceImplementation(CONFIGURATION.getMybatis_configuration_file());
 	}
+	public RefPubImplementation(String configFile) {
+		this.CONFIG_FILE = configFile;
+		loadConfiguration();
+		ps = new PersistenceServiceImplementation(CONFIGURATION.getMybatis_configuration_file());
+	}
 	
 	@Override
 	public void setUrl(UriInfo uri) {
