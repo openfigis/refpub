@@ -49,10 +49,9 @@ public class Execute {
 	public Execute(UriInfo uri, String mediatype, ServletContext context) {
 		this.uri = uri;
 		this.context = context;
-		this.mediatype = mediatype;
-		/*if (mediatype != null) {
+		if (mediatype != null) {
 			this.mediatype = mediatype;
-		}*/
+		}
 	};
 	
 	public Object run() {
