@@ -75,8 +75,8 @@ public class LinkRelDTO {
 			return "json";
 		} else if (pathWithoutParameters.toLowerCase().endsWith("xml")) {
 			return "xml";
-		} else {
-			return "json";
+		} else { 
+			return "";
 		}
 	}
 	

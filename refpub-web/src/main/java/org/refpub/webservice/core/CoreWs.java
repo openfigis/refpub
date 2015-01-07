@@ -8,6 +8,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -33,6 +34,7 @@ public class CoreWs {
 	@Inject RefPubInterface bean;
 	@Context private UriInfo uriInfo;
 	@Context ServletContext context;
+	@Context HttpHeaders httpHeaders;
 	
 	
 	@Path("concept/{type: .*}")
@@ -43,14 +45,7 @@ public class CoreWs {
 	)
 	public Response concepts( @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 			 				  @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.ConceptsRun(this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.ConceptsRun(this.getMediaType("xml"));
-		} else {
-			return this.ConceptsRun(null);
-		}
+		return this.ConceptsRun(this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("codesystem/{type: .*}")
@@ -61,34 +56,20 @@ public class CoreWs {
 	)
 	public Response code(@ApiParam(name = "type", value = "Output type {json/xml}", required = true) 
 	 					 @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.CodeRun(this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.CodeRun(this.getMediaType("xml"));
-		} else {
-			return this.CodeRun(null);
-		}
+		return this.CodeRun(this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/{type: .*}")
 	@GET
 	@ApiOperation(value="Get all records for concept in JSON/XML format")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 200, message = "Successful retrieval of records for a concepts", response = ConceptList.class)}
+	@ApiResponse(code = 200, message = "Successful retrieval of records for a concepts", response = ConceptList.class)}
 	)
 	public Response conceptList(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true)
 								@PathParam("concept") String conceptCode, 
 								@ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							    @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.conceptListRun(conceptCode, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.conceptListRun(conceptCode, this.getMediaType("xml"));
-		} else {
-			return this.conceptListRun(conceptCode, null);
-		}
+		return this.conceptListRun(conceptCode, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/attribute/{type: .*}")
@@ -101,14 +82,7 @@ public class CoreWs {
 								@PathParam("concept") String conceptCode, 
 								@ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							    @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.attributeListRun(conceptCode, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.attributeListRun(conceptCode, this.getMediaType("xml"));
-		} else {
-			return this.attributeListRun(conceptCode, null);
-		}
+		return this.attributeListRun(conceptCode, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/codesystem/{type: .*}")
@@ -122,14 +96,7 @@ public class CoreWs {
 								@PathParam("concept") String concept, 
 								@ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							    @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.codesystemsRun(concept, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.codesystemsRun(concept, this.getMediaType("xml"));
-		} else {
-			return this.codesystemsRun(concept, null);
-		}
+		return this.codesystemsRun(concept, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/{type: .*}")
@@ -144,14 +111,7 @@ public class CoreWs {
 								   @PathParam("codesystem") String codesystem, 
 								   @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 								   @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.codesystemRun(concept, codesystem, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.codesystemRun(concept, codesystem, this.getMediaType("xml"));
-		} else {
-			return this.codesystemRun(concept, codesystem, null);
-		}
+		return this.codesystemRun(concept, codesystem, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/codesystem/{codesystem}/code/{code}/{type: .*}")
@@ -169,14 +129,7 @@ public class CoreWs {
 							 @PathParam("code") String code, 
 							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							 @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.codeRun(concept, codesystem, code, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.codeRun(concept, codesystem, code, this.getMediaType("xml"));
-		} else {
-			return this.codeRun(concept, codesystem, code, null);
-		}
+		return this.codeRun(concept, codesystem, code, this.getMediaType(httpHeaders, type));
 	}
 	
 	/*
@@ -221,14 +174,7 @@ public class CoreWs {
 							@PathParam("attribute") String attribute, 
 							@ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							@PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.attrCodeRun(concept, codesystem, code, attribute, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.attrCodeRun(concept, codesystem, code, attribute,  this.getMediaType("xml"));
-		} else {
-			return this.attrCodeRun(concept, codesystem, code, attribute,  null);
-		}
+		return this.attrCodeRun(concept, codesystem, code, attribute, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/group/{type: .*}")
@@ -239,14 +185,7 @@ public class CoreWs {
 	)
 	public Response getGroup(@ApiParam(name = "concept", value = "Alphanumeric value of the concept", required = true) @PathParam("concept") String concept, 
 			@ApiParam(name = "type", value = "Alphanumeric value of the concept", required = true) @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.getGroupRun(concept, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.getGroupRun(concept, this.getMediaType("xml"));
-		} else {
-			return this.getGroupRun(concept, null);
-		}
+		return this.getGroupRun(concept, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/group/{group}/{type: .*}")
@@ -261,14 +200,7 @@ public class CoreWs {
 							 @PathParam("group") String group, 
 							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							 @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.groupMainRun(concept, group, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.groupMainRun(concept, group, this.getMediaType("xml"));
-		} else {
-			return this.groupMainRun(concept, group, null);
-		}
+		return this.groupMainRun(concept, group, this.getMediaType(httpHeaders, type));
 	}
 	
 	@Path("concept/{concept}/group/{group}/{subgroup}/{type: .*}")
@@ -285,17 +217,19 @@ public class CoreWs {
 							 @PathParam("subgroup") String subgroup, 
 							 @ApiParam(name = "type", value = "Output type {json/xml}", required = true)
 							 @PathParam("type") String type) {
-		
-		if ("json".equalsIgnoreCase(type)) {
-			return this.getGroupRun(concept, group, subgroup, this.getMediaType("json"));
-		} else if ("xml".equalsIgnoreCase(type)) {
-			return this.getGroupRun(concept, group, subgroup, this.getMediaType("xml"));
-		} else {
-			return this.getGroupRun(concept, group, subgroup, null);
-		}
+		return this.getGroupRun(concept, group, subgroup, this.getMediaType(httpHeaders, type));
 	}
 	
-	/* Private Methods*/
+	
+	
+	
+	
+	
+	/* 
+	 * 
+	 * Private Methods
+	 * 
+	*/
 	private String getPageParam(String param) {
 		String value = uriInfo.getQueryParameters().getFirst(param);
 		if (value == null || ("").equals(value.trim())) {
@@ -315,18 +249,30 @@ public class CoreWs {
 		bean.setPropertiesFile(appConfigPath);
 	}
 	
-	private String getMediaType(String out) {
-		if ("xml".equalsIgnoreCase(out)) {
-			return MediaType.APPLICATION_XML;
-		} else if ("json".equalsIgnoreCase(out)) {
-			if (this.getPageParam("jcb") != null) {
-				return "application/x-javascript";
-			} else {
-				return MediaType.APPLICATION_JSON;
+	private String getMediaType(HttpHeaders httpHeaders, String type) {
+		if (type != null && !type.trim().equalsIgnoreCase("")) {
+			if ("xml".equalsIgnoreCase(type)) {
+				return MediaType.APPLICATION_XML;
+			} else if ("json".equalsIgnoreCase(type)) {
+				if (this.getPageParam("jcb") != null) {
+					return "application/x-javascript";
+				} else {
+					return MediaType.APPLICATION_JSON;
+				}
 			}
-		} else {
-			return MediaType.APPLICATION_JSON;
 		}
+		for (MediaType mt : httpHeaders.getAcceptableMediaTypes()) {
+			if (mt.equals(MediaType.APPLICATION_JSON_TYPE)) {
+				if (this.getPageParam("jcb") != null) {
+					return "application/x-javascript";
+				} else {
+					return MediaType.APPLICATION_JSON;
+				}
+			} else if (mt.equals(MediaType.APPLICATION_XML_TYPE)) { //note that this is application/xml and not text/xml
+				return MediaType.APPLICATION_XML;
+			}
+		}
+		return MediaType.APPLICATION_JSON;
 	}
 	
 	/*Runners*/
@@ -419,7 +365,7 @@ public class CoreWs {
 			}
 		}.execute();
 	}
-	private Response codeAttrRun(String conceptCode, String codesystem, String mediatype) {
+	/*private Response codeAttrRun(String conceptCode, String codesystem, String mediatype) {
 		setBean();
 		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
@@ -429,7 +375,7 @@ public class CoreWs {
 				return bean.error(err);
 			}
 		}.execute();
-	}
+	}*/
 	private Response attrCodeRun(String conceptCode, String codesystem, String code, String attribute, String mediatype) {
 		setBean();
 		return new Execute(uriInfo, mediatype, context){
@@ -474,7 +420,7 @@ public class CoreWs {
 			}
 		}.execute();
 	}	
-	private Response subSubgroupRun(String conceptCode, String filter, String group, String subgroup, String mediatype) {
+	/*private Response subSubgroupRun(String conceptCode, String filter, String group, String subgroup, String mediatype) {
 		setBean();
 		return new Execute(uriInfo, mediatype, context){
 			public Object run() {
@@ -484,5 +430,5 @@ public class CoreWs {
 				return bean.error(err);
 			}
 		}.execute();
-	}
+	}*/
 }
