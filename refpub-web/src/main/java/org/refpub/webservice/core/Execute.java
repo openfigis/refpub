@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.Iterator;
 
-import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
