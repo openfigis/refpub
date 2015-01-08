@@ -10,7 +10,6 @@ import org.fao.fi.refpub.webservice.Children;
 import org.fao.fi.refpub.webservice.HierarchyList;
 import org.fao.fi.refpub.webservice.Parent;
 import org.fao.fi.refpub.webservice.Parents;
-import org.fao.fi.refpub.webservice.ValueAttrName;
 import org.fao.fi.refpub.webservice.objects.ResourceKeyValue;
 
 public class HierarchyListTypeDTO {

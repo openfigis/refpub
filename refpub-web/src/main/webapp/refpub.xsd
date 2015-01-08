@@ -114,10 +114,30 @@
 		</simpleContent>
 	</complexType>
 
-	<complexType name="MultilingualType">
+	<complexType name="MultilingualTypeLegacy">
 		<sequence>
 			<element name="value" type="refpub:TextLang" maxOccurs="unbounded"
 				minOccurs="1" nillable="true" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="MultilingualType">
+		<sequence>
+
+			<element name="EN" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="FR" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="ES" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="AR" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="ZH" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="RU" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<!-- <any minOccurs="0" maxOccurs="1"></any> -->
+			<element ref="refpub:attributeList"></element>
 		</sequence>
 	</complexType>
 	
@@ -168,10 +188,26 @@
 			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
+			<element name="multilingualName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualFullName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualLongName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualOfficialName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualShortDescription"
+				type="refpub:MultilingualType">
+			</element>
 			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
 		</sequence>
+		<attribute name="type" type="string" />
 	</complexType>
 	
 	<complexType name="Parents">
@@ -191,7 +227,7 @@
 	</complexType>
 	
 	<complexType name="Child">
-		<sequence>
+		<!-- <sequence>
 			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
@@ -201,7 +237,34 @@
 			<element name="concept" type="refpub:ConceptType" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
+		</sequence> -->
+		<sequence>
+			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="multilingualName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualFullName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualLongName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualOfficialName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualShortDescription"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="concept" type="refpub:ConceptType" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
 		</sequence>
+		<attribute name="type" type="string" />
 	</complexType>
 	
 	<complexType name="HierarchyList">
