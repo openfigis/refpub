@@ -51,7 +51,7 @@ public class CodeSystemMock {
 
 	public static CodeSystem create() {
 		//cl.setCodelist(CODE);
-		cl.setMultilingualName(MultilingualTypeMock.create());
+		//cl.setMultilingualName(MultilingualTypeMock.create());
 		//cl.setResourceUrl(ResourceUrlMock.create("concept/species/codesystem") + CODE);
 		return cl;
 	}

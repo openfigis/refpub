@@ -9,7 +9,7 @@ public class ConceptTypeMock {
 	public static Concept create() {
 		Concept c = new Concept();
 		//c.setCodelist(CODE);
-		c.setMultilingualName(MultilingualTypeMock.create());
+		//c.setMultilingualName(MultilingualTypeMock.create());
 		//c.setResourceUrl(ResourceUrlMock.create("concept") + CODE);
 		return c;
 	}

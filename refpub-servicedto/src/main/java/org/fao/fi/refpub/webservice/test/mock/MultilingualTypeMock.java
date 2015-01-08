@@ -17,8 +17,8 @@ public class MultilingualTypeMock {
 		fr.setLang("fr");
 		fr.setValue("En langue francaise");
 
-		n.getValues().add(en);
-		n.getValues().add(fr);
+		/*n.getValues().add(en);
+		n.getValues().add(fr);*/
 
 		return n;
 	}

@@ -21,6 +21,7 @@ import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.beans.Configuration;
 import org.refpub.cache.CacheImplementation;
 import org.refpub.cache.CacheInterface;
+import org.refpub.webapp.json.JsonMocker;
 
 
 
@@ -146,7 +147,7 @@ public class Execute {
 	        m.setProperty(MarshallerProperties.MEDIA_TYPE, mediatype);
 	        m.marshal((AttributeList) obj, w);
 		}
-		return w.toString();
+		return new JsonMocker(w.toString()).mock();
 	}
 	
 	private String XMLMarhaller(Object obj) throws JAXBException {
