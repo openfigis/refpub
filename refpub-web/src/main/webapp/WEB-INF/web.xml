@@ -29,7 +29,7 @@
   	</resource-env-ref>
 	<context-param>     
   		<param-name>refpub-web-confFile</param-name>     
-  		<param-value>/work/FIGIS/refpub_data/conf/refpub.properties</param-value>     
+  		<param-value>C:/Users/vaningen/.m2/conf/refpub.properties</param-value>     
  	</context-param>
 </web-app>
 
