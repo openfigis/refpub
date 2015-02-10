@@ -36,7 +36,11 @@ public class FIGISObject {
 	private String short_description_a;
 	private String short_description_c;
 	
+	private String scientific_name;
+	private String vessel;
+	
 	private String concept;
+	private String concept_group;
 	private String url;
 	public String getName_e() {
 		return name_e;
@@ -224,10 +228,28 @@ public class FIGISObject {
 	public void setConcept(String concept) {
 		this.concept = concept;
 	}
+	public String getConcept_group() {
+		return concept_group;
+	}
+	public void setConcept_group(String concept_group) {
+		this.concept_group = concept_group;
+	}
 	public String getUrl() {
 		return url;
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getScientific_name() {
+		return scientific_name;
+	}
+	public void setScientific_name(String scientific_name) {
+		this.scientific_name = scientific_name;
+	}
+	public String getVessel() {
+		return vessel;
+	}
+	public void setVessel(String vessel) {
+		this.vessel = vessel;
 	}
 }

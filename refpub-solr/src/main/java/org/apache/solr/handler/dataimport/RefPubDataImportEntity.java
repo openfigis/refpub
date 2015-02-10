@@ -41,10 +41,18 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
 	    		
 	    		String url2 = c.get(concept) + "?count=all";
 	    		
-	    		List<FIGISObject> list = this.getObjects(url2);
-	    		for (FIGISObject o : list) {
-	    			figis_objects.add(o);
+	    		if (concept.endsWith("_group")) {
+	    			List<FIGISObject> list = this.getGroups(url2, concept.replace("_group", ""));
+		    		for (FIGISObject o : list) {
+		    			figis_objects.add(o);
+		    		}
+	    		} else {
+	    			List<FIGISObject> list = this.getObjects(url2);
+		    		for (FIGISObject o : list) {
+		    			figis_objects.add(o);
+		    		}
 	    		}
+	    		
 			}
 		}
 	}
@@ -91,7 +99,11 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
     			row.put("short_description_a", obj.getShort_description_a());
     			row.put("short_description_c", obj.getShort_description_c());
     			
+    			row.put("scientific_name", obj.getScientific_name());
+    			row.put("vessel_name", obj.getVessel());
+    			
     			row.put("concept", obj.getConcept());
+    			row.put("concept_group", obj.getConcept_group());
     			row.put("url", obj.getUrl());
     			
     			Random rand = new Random();
@@ -125,12 +137,12 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
 	}
 	
 	private List<Map<String, String>> getConcepts(String url) {
-		//System.out.println("RefPubDataImportHandler::: " + url);
     	try {
     		InputStream in = new URL( url ).openStream();
             String genreJson = IOUtils.toString(in);
             JSONObject conceptJsonObject = (JSONObject) JSONValue.parseWithException(genreJson);
-            JSONArray conceptArray = (JSONArray) conceptJsonObject.get("concept");
+            JSONObject list = (JSONObject) conceptJsonObject.get("conceptList");
+            JSONArray conceptArray = (JSONArray) list.get("concept");
             List<Map<String, String>> returnVal = new ArrayList<Map<String, String>>();
             
             for (int i = 0; i < conceptArray.size(); i++) {
@@ -141,8 +153,18 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
 	            JSONObject c = (JSONObject) arrayOfConceptsLinks.get(0);
 	            
 	            Map<String,String> t = new HashMap<String, String>();
-	            t.put((String) c.get("rel"), (String) c.get("value"));
+	            t.put((String) c.get("rel"), (String) c.get("href"));
 	            returnVal.add(t);
+	            
+	            JSONObject groups = (JSONObject) conceptArrayLinks.get("groups");
+	            if (groups != null) {
+	            	System.out.println(c.get("rel"));
+	            	JSONArray groupLink = (JSONArray) groups.get("link");
+	            	JSONObject g = (JSONObject) groupLink.get(0);
+	            	Map<String,String> gg = new HashMap<String, String>();
+		            gg.put((String) c.get("rel") + "_group", (String) g.get("href"));
+		            returnVal.add(gg);
+	            }
             }
             return returnVal;
         } catch (IOException e) {
@@ -161,7 +183,8 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
     		InputStream in = new URL( url ).openStream();
             String genreJson = IOUtils.toString(in);
             JSONObject conceptJsonObject = (JSONObject) JSONValue.parseWithException(genreJson);
-            JSONArray conceptArray = (JSONArray) conceptJsonObject.get("concept");
+            JSONObject conceptList = (JSONObject) conceptJsonObject.get("conceptList"); 
+            JSONArray conceptArray = (JSONArray) conceptList.get("concept");
             for (int i = 0; i < conceptArray.size(); i++) {
             	JSONObject ca = (JSONObject) conceptArray.get(i);
             	JSONObject multilingualLongName = (JSONObject) ca.get("multilingualLongName");
@@ -169,141 +192,131 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
             	JSONObject multilingualFullName = (JSONObject) ca.get("multilingualFullName");
             	JSONObject multilingualOfficialName = (JSONObject) ca.get("multilingualOfficialName");
             	JSONObject multilingualShortDescription = (JSONObject) ca.get("multilingualShortDescription");
+            	String scientific_name = null;
+            	if (ca.containsKey("scientific_name")) {
+            		scientific_name = (String) ca.get("scientific_name");
+            	}
+            	String vessel = null;
+            	if (ca.containsKey("vessel_name")) {
+            		vessel = (String) ca.get("vessel_name");
+            	}
             	JSONArray link = (JSONArray) ca.get("link");
             	FIGISObject figis = new FIGISObject();
             	for (int j = 0; j < link.size(); j++) {
             		JSONObject la = (JSONObject) link.get(j);
             		figis.setConcept((String) la.get("rel"));
-            		figis.setUrl((String) la.get("value"));
+            		figis.setUrl((String) la.get("href"));
             	}
-             	
-            	if (multilingualName != null && multilingualName.get("value") != null) {
-            		JSONArray arr = (JSONArray) multilingualName.get("value");
-            		for (int j = 0; j < arr.size(); j++) {
-            			JSONObject caa = (JSONObject) arr.get(j);
-            			String lang = (String) caa.get("lang");
-            			if (lang.equalsIgnoreCase("ar")) {
-            				figis.setName_a((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("en")) {
-            				figis.setName_e((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("fr")) {
-            				figis.setName_f((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("es")) {
-            				figis.setName_s((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("ru")) {
-            				figis.setName_r((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("zh")) {
-            				figis.setName_c((String) caa.get("value"));
-            			}
+            	
+            	if (scientific_name != null) {
+            		figis.setScientific_name(scientific_name);
+            	}
+            	if (vessel != null) {
+            		figis.setVessel(vessel);
+            	}
+            	
+               	if (multilingualName != null && multilingualName.size() > 0) {
+            		if (multilingualName.containsKey("EN")) {
+            			figis.setName_e((String) multilingualName.get("EN"));
+            		}
+            		if (multilingualName.containsKey("FR")) {
+            			figis.setName_f((String) multilingualName.get("FR"));
+            		}
+            		if (multilingualName.containsKey("ES")) {
+            			figis.setName_s((String) multilingualName.get("ES"));
+            		}
+            		if (multilingualName.containsKey("AR")) {
+            			figis.setName_a((String) multilingualName.get("AR"));
+            		}
+            		if (multilingualName.containsKey("RU")) {
+            			figis.setName_r((String) multilingualName.get("RU"));
+            		}
+            		if (multilingualName.containsKey("ZH")) {
+            			figis.setName_c((String) multilingualName.get("ZH"));
             		}
             	}
             	
-            	if (multilingualFullName != null && multilingualFullName.get("value") != null) {
-            		JSONArray arr = (JSONArray) multilingualFullName.get("value");
-            		for (int j = 0; j < arr.size(); j++) {
-            			JSONObject caa = (JSONObject) arr.get(j);
-            			String lang = (String) caa.get("lang");
-            			if (lang.equalsIgnoreCase("ar")) {
-            				figis.setFull_name_a((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("en")) {
-            				figis.setFull_name_e((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("fr")) {
-            				figis.setFull_name_f((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("es")) {
-            				figis.setFull_name_s((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("ru")) {
-            				figis.setFull_name_r((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("zh")) {
-            				figis.setFull_name_c((String) caa.get("value"));
-            			}
+            	if (multilingualFullName != null && multilingualFullName.size() > 0) {
+            		if (multilingualFullName.containsKey("EN")) {
+            			figis.setFull_name_e((String) multilingualFullName.get("EN"));
+            		}
+            		if (multilingualFullName.containsKey("FR")) {
+            			figis.setFull_name_f((String) multilingualFullName.get("FR"));
+            		}
+            		if (multilingualFullName.containsKey("ES")) {
+            			figis.setFull_name_s((String) multilingualFullName.get("ES"));
+            		}
+            		if (multilingualFullName.containsKey("AR")) {
+            			figis.setFull_name_a((String) multilingualFullName.get("AR"));
+            		}
+            		if (multilingualFullName.containsKey("RU")) {
+            			figis.setFull_name_r((String) multilingualFullName.get("RU"));
+            		}
+            		if (multilingualFullName.containsKey("ZH")) {
+            			figis.setFull_name_c((String) multilingualFullName.get("ZH"));
             		}
             	}
             	
-            	if (multilingualLongName != null && multilingualLongName.get("value") != null) {
-            		JSONArray arr = (JSONArray) multilingualLongName.get("value");
-            		for (int j = 0; j < arr.size(); j++) {
-            			JSONObject caa = (JSONObject) arr.get(j);
-            			String lang = (String) caa.get("lang");
-            			if (lang.equalsIgnoreCase("ar")) {
-            				figis.setLong_name_a((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("en")) {
-            				figis.setLong_name_e((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("fr")) {
-            				figis.setLong_name_f((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("es")) {
-            				figis.setLong_name_s((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("ru")) {
-            				figis.setLong_name_r((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("zh")) {
-            				figis.setLong_name_c((String) caa.get("value"));
-            			}
+            	if (multilingualLongName != null && multilingualLongName.size() > 0) {
+            		if (multilingualLongName.containsKey("EN")) {
+            			figis.setLong_name_e((String) multilingualLongName.get("EN"));
+            		}
+            		if (multilingualLongName.containsKey("FR")) {
+            			figis.setLong_name_f((String) multilingualLongName.get("FR"));
+            		}
+            		if (multilingualLongName.containsKey("ES")) {
+            			figis.setLong_name_s((String) multilingualLongName.get("ES"));
+            		}
+            		if (multilingualLongName.containsKey("AR")) {
+            			figis.setLong_name_a((String) multilingualLongName.get("AR"));
+            		}
+            		if (multilingualLongName.containsKey("RU")) {
+            			figis.setLong_name_r((String) multilingualLongName.get("RU"));
+            		}
+            		if (multilingualLongName.containsKey("ZH")) {
+            			figis.setLong_name_c((String) multilingualLongName.get("ZH"));
             		}
             	}
             	
-            	if (multilingualOfficialName != null && multilingualOfficialName.get("value") != null) {
-            		JSONArray arr = (JSONArray) multilingualOfficialName.get("value");
-            		for (int j = 0; j < arr.size(); j++) {
-            			JSONObject caa = (JSONObject) arr.get(j);
-            			String lang = (String) caa.get("lang");
-            			if (lang.equalsIgnoreCase("ar")) {
-            				figis.setOfficial_name_a((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("en")) {
-            				figis.setOfficial_name_e((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("fr")) {
-            				figis.setOfficial_name_f((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("es")) {
-            				figis.setOfficial_name_s((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("ru")) {
-            				figis.setOfficial_name_r((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("zh")) {
-            				figis.setOfficial_name_c((String) caa.get("value"));
-            			}
+            	if (multilingualOfficialName != null && multilingualOfficialName.size() > 0) {
+            		if (multilingualOfficialName.containsKey("EN")) {
+            			figis.setOfficial_name_e((String) multilingualOfficialName.get("EN"));
+            		}
+            		if (multilingualOfficialName.containsKey("FR")) {
+            			figis.setOfficial_name_f((String) multilingualOfficialName.get("FR"));
+            		}
+            		if (multilingualOfficialName.containsKey("ES")) {
+            			figis.setOfficial_name_s((String) multilingualOfficialName.get("ES"));
+            		}
+            		if (multilingualOfficialName.containsKey("AR")) {
+            			figis.setOfficial_name_a((String) multilingualOfficialName.get("AR"));
+            		}
+            		if (multilingualOfficialName.containsKey("RU")) {
+            			figis.setOfficial_name_r((String) multilingualOfficialName.get("RU"));
+            		}
+            		if (multilingualOfficialName.containsKey("ZH")) {
+            			figis.setOfficial_name_c((String) multilingualOfficialName.get("ZH"));
             		}
             	}
             	
-            	if (multilingualShortDescription != null && multilingualShortDescription.get("value") != null) {
-            		JSONArray arr = (JSONArray) multilingualShortDescription.get("value");
-            		for (int j = 0; j < arr.size(); j++) {
-            			JSONObject caa = (JSONObject) arr.get(j);
-            			String lang = (String) caa.get("lang");
-            			if (lang.equalsIgnoreCase("ar")) {
-            				figis.setShort_description_a((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("en")) {
-            				figis.setShort_description_e((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("fr")) {
-            				figis.setShort_description_f((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("es")) {
-            				figis.setShort_description_s((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("ru")) {
-            				figis.setShort_description_r((String) caa.get("value"));
-            			}
-            			if (lang.equalsIgnoreCase("zh")) {
-            				figis.setShort_description_c((String) caa.get("value"));
-            			}
+            	if (multilingualShortDescription != null && multilingualShortDescription.size() > 0) {
+            		if (multilingualShortDescription.containsKey("EN")) {
+            			figis.setShort_description_e((String) multilingualShortDescription.get("EN"));
+            		}
+            		if (multilingualShortDescription.containsKey("FR")) {
+            			figis.setShort_description_f((String) multilingualShortDescription.get("FR"));
+            		}
+            		if (multilingualShortDescription.containsKey("ES")) {
+            			figis.setShort_description_s((String) multilingualShortDescription.get("ES"));
+            		}
+            		if (multilingualShortDescription.containsKey("AR")) {
+            			figis.setShort_description_a((String) multilingualShortDescription.get("AR"));
+            		}
+            		if (multilingualShortDescription.containsKey("RU")) {
+            			figis.setShort_description_r((String) multilingualShortDescription.get("RU"));
+            		}
+            		if (multilingualShortDescription.containsKey("ZH")) {
+            			figis.setShort_description_c((String) multilingualShortDescription.get("ZH"));
             		}
             	}
             	
@@ -318,5 +331,58 @@ public class RefPubDataImportEntity extends EntityProcessorBase{
     	return returnList;
     }
 	
+    private List<FIGISObject> getGroups(String url, String concept) {
+		List<FIGISObject> returnList = new ArrayList<FIGISObject>();
+		InputStream in;
+		try {
+			in = new URL( url ).openStream();
+			String genreJson = IOUtils.toString(in);
+			JSONObject conceptJsonObject = (JSONObject) JSONValue.parseWithException(genreJson);
+            JSONObject conceptList = (JSONObject) conceptJsonObject.get("conceptList"); 
+            JSONArray conceptArray = (JSONArray) conceptList.get("concept");			
+			FIGISObject figis = new FIGISObject();
+			figis.setConcept_group(concept);
+			for (int i = 0; i < conceptArray.size(); i++) {
+				JSONObject obj = (JSONObject) conceptArray.get(i);
+				JSONArray links = (JSONArray) obj.get("link");
+				JSONObject multilingualName = (JSONObject) obj.get("multilingualName");
+				
+				for (int j = 0; j < links.size(); j++) {
+            		JSONObject la = (JSONObject) links.get(j);
+            		figis.setConcept((String) la.get("rel"));
+            		figis.setUrl((String) la.get("href"));
+            	}
+				
+				if (multilingualName != null && multilingualName.size() > 0) {
+					if (multilingualName.containsKey("EN")) {
+            			figis.setName_a((String) multilingualName.get("EN"));
+            		}
+            		if (multilingualName.containsKey("FR")) {
+            			figis.setName_f((String) multilingualName.get("FR"));
+            		}
+            		if (multilingualName.containsKey("ES")) {
+            			figis.setName_s((String) multilingualName.get("ES"));
+            		}
+            		if (multilingualName.containsKey("AR")) {
+            			figis.setName_a((String) multilingualName.get("AR"));
+            		}
+            		if (multilingualName.containsKey("RU")) {
+            			figis.setName_r((String) multilingualName.get("RU"));
+            		}
+            		if (multilingualName.containsKey("ZH")) {
+            			figis.setName_c((String) multilingualName.get("ZH"));
+            		}
+				}
+				returnList.add(figis);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return returnList;
+	}
 	
 }
