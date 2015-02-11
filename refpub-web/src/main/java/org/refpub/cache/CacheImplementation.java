@@ -11,15 +11,30 @@ import org.mapdb.DBMaker;
 import org.mapdb.HTreeMap;
 
 public class CacheImplementation implements CacheInterface{
-	private DB db;
-	private HTreeMap<String, List<String>> map;
+	private static DB db = null;
+	private static HTreeMap<String, List<String>> map;
 	private String defaultPath = "/tmp";
-	private String path;
+	private static String path;
 	
 	final static Logger logger = Logger.getLogger(CacheImplementation.class);
 	
 	private int DEFAULT_EXPIRY_SECONDS = 120;
 	private int EXPIRY_SECONDS;
+	
+	/*static {
+		CacheImplementation.db = DBMaker.newFileDB(new File(path + "refpubCache"))
+	               .closeOnJvmShutdown()
+	               .encryptionEnable("password")
+	               .make();
+
+		if (!db.exists("refPubCollection")) {
+		    map = db.createHashMap("refPubCollection")
+	                .expireMaxSize(1000000)
+	                .make();
+		} else {
+			map = db.getHashMap("refPubCollection");
+		}
+	}*/
 	
 	public CacheImplementation(String pathToSaveCache, String expiry) {
 		if (expiry == null) {
@@ -59,7 +74,23 @@ public class CacheImplementation implements CacheInterface{
 		if (!path.endsWith("/")) {
 			path += "/";
 		}
-		db = DBMaker.newFileDB(new File(path + "refpubCache"))
+		initCache(path);
+		/*CacheImplementation.db = DBMaker.newFileDB(new File(path + "refpubCache"))
+		               .closeOnJvmShutdown()
+		               .encryptionEnable("password")
+		               .make();
+	
+			if (!db.exists("refPubCollection")) {
+			    map = db.createHashMap("refPubCollection")
+		                .expireMaxSize(1000000)
+		                .make();
+			} else {
+				map = db.getHashMap("refPubCollection");
+			}*/
+	}
+	
+	private static void initCache(String path) {
+		CacheImplementation.db = DBMaker.newFileDB(new File(path + "refpubCache"))
 	               .closeOnJvmShutdown()
 	               .encryptionEnable("password")
 	               .make();
@@ -138,7 +169,7 @@ public class CacheImplementation implements CacheInterface{
 	@Override
 	public void commit() {
 		db.commit();
-		this.close();
+		//this.close();
 	}
 	
 	private void close() {
