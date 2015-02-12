@@ -1,5 +1,7 @@
 package org.apache.solr.handler.dataimport;
 
+import java.util.List;
+
 public class FIGISObject {
 	private String name_e;
 	private String name_f;
@@ -42,6 +44,9 @@ public class FIGISObject {
 	private String concept;
 	private String concept_group;
 	private String url;
+	
+	private List<FIGISObject> hierarchy;
+	
 	public String getName_e() {
 		return name_e;
 	}
@@ -251,5 +256,11 @@ public class FIGISObject {
 	}
 	public void setVessel(String vessel) {
 		this.vessel = vessel;
+	}
+	public List<FIGISObject> getHierarchy() {
+		return hierarchy;
+	}
+	public void setHierarchy(List<FIGISObject> hierarchy) {
+		this.hierarchy = hierarchy;
 	}
 }
