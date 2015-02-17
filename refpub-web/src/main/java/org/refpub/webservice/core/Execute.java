@@ -71,7 +71,7 @@ public class Execute {
 			cachePath = null;
 		}
 		configuration = new Configuration(this.getConfigurationFile());
-		CacheInterface cache = new CacheImplementation(cachePath, configuration.getCache_expiry());
+		CacheInterface cache = new CacheImplementation(configuration.getCache_expiry());
 		String key = this.buildFullUri();
 		if (uri != null) {	
 			String cachedResponse = cache.getCachedValue(key);

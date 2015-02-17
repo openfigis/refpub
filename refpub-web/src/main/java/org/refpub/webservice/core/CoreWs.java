@@ -1,6 +1,7 @@
 package org.refpub.webservice.core;
 
 import javax.annotation.ManagedBean;
+import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.servlet.ServletContext;
@@ -14,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.fao.fi.refpub.webservice.ConceptList;
+import org.fao.fi.refpub.webservice.beans.RefPubImplementation;
 import org.fao.fi.refpub.webservice.beans.RefPubInterface;
 import org.fao.fi.refpub.webservice.cache.CacheService;
 import org.fao.fi.refpub.webservice.cache.CacheServiceInterceptor;
@@ -35,7 +37,6 @@ public class CoreWs {
 	@Context private UriInfo uriInfo;
 	@Context ServletContext context;
 	@Context HttpHeaders httpHeaders;
-	
 	
 	@Path("concept/{type: .*}")
 	@GET
@@ -241,12 +242,17 @@ public class CoreWs {
 	private void setBean() {
 		bean.setUrl(uriInfo);
 		
+		String appConfigPath = this.getConfigPath();
+		
+		bean.setPropertiesFile(appConfigPath);
+	}
+	
+	private String getConfigPath() {
 		String appConfigPath = context.getInitParameter("refpub-confFile");
 		if (appConfigPath == null) {
 			appConfigPath = "/work/FIGIS/refpub_data/conf/refpub.properties";
 		}
-		
-		bean.setPropertiesFile(appConfigPath);
+		return appConfigPath;
 	}
 	
 	private String getMediaType(HttpHeaders httpHeaders, String type) {
