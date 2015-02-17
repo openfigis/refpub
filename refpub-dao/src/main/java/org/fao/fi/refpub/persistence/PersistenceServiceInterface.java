@@ -19,6 +19,11 @@ public abstract interface PersistenceServiceInterface {
 	
 	/*List<RefPubObject> getCategories(@Param("db_schema") String db_schema);*/
 	
+	HashMap<String, Object> getMDRefObject (
+			@Param("db_schema") String db_schema,
+			@Param("metaId") String metaId);
+
+	
 	ArrayList<HashMap<String, Object>> getObjects(
 			@Param("db_schema") String db_schema, 
 			@Param("meta") List<String> meta,

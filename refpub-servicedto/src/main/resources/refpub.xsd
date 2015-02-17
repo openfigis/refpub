@@ -203,6 +203,8 @@
 			<element name="multilingualShortDescription"
 				type="refpub:MultilingualType">
 			</element>
+			<element name="scientific_name" type="string"></element>
+			<element name="vessel" type="string"></element>
 			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>
@@ -257,6 +259,8 @@
 			<element name="multilingualShortDescription"
 				type="refpub:MultilingualType">
 			</element>
+			<element name="scientific_name" type="string"></element>
+			<element name="vessel" type="string"></element>
 			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
 				minOccurs="1">
 			</element>

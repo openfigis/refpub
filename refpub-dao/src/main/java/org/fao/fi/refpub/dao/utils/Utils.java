@@ -686,6 +686,8 @@ public class Utils {
 					name2check = "FULL_NAME_E";
 				} else if (counter == 4) {
 					name2check = "SHORTNAME";
+				} else if (counter == 5) {
+					name2check = "VESSELNAME";
 				} else {
 					found = true;
 					break outerloop;

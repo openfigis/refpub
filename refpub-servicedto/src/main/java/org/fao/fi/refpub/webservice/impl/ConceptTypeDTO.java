@@ -55,7 +55,7 @@ public class ConceptTypeDTO {
 					urlChunks.add(new ResourceKeyValue("concept", object.getConcept()));
 					urlChunks.add(new ResourceKeyValue("codesystem", cl.getName()));
 					urlChunks.add(new ResourceKeyValue("code", cl.getValue()));
-					c.getLinks().add(LinkRelDTO.create(object, urlChunks, object.getConcept()));
+					c.getLinks().add(LinkRelDTO.create(object, urlChunks, object.getSelfRel()));
 				}
 			}
 			c.setCodeList(CodeListTypeDTO.createList(object, false));
@@ -74,6 +74,10 @@ public class ConceptTypeDTO {
 		
 		if (object.getNAME() != null) {
 			c.setName(object.getNAME());
+		}
+		
+		if (object.getSHORTNAME() != null && object.getNAME_E() == null) {
+			object.setNAME_E(object.getSHORTNAME());
 		}
 		
 		if (object.getNAME_E() != null ||

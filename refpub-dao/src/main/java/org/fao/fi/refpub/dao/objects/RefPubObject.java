@@ -47,6 +47,7 @@ public class RefPubObject {
     
     private String SCIENTIFIC_NAME;
     private String VESSELNAME;
+    private String SHORTNAME;
     
     private List<HashMap<String, String>> ATTRIBUTES;
     private String FILTER;
@@ -60,6 +61,8 @@ public class RefPubObject {
 	private boolean is_group;
 	private String group_name;
 	private boolean hidden;
+	
+	private String selfRel;
 	
 	public String getPKID() {
 		return PKID;
@@ -336,5 +339,17 @@ public class RefPubObject {
 	}
 	public void setHidden(boolean hidden) {
 		this.hidden = hidden;
+	}
+	public String getSHORTNAME() {
+		return SHORTNAME;
+	}
+	public void setSHORTNAME(String sHORTNAME) {
+		SHORTNAME = sHORTNAME;
+	}
+	public String getSelfRel() {
+		return selfRel;
+	}
+	public void setSelfRel(String selfRel) {
+		this.selfRel = selfRel;
 	}
 }

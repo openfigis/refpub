@@ -52,6 +52,8 @@ public class StandardFigisDBColumns {
 	        add("SCIENTIFIC_NAME");
 	        
 	        add("VESSELNAME");
+	        
+	        add("SHORTNAME");
 	    }
 	}; 
 

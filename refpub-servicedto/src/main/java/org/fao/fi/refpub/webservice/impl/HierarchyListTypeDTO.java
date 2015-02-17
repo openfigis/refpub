@@ -38,6 +38,9 @@ public class HierarchyListTypeDTO {
 			if (refPubObject.getOFFICIAL_NAME_A() != null || refPubObject.getOFFICIAL_NAME_E() != null || refPubObject.getOFFICIAL_NAME_S() != null || refPubObject.getOFFICIAL_NAME_F() != null || refPubObject.getOFFICIAL_NAME_R() != null || refPubObject.getOFFICIAL_NAME_C() != null ) {
 				child.setMultilingualOfficialName(MultilingualTypeDTO.create(refPubObject, "LONG"));
 			}
+			if (refPubObject.getSCIENTIFIC_NAME() != null) {
+				child.setScientificName(refPubObject.getSCIENTIFIC_NAME());
+			}
 
 			List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();
 			
@@ -79,6 +82,9 @@ public class HierarchyListTypeDTO {
 			}
 			if (refPubObject.getOFFICIAL_NAME_A() != null || refPubObject.getOFFICIAL_NAME_E() != null || refPubObject.getOFFICIAL_NAME_S() != null || refPubObject.getOFFICIAL_NAME_F() != null || refPubObject.getOFFICIAL_NAME_R() != null || refPubObject.getOFFICIAL_NAME_C() != null ) {
 				parent.setMultilingualOfficialName(MultilingualTypeDTO.create(refPubObject, "LONG"));
+			}
+			if (refPubObject.getSCIENTIFIC_NAME() != null) {
+				parent.setScientificName(refPubObject.getSCIENTIFIC_NAME());
 			}
 			
 			List<ResourceKeyValue> urlChunks = new ArrayList<ResourceKeyValue>();

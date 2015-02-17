@@ -750,4 +750,16 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+
+	@Override
+	public HashMap<String, Object> getMDRefObject(String db_schema,
+			String metaId) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession(MYBATIS_CONFIG_FILE);
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getMDRefObject(db_schema, metaId);
+		} finally {
+			sqlSession.close();
+		}
+	}
 }
