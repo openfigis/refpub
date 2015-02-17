@@ -13,7 +13,7 @@ import org.mapdb.HTreeMap;
 public class CacheImplementation implements CacheInterface{
 	private static DB db = null;
 	private static HTreeMap<String, List<String>> map;
-	private String defaultPath = "/tmp";
+	private static String defaultPath = "/tmp";
 	private static String path;
 	
 	final static Logger logger = Logger.getLogger(CacheImplementation.class);
@@ -21,7 +21,16 @@ public class CacheImplementation implements CacheInterface{
 	private int DEFAULT_EXPIRY_SECONDS = 120;
 	private int EXPIRY_SECONDS;
 	
-	/*static {
+	static {
+		System.out.println("-----------------" + System.getProperty("catalina.base"));
+		path = System.getProperty("catalina.base");
+		if (path == null || path.trim().equals("")) {
+			path = defaultPath;
+		}
+		if (!path.endsWith(File.separator)) {
+			path += File.separator;
+		}
+		logger.debug("... Initializing cache on: " + path);
 		CacheImplementation.db = DBMaker.newFileDB(new File(path + "refpubCache"))
 	               .closeOnJvmShutdown()
 	               .encryptionEnable("password")
@@ -34,9 +43,9 @@ public class CacheImplementation implements CacheInterface{
 		} else {
 			map = db.getHashMap("refPubCollection");
 		}
-	}*/
+	}
 	
-	public CacheImplementation(String pathToSaveCache, String expiry) {
+	public CacheImplementation(String expiry) {
 		if (expiry == null) {
 			EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
 		} else {
@@ -47,22 +56,26 @@ public class CacheImplementation implements CacheInterface{
 				EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
 			}
 		}
-		if (pathToSaveCache == null || pathToSaveCache.equalsIgnoreCase("")) {
-			path = defaultPath;
+		init();
+	}
+	
+	/*public CacheImplementation(String pathToSaveCache, String expiry) {
+		if (expiry == null) {
+			EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
 		} else {
-			path = pathToSaveCache;
+			try {
+				EXPIRY_SECONDS = Integer.parseInt(expiry);
+			} catch (Exception ex) {
+				logger.debug("Error Setting up Expiry seconds. Configuration entry seems not an Integer value");
+				EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
+			}
 		}
 		init();
 	}
 	public CacheImplementation(String pathToSaveCache) {
 		EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
-		if (pathToSaveCache == null || pathToSaveCache.equalsIgnoreCase("")) {
-			path = defaultPath;
-		} else {
-			path = pathToSaveCache;
-		}
 		init();
-	}
+	}*/
 	public CacheImplementation() {
 		EXPIRY_SECONDS = DEFAULT_EXPIRY_SECONDS;
 		path = defaultPath;
@@ -74,7 +87,7 @@ public class CacheImplementation implements CacheInterface{
 		if (!path.endsWith("/")) {
 			path += "/";
 		}
-		initCache(path);
+		//initCache(path);
 		/*CacheImplementation.db = DBMaker.newFileDB(new File(path + "refpubCache"))
 		               .closeOnJvmShutdown()
 		               .encryptionEnable("password")
@@ -154,7 +167,11 @@ public class CacheImplementation implements CacheInterface{
 	@Override
 	public void purgeCache() {
 		db.delete(null);
-		this.commit();
+		try {
+			this.commit();
+		} catch (Exception ex) {
+			db.close();
+		}
 	}
 
 	@Override
