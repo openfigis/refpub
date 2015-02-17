@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import javax.ejb.Stateful;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.UriInfo;
 
@@ -57,13 +58,17 @@ public class RefPubImplementation implements RefPubInterface {
 	private static PersistenceServiceInterface ps = null;
 	
 	public RefPubImplementation() {
-		loadConfiguration();
-		ps = new PersistenceServiceImplementation(CONFIGURATION.getMybatis_configuration_file());
+		loadConfigurationAndInit();
 	}
 	public RefPubImplementation(String configFile) {
 		this.CONFIG_FILE = configFile;
-		loadConfiguration();
-		ps = new PersistenceServiceImplementation(CONFIGURATION.getMybatis_configuration_file());
+		loadConfigurationAndInit();
+	}
+	
+	@Override
+	public void setPropertiesFile(String propertiesFile) { 
+		RefPubImplementation.CONFIG_FILE = propertiesFile;
+		loadConfigurationAndInit();
 	}
 	
 	@Override
@@ -78,10 +83,6 @@ public class RefPubImplementation implements RefPubInterface {
 	public SystemError error(Exception e) {
 		return ErrorListDTO.create(e);
 	}
-	
-	@Override
-	public void setPropertiesFile(String propertiesFile) { RefPubImplementation.CONFIG_FILE = propertiesFile; }
-	
 	
 	@Override
 	public ConceptList getAllConcept(String count, String page) {
@@ -343,6 +344,20 @@ public class RefPubImplementation implements RefPubInterface {
 																	concept), 
 																	refPubObject);
 		
+		if (refPubObject.getMETA() != null) {
+			HashMap<String, Object> mdRefObj = ps.getMDRefObject(
+					RefPubImplementation.CONFIGURATION.getDb_schema(),
+					refPubObject.getMETA());
+			
+			if (mdRefObj.containsKey("NAME_E")) {
+				refPubObject.setSelfRel((String) mdRefObj.get("NAME_E"));
+			} else {
+				refPubObject.setSelfRel(concept);
+			}
+		} else {
+			refPubObject.setSelfRel(concept);
+		}
+		
 		refPubObject.setConcept(concept);
 		refPubObject.setCodeList(codemap);
 
@@ -369,6 +384,21 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		List<CodeListDAO> codemap = Utils.retrieveCodeListForObject(ps.getCodelistForConcept(
 												RefPubImplementation.CONFIGURATION.getDb_schema(), concept), obj);
+		
+		if (obj.getMETA() != null) {
+			HashMap<String, Object> mdRefObj = ps.getMDRefObject(
+					RefPubImplementation.CONFIGURATION.getDb_schema(),
+					obj.getMETA());
+			
+			if (mdRefObj.containsKey("NAME_E")) {
+				obj.setSelfRel((String) mdRefObj.get("NAME_E"));
+			} else {
+				obj.setSelfRel(concept);
+			}
+		} else {
+			obj.setSelfRel(concept);
+		}
+		
 		obj.setConcept(concept);
 		obj.setCodeList(codemap);
 		
@@ -533,7 +563,11 @@ public class RefPubImplementation implements RefPubInterface {
 			}
 		}
 		else {
-			return this.getSubGroup(concept, filter, mdGrouping.getMeta());
+			if (mdGrouping.getMeta() == null) {
+				return this.getSubGroup(concept, filter, "");
+			} else {
+				return this.getSubGroup(concept, filter, mdGrouping.getMeta());
+			}
 		}
 		
 		
@@ -1217,12 +1251,13 @@ public class RefPubImplementation implements RefPubInterface {
 	}
 	
 
-	private void loadConfiguration() {
+	private void loadConfigurationAndInit() {
 		if (RefPubImplementation.CONFIG_FILE == null) {
 			RefPubImplementation.CONFIGURATION = new Configuration();
 		} else {
 			RefPubImplementation.CONFIGURATION = new Configuration(RefPubImplementation.CONFIG_FILE);
 		}
+		ps = new PersistenceServiceImplementation(CONFIGURATION.getMybatis_configuration_file());
 	}
 	
 	private String getValueFromAttributes(List<HashMap<String, String>> attributes, String key) {
