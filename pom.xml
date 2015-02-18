@@ -43,6 +43,7 @@
 		<module>refpub-servicedto</module>
 		<module>refpub-dao</module>
     <module>refpub-solr</module>
+    <module>refpub-client</module>
   </modules>
 
 	<dependencies>

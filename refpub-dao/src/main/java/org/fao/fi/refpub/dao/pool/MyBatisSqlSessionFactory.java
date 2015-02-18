@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -21,7 +22,13 @@ public class MyBatisSqlSessionFactory {
 				inputStream = new FileInputStream(CONFIG_FILE);
 				sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 			} catch (IOException e) {
-				throw new RuntimeException(e.getCause());
+				try {
+					sqlSessionFactory = new SqlSessionFactoryBuilder().build(
+							Resources.getResourceAsStream("org/fao/fi/mybatis/mappers/mybatis-config.xml"));
+				} catch (IOException ex1) {
+					throw new RuntimeException(ex1.getCause());
+				}
+				
 			}
 		}
 		return sqlSessionFactory;
