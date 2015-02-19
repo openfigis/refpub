@@ -29,8 +29,7 @@
   	</resource-env-ref>
 	<context-param>     
   		<param-name>refpub-web-confFile</param-name>     
-  		<param-value>/work/FIGIS/refpub_data/conf/refpub.properties</param-value>     
- 	</context-param>
+<param-value>/work/FIGIS/refpub_data/conf/refpub.properties</param-value> 	</context-param>
 </web-app>
 
 
