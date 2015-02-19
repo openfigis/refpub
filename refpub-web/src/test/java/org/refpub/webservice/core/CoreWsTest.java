@@ -32,6 +32,7 @@ public class CoreWsTest {
 	String subgroup = "Order";
 
 	@Test
+	@Ignore
 	public void testConcepts() {
 		coreWs.concepts(type);
 	}
