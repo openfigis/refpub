@@ -188,6 +188,18 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+	
+	@Override
+	public MDCodelist getCodeListForAttribute(String db_schema, String concept,
+			String attribute) {
+		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession(MYBATIS_CONFIG_FILE);
+		try {
+			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
+			return mapper.getCodeListForAttribute(db_schema, concept, attribute);
+		} finally {
+			sqlSession.close();
+		}
+	}
 
 
 	/*@Override
@@ -324,12 +336,12 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 
 	@Override
 	public ArrayList<HashMap<String, Object>> getAttributeForSingleObject(String db_schema, String table,
-			String column, String codelistvalue, String pk_column,
+			String column_source, String column_target, String codelistvalue, String pk_column,
 			String attribute) {
 		SqlSession sqlSession = MyBatisSqlSessionFactory.openSession(MYBATIS_CONFIG_FILE);
 		try {
 			PersistenceServiceInterface mapper = sqlSession.getMapper(PersistenceServiceInterface.class);
-			return mapper.getAttributeForSingleObject(db_schema, table, column, codelistvalue, pk_column, attribute);
+			return mapper.getAttributeForSingleObject(db_schema, table, column_source, column_target, codelistvalue, pk_column, attribute);
 		} finally {
 			sqlSession.close();
 		}
@@ -762,4 +774,6 @@ public class PersistenceServiceImplementation implements PersistenceServiceInter
 			sqlSession.close();
 		}
 	}
+
+	
 }

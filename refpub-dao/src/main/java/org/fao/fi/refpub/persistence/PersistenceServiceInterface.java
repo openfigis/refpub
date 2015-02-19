@@ -61,6 +61,11 @@ public abstract interface PersistenceServiceInterface {
 			@Param("concept") String concept, 
 			@Param("codelistname") String codelistname);
 	
+	MDCodelist getCodeListForAttribute(
+			@Param("db_schema") String db_schema, 
+			@Param("concept") String concept, 
+			@Param("attribute") String attribute);
+	
 	ClassInitXML getRefTable(
 			@Param("db_schema") String db_schema, 
 			@Param("id") int id);
@@ -105,11 +110,11 @@ public abstract interface PersistenceServiceInterface {
 	ArrayList<HashMap<String, Object>> getAttributeForSingleObject(
 			@Param("db_schema") String db_schema,
 			@Param("table") String table, 
-			@Param("column") String column, 
+			@Param("column_source") String column_source,
+			@Param("column_target") String column_target,
 			@Param("codelist") String codelistvalue, 
 			@Param("main_id") String pk_column,
-			@Param("attribute") String attribute);
-	
+			@Param("attribute") String attribute);	
 	
 	ArrayList<HashMap<String, Object>> getObjectsByCodeList(
 			@Param("db_schema") String db_schema, 
