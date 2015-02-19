@@ -417,6 +417,11 @@ public class RefPubImplementation implements RefPubInterface {
 		
 		MDCodelist mdcodelistTarget =  ps.getCodeListForAttribute(RefPubImplementation.CONFIGURATION.getDb_schema(), 
 				concept, attribute);
+		
+		String targetColumn = mdcodelistSource.getCode_column();
+		if (mdcodelistTarget != null) {
+			targetColumn = mdcodelistTarget.getCode_column();
+		}
 
 		TableReference tbl = ps.getTableReferenceByName(RefPubImplementation.CONFIGURATION.getDb_schema(), 
 										mdconcept.getTable_name());
@@ -424,7 +429,7 @@ public class RefPubImplementation implements RefPubInterface {
 		RefPubObject obj = Utils.buildRefPubObject(ps.getAttributeForSingleObject(RefPubImplementation.CONFIGURATION.getDb_schema(),
 														  mdconcept.getTable_name(), 
 														  mdcodelistSource.getCode_column(), 
-														  mdcodelistTarget.getCode_column(), 
+														  targetColumn, 
 														  code, 
 														  tbl.getPrimaryKey(),
 														  attribute));

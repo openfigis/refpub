@@ -135,6 +135,10 @@
 	<select id="getCodeList" parameterType="map" resultMap="CodelistResult">
 		SELECT * FROM ${db_schema}.MD_REFPUB_CODELIST WHERE REST_CONCEPT=#{concept} AND CODE_NAME=#{codelistname}
 	</select>
+
+	<select id="getCodeListForAttribute" parameterType="map" resultMap="CodelistResult">
+		SELECT * FROM ${db_schema}.MD_REFPUB_CODELIST WHERE REST_CONCEPT=#{concept} AND CODE_NAME=#{attribute}
+	</select>
 	
 	<select id="countGroupsForConcept" parameterType="map" resultType="int">
 		SELECT COUNT(*) AS C FROM ${db_schema}.MD_REFPUB_GROUPING WHERE CONCEPT_ID=#{concept}
@@ -178,7 +182,7 @@
 	</select>
 	
 	<select id="getAttributeForSingleObject" parameterType="map" resultType="hashmap">
-		SELECT ${table}.${attribute} as "${attribute}", ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column}=#{codelist}
+		SELECT ${table}.${column_target} as "${attribute}", ${main_id} AS PKID FROM ${db_schema}.${table} WHERE ${column_source}=#{codelist}
 	</select>
 	
 	<select id="getObjects" parameterType="map" resultType="hashmap">
