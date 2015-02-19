@@ -23,14 +23,22 @@ import org.fao.fi.refpub.webservice.beans.RefPubInterface;
 public class RefPubClient implements RefPubInterface{
 	
 	UriInfo URI;
-	private static String CONFIG_FILE;
 	private static String REFPUB_URI;
 	
+	/**
+	 * Initialize the client. A valid RefPub host must be passed as parameter. 
+	 * @param refpub_host
+	 * @throws Exception
+	 */
 	public RefPubClient (String refpub_host) throws Exception {
 		if (refpub_host == null || !refpub_host.toLowerCase().startsWith("http")) {
 			throw new Exception("RefPub host must be a valid URI");
 		}
-		RefPubClient.REFPUB_URI = refpub_host;
+		if (refpub_host.endsWith("/")) {
+			RefPubClient.REFPUB_URI = refpub_host;
+		} else {
+			RefPubClient.REFPUB_URI = refpub_host + "/";
+		}
 	}
 
 	@Override
@@ -43,10 +51,7 @@ public class RefPubClient implements RefPubInterface{
 	}
 
 	@Override
-	public void setPropertiesFile(String propertiesFile) {
-		RefPubClient.CONFIG_FILE = propertiesFile;
-		
-	}
+	public void setPropertiesFile(String propertiesFile) {}
 
 	@Override
 	public ConceptList getAllConcept(String count, String page) {
@@ -65,7 +70,6 @@ public class RefPubClient implements RefPubInterface{
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -95,7 +99,6 @@ public class RefPubClient implements RefPubInterface{
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -135,70 +138,172 @@ public class RefPubClient implements RefPubInterface{
 	@Override
 	public Concept getAttributeForObject(String concept, String codesystem,
 			String code, String attribute) {
-		// TODO Auto-generated method stub
+		if (concept == null || codesystem == null || code == null || attribute == null) {
+			try {
+				throw new Exception ("Parameters can't be null");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + concept + "/codesystem/" + codesystem + "/code/" + code + "/attribute/" + attribute, "");
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (Concept) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 
 	@Override
 	public Concept getAllCodeSystem(String count, String page) {
-		// TODO Auto-generated method stub
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("count", count);
+		params.put("page", page);
+		String parameters = this.buildParameters(params);
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "codesystem/", parameters);
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (Concept) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public ConceptList getObjectByCodeSystem(String concept, String codesystem,
 			String count, String page) {
-		// TODO Auto-generated method stub
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("count", count);
+		params.put("page", page);
+		String parameters = this.buildParameters(params);
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + concept + "/codesystem/" + codesystem, parameters);
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (ConceptList) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public Concept getAllCodeSystemByConcept(String concept) {
-		// TODO Auto-generated method stub
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + concept + "/codesystem", "");
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (Concept) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public ConceptList getGroups(String concept) {
-		// TODO Auto-generated method stub
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + concept + "/group", "");
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (ConceptList) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public ConceptList getGroupMain(String concept, String filter) {
-		// TODO Auto-generated method stub
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + concept + "/group/" + filter, "");
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (ConceptList) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public ConceptList getGroup(String Concept, String filter, String group) {
-		// TODO Auto-generated method stub
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + Concept + "/group/" + filter + "/" + group, "");
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (ConceptList) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public ConceptList getSubGroups(String Concept, String filter,
 			String group, String subGroup) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public AttributeList getAllAttributesForConcept(String concept) {
-		// TODO Auto-generated method stub
+		String XML = "";
+		
+		try {
+			XML = this.getXML(REFPUB_URI + "concept/" + concept + "/attribute", "");
+			JAXBContext jc = JAXBContext.newInstance( ConceptList.class );
+		    Unmarshaller u = jc.createUnmarshaller();
+		    return (AttributeList) u.unmarshal( new StringReader(XML) );
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public AttributeList getAllAttributesForConceptAndCodesystem(
 			String concept, String codesystem) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public SystemError error(Exception e) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

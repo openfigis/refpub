@@ -7,128 +7,161 @@ import org.fao.fi.refpub.webservice.Concept;
 import org.fao.fi.refpub.webservice.ConceptList;
 import org.fao.fi.refpub.webservice.SystemError;
 
-/*
+/**
+ * @author Enrico Anello
  * This is the interface of the RefPub REST Interface
+ *
  */
-
-
 public interface RefPubInterface {
 	
+	/**
+	 * Sets the URI of the RestAPI interface, if any
+	 * @param uri
+	 */
 	void setUrl(UriInfo uri);
 	void setPropertiesFile(String propertiesFile);
 	
-	/*
-	 * getAllConcept()
-	 * Returns the list of all the concepts
-	 * @return ConceptList
+	/**
+	 * Gets all the main concepts
+	 * @param count
+	 * @param page
+	 * @return
 	 */
-	//List<RefPubConcept> getConcepts();
 	ConceptList getAllConcept(String count, String page);
 	
-	/*
-	 * getConcept()
-	 * Returns a single concept
-	 * @param concept : The name of the concept
-	 * @return Concept
+	
+	/**
+	 * Not Used Method
+	 * @param concept
+	 * @param count
+	 * @param page
+	 * @return
 	 */
-	//RefPubConcept getConcept(String concept);
 	Concept getConcept(String concept, String count, String page);
 	
-	/*
-	 * getAllObjectByConcept()
-	 * Returns a list of objects belonging to some concept
-	 * @param concept : The name of the concept
-	 * @return ConceptList
+	
+	/**
+	 * Gets the list of objects for a concept
+	 * @param concept
+	 * @param count
+	 * @param page
+	 * @return
 	 */
-	//List<RefPubObject> getObjects(String concept);
 	ConceptList getAllObjectByConcept(String concept, String count, String page);
 	
-	/*
-	 * getObject()
-	 * Returns a single object by its concept, codelist and codelist's code
-	 * @param concept : The name of the concept
-	 * @param codesystem : The name of the codelist
-	 * @param code : The codelist's code
-	 * @return Concept
+
+	/**
+	 * Gets a single object by Concept, Codesystem and Code
+	 * @param concept
+	 * @param codesystem
+	 * @param code
+	 * @return
 	 */
 	Concept getObject(String concept, String codesystem, String code);
+	/**
+	 * Gets a single object by Concept and Code
+	 * @param concept
+	 * @param code
+	 * @return
+	 */
 	Concept getObject(String concept, String code);
 	
-	/*
-	 * getAttributeForObject()
-	 * Returns a single object's attribute by its concept, codelist and codelist's code
-	 * @param concept : The name of the concept
-	 * @param codesystem : The name of the codelist
-	 * @param code : The codelist's code
-	 * @param attribute : The object's attribute
-	 * @return Concept
+	
+	/**
+	 * Gets all attributes for an object
+	 * @param concept
+	 * @param codesystem
+	 * @param code
+	 * @param attribute
+	 * @return
 	 */
 	Concept getAttributeForObject(String concept, String codesystem, String code, String attribute);
 	
-	/*
-	 * getAllCodeSystem
-	 * Return a list of codelist
-	 * @return Concept
+	
+	/**
+	 * Gets all Codesystems for all the concepts
+	 * @param count
+	 * @param page
+	 * @return
 	 */
 	Concept getAllCodeSystem(String count, String page);
 	
-	/*
-	 * getObjectByCodeSystem()
-	 * Returns a list of object by its concept and codelist
-	 * @param concept : The name of the concept
-	 * @param codelist : The name of the codelist
-	 * @return ConceptList
+	
+	/**
+	 * Gets a single Codesystem for a concept
+	 * @param concept
+	 * @param codesystem
+	 * @param count
+	 * @param page
+	 * @return
 	 */
 	ConceptList getObjectByCodeSystem(String concept, String codesystem, String count, String page);
 	
-	/*
-	 * getAllCodeSystemByConcept()
-	 * Returns a list of codesystems by a selected concept
+	
+	/**
+	 * Gets all Codesystems for a single concept
 	 * @param concept
-	 * @return Concept
+	 * @return
 	 */
 	Concept getAllCodeSystemByConcept(String concept);
 	
-	/*
-	 * getGroups()
-	 * Gets all gropus for a concept
+	
+	/**
+	 * Gets the groups for a concept
 	 * @param concept
-	 * @return ConceptList
+	 * @return
 	 */
 	ConceptList getGroups(String concept);
 	
-	/*
-	 * getGroupMain()
-	 * Gets all gropus for a concept and filter
+	
+	/**
+	 * Gets the main groupings for a concept and a main group
 	 * @param concept
-	 * @return ConceptList
+	 * @param filter
+	 * @return
 	 */
 	ConceptList getGroupMain(String concept, String filter);
 	
-	/*
-	 * getGroup()
-	 * Gets all the grouping for concept, filter and group
-	 * @param concept
+	
+	/**
+	 * Gets the list of objects for a group
+	 * @param Concept
 	 * @param filter
 	 * @param group
-	 * @return ConceptList
+	 * @return
 	 */
 	ConceptList getGroup(String Concept, String filter, String group);
 	
-	/*
-	 * getSubGroups()
-	 * Iterate the hierarchy
-	 * @param concept
+	
+	/**
+	 * Not used method
+	 * @param Concept
 	 * @param filter
 	 * @param group
-	 * @param group
-	 * @return ConceptList
+	 * @param subGroup
+	 * @return
 	 */
 	ConceptList getSubGroups(String Concept, String filter, String group, String subGroup);
 	
+	/**
+	 * Gets all the attributes for a Concept
+	 * @param concept
+	 * @return
+	 */
 	AttributeList getAllAttributesForConcept(String concept);
 	
+	/**
+	 * Gets all the attributes for a Concept and a Codesystem
+	 * @param concept
+	 * @param codesystem
+	 * @return
+	 */
 	AttributeList getAllAttributesForConceptAndCodesystem(String concept, String codesystem);
 	
+	/**
+	 * Error handler
+	 * @param e
+	 * @return
+	 */
 	SystemError error(Exception e);
 }
