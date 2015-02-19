@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:refpub="http://www.fao.org/fi/refpub/webservice"
+	targetNamespace="http://www.fao.org/fi/refpub/webservice"
+	elementFormDefault="qualified"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	jaxb:extensionBindingPrefixes="xjc"
+	jaxb:version="2.0">
+	
+	
+	<annotation>
+       <appinfo>
+          <jaxb:globalBindings>
+           	<xjc:superClass name="org.fao.fi.refpub.webservice.objects.customization.jaxb.JaxbSuperClass"/>
+           	<xjc:treatRestrictionLikeNewType />
+			<xjc:simple />
+          </jaxb:globalBindings>
+       </appinfo>
+    </annotation>
+
+	<!-- Elements -->
+
+    <element name="conceptList" type="refpub:ConceptListType"></element>
+	<element name="concept" type="refpub:ConceptType"></element>
+
+	<element name="codeSystemList" type="refpub:CodeSystemListType"></element>
+	<element name="codeSystem" type="refpub:CodeSystemType"></element>
+	<element name="code" type="refpub:codeType"></element>
+	<element name="attributeList" type="refpub:attributesList"></element>
+	<element name="systemError" type="refpub:ErrorList"></element>
+	
+	<!-- Types -->
+	<complexType name="ConceptListType">
+		<complexContent>
+			<extension base="refpub:RestTypeSingle">
+				<sequence>
+					<element name="concept" type="refpub:ConceptType"
+						minOccurs="1" maxOccurs="unbounded">
+						<annotation>
+                          <appinfo>
+                              <property name="concept"/>
+                          </appinfo>
+                      	</annotation>	
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="RestType">
+		<complexContent>
+			<extension base="refpub:atomLink">
+				<sequence>
+					<element name="attribute" type="refpub:atomLink"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="RestTypeSingle">
+		<complexContent>
+			<extension base="refpub:atomLink">
+				<attribute name="count_record" type="int"></attribute>
+				<attribute name="error_msg" type="string"></attribute>
+				<attribute name="total_record" type="int"></attribute>
+			</extension>
+		</complexContent>	
+	</complexType>
+
+	<complexType name="ConceptType">
+		<complexContent>
+			<extension base="refpub:TreasureType">
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="CodeSystemListType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+					<element name="concept" type="refpub:CodeSystemType"
+						minOccurs="1" maxOccurs="unbounded">
+                     </element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="CodeSystemType">
+		<complexContent>
+			<extension base="refpub:TreasureType">
+				<sequence>
+					<element name="code" type="refpub:codeType" maxOccurs="unbounded" minOccurs="1">
+						<annotation>
+                          <appinfo>
+                              <property name="code"/>
+                          </appinfo>
+                      	</annotation>	
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+
+	<complexType name="TextLang">
+		<simpleContent>
+        	<extension base="string">
+				<attribute name="lang" type="string" />
+			</extension>
+		</simpleContent>
+	</complexType>
+
+	<complexType name="MultilingualTypeLegacy">
+		<sequence>
+			<element name="value" type="refpub:TextLang" maxOccurs="unbounded"
+				minOccurs="1" nillable="true" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="MultilingualType">
+		<sequence>
+
+			<element name="EN" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="FR" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="ES" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="AR" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="ZH" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<element name="RU" type="string" maxOccurs="1" minOccurs="0"
+				nillable="true" />
+			<!-- <any minOccurs="0" maxOccurs="1"></any> -->
+			<element ref="refpub:attributeList"></element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="CodeListListType">
+		<sequence>
+			<element name="code" type="refpub:codeList" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="TextTypeValuePair">
+		<attribute name="name" type="string" />
+		<attribute name="value" type="string" />
+	</complexType>
+	
+	<complexType name="TextTypeValueList">
+		<sequence>
+			<element name="name" type="string" minOccurs="1" maxOccurs="unbounded">
+			</element>
+			<element name="value" type="refpub:TextTypeValuePair" minOccurs="1" maxOccurs="unbounded">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="attributesList">
+		<complexContent>
+			<extension base="refpub:RestTypeSingle">
+				<sequence>
+					<element name="attribute" type="refpub:TextTypeValuePair" minOccurs="1" maxOccurs="unbounded">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="codeList">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<attribute name="name"></attribute>
+				<attribute name="concept"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="Parent">
+		<sequence>
+			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="multilingualName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualFullName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualLongName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualOfficialName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualShortDescription"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="scientific_name" type="string"></element>
+			<element name="vessel" type="string"></element>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+		<attribute name="type" type="string" />
+	</complexType>
+	
+	<complexType name="Parents">
+		<sequence>
+			<element name="parent" type="refpub:Parent" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Children">
+		<sequence>
+			<element name="child" type="refpub:Child" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Child">
+		<!-- <sequence>
+			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="concept" type="refpub:ConceptType" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence> -->
+		<sequence>
+			<element name="value" type="refpub:ValueAttrName" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="multilingualName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualFullName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualLongName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualOfficialName"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="multilingualShortDescription"
+				type="refpub:MultilingualType">
+			</element>
+			<element name="scientific_name" type="string"></element>
+			<element name="vessel" type="string"></element>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="concept" type="refpub:ConceptType" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+		<attribute name="type" type="string" />
+	</complexType>
+	
+	<complexType name="HierarchyList">
+		<sequence>
+			<element name="parents" type="refpub:Parents" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+			<element name="children" type="refpub:Children" maxOccurs="unbounded"
+				minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="groupsType">
+		<sequence>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded" minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="attributesType">
+		<sequence>
+			<element name="link" type="refpub:linkRel" maxOccurs="unbounded" minOccurs="1">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="TreasureType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+					<!-- <element name="records_count" type="int" minOccurs="1"></element> -->
+					<element name="multilingualName"
+						type="refpub:MultilingualType">
+					</element>
+					<element name="multilingualFullName"
+						type="refpub:MultilingualType">
+					</element>
+					<element name="multilingualLongName"
+						type="refpub:MultilingualType">
+					</element>
+					<element name="multilingualOfficialName"
+						type="refpub:MultilingualType">
+					</element>
+					<element name="multilingualShortDescription"
+						type="refpub:MultilingualType">
+					</element>
+					<element name="name"
+						type="string">
+					</element>
+					<element name="scientific_name"
+						type="string">
+					</element>
+					<element name="vessel_name"
+						type="string">
+					</element>
+					<element name="codeList"
+						type="refpub:CodeListListType">
+					</element>
+					<element name="groups"
+						type="refpub:groupsType">
+					</element>
+					<element name="attributes"
+						type="refpub:attributesType">
+					</element>
+					<element name="attr" 
+						type="refpub:attrList">
+					</element>
+					<element name="hierarchy" type="refpub:HierarchyList" nillable="false">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="codeType">
+		<complexContent>
+			<extension base="refpub:RestType">
+				<sequence>
+				</sequence>
+				<attribute name="code" type="string"></attribute>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	
+	<complexType name="linkRel">
+		<simpleContent>
+        	<extension base="string">
+				<attribute name="rel" type="string" />
+				<attribute name="href" type="string" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	
+    <complexType name="atomLink">
+        <sequence>
+            <element name="link" type="refpub:linkRel" />
+            <element name="link" type="refpub:linkRel" />
+            <element name="link" type="refpub:linkRel" />
+        </sequence>
+    </complexType>
+    
+    <complexType name="simpleText">
+    	<simpleContent>
+    		<extension base="string">
+    			<attribute name="name" type="string"></attribute>
+    		</extension>
+    	</simpleContent>
+    </complexType>
+    	
+    <complexType name="attrList">
+    	<sequence>
+    		<element type="refpub:simpleText" name="value" maxOccurs="unbounded"
+				minOccurs="1" nillable="true" />
+    	</sequence>
+    </complexType>
+    
+    <complexType name="ValueAttrName">
+    	<simpleContent>
+    		<extension base="string">
+    			<attribute name="name" type="string"></attribute>
+    			<attribute name="lang" type="string"></attribute>
+    			<attribute name="type" type="string"></attribute>
+    		</extension>
+      	</simpleContent>
+    </complexType>
+    
+    <complexType name="ErrorList">
+		<sequence>
+			<element name="error" type="string" minOccurs="1" maxOccurs="unbounded" />
+			<element name="stacktrace" type="string" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+</schema>
