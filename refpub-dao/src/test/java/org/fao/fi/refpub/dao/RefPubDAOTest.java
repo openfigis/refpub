@@ -96,7 +96,7 @@ public class RefPubDAOTest extends TestCase{
     }
 
      public void testGetAttributeForSingleObject() {
-    	 ArrayList<HashMap<String, Object>> results = ps.getAttributeForSingleObject(FIGIS_SCHEMA, FIGIS_TEST_TABLE, FIGIS_TEST_TABLE, "2753", FIGIS_TEST_TABLE, "FULL_NAME_E");
+    	 ArrayList<HashMap<String, Object>> results = ps.getAttributeForSingleObject(FIGIS_SCHEMA, FIGIS_TEST_TABLE, "FIC_ITEM", FIGIS_TEST_TABLE, "2753", FIGIS_TEST_TABLE, "FULL_NAME_E");
      	 if (results.size() < 1) {
      		 assertTrue(false);
      	 }
