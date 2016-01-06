@@ -8,6 +8,6 @@ override=true
 suspend=false
 vals/org.eclipse.angularjs.core.HTMLAngularValidator/global=TF01
 vals/org.eclipse.jst.jsf.facelet.ui.FaceletHTMLValidator/global=TF01
-vals/org.eclipse.wst.html.core.HTMLValidator/global=TF01
+vals/org.eclipse.wst.html.core.HTMLValidator/global=FF01
 vals/org.eclipse.wst.jsdt.web.core.JsBatchValidator/global=TF01
 vf.version=3
