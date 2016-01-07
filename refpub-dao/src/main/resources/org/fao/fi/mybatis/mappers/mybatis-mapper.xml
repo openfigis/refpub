@@ -229,6 +229,22 @@
 			WHERE RNK BETWEEN #{min} AND #{max} 
 		]]>
 	</select>
+
+	<select id="getObjectsByCodeListWithoutMeta" parameterType="map" resultType="hashmap">
+		<![CDATA[ 
+			SELECT * FROM (
+				SELECT ${table}.*, ${main_id} AS PKID, 
+				(SELECT 
+					COUNT(*)
+				 FROM 
+				 	${db_schema}.${table} 
+				 WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ')  COUNTALL, 
+				ROW_NUMBER() OVER (ORDER BY ${column}) RNK
+				FROM ${db_schema}.${table} 
+				WHERE ${column} IS NOT NULL AND TO_CHAR(${column}) != ' ') 
+			WHERE RNK BETWEEN #{min} AND #{max} 
+		]]>
+	</select>
 	
 	<select id="getRefTable" parameterType="int" resultMap="ClassInitResults">
 		SELECT regexp_substr(INIT_XML,'(^|\\s)Table=([^;]+)') as REF_TABLE FROM ${db_schema}.MD_CLASSINIT WHERE ID=#{id}
